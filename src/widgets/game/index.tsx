@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {selectGameState} from '../../store/selectors/game';
-import {EGameState} from '../../models/game';
+import GameModel, {EGameState, EGameType} from '../../models/game';
 import End from './end';
 import Middle from './middle';
 import Start from './start';
@@ -19,6 +19,9 @@ const Game: FC = () => {
     const state = useSelector(selectGameState);
     const Widget = GAME_WIDGETS[state];
 
+    // useEffect(() => {
+    //     GameModel.startGame(EGameType.TRANSLATION_FROM_LIST);
+    // }, []);
     return <div className={styles.gameContainer}><Widget/></div>;
 };
 

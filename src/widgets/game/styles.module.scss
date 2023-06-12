@@ -6,7 +6,6 @@
   flex-wrap: wrap;
   padding: 16px;
   min-height: 100%;
-  height: fit-content;
   gap: 30px;
   background: transparent;
   box-shadow: unset;
@@ -14,6 +13,5 @@
   > div {
     display: flex;
     width: 100%;
-    height: 100%;
   }
 }
