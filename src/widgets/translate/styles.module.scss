@@ -1,0 +1,62 @@
+@use "styles/mixins.scss" as m;
+@use "styles/constants.scss" as c;
+
+.translateContainer {
+  @include m.widget;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  overflow: initial;
+
+  > div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.translation {
+  @include m.textEllipsis;
+  width: 100%;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 2px;
+  border-bottom: 1px solid c.$primary-color;
+  font-weight: 600;
+}
+
+.transLangContainer {
+  display: flex;
+  flex-direction: row;
+  margin-right: 2px;
+  align-items: center;
+}
+
+.transLang {
+  color: c.$primary-color;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 32px;
+  box-sizing: border-box;
+  input {
+    text-align: center;
+  }
+}
+
+.placeholder {
+  position: relative;
+  @include m.placeholder;
+  text-align: center;
+}
+
+.addField {
+  input:last-of-type {
+    &, &::placeholder {
+      font-size: 12px;
+    }
+    padding: 8px 10px;
+  }
+}

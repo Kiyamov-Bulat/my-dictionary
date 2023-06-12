@@ -1,0 +1,25 @@
+@mixin textEllipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin shadow {
+  box-shadow: 0px 0px 4px 0px rgba(174, 191, 204, 0.8);
+}
+
+@mixin widget {
+  @include shadow;
+  display: flex;
+  border-radius: 8px;
+  padding: 8px;
+  background: rgba(255, 255, 255);
+  box-sizing: border-box;
+  height: fit-content;
+}
+
+@mixin placeholder {
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(128, 128, 128, 0.35);
+}

@@ -1,0 +1,13 @@
+@use 'src/styles/mixins' as m;
+@use 'src/styles/constants' as c;
+
+.dictionaryContainer {
+  @include m.widget;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: c.$gap;
+  height: 100%;
+  box-shadow: unset;
+}

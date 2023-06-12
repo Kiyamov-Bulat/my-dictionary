@@ -1,0 +1,11 @@
+@use 'styles/constants.scss' as c;
+
+.startContainer {
+  font-size: 128px;
+  line-height: 144px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: c.$primary-color;
+}

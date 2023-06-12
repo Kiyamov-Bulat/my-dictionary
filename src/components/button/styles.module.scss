@@ -1,0 +1,91 @@
+@use "styles/constants.scss" as c;
+
+.commonBtn {
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.3px;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.primary {
+  background: c.$primary-color;
+  color: white;
+
+  &:hover {
+    background: c.$active-primary-color;
+  }
+
+  &:active {
+    background: c.$active-primary-color;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.ghost {
+  background: transparent;
+  color: #131618;
+
+  &:hover {
+    background-color: #eff0f1;
+  }
+
+  &:active {
+    background-color: #dfe2e4;
+  }
+
+  &:disabled {
+    background-color: #eff0f1;
+    opacity: 0.4;
+  }
+}
+
+.danger {
+  background: #FF5743;
+  color: white;
+
+  &:hover {
+    background-color: #E04D3B;
+  }
+
+  &:active {
+    background-color: #C24233;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+}
+
+.tertiary {
+  background: #EBEBEB;
+  color: #131618;
+
+  &:hover {
+    background-color: #E0E0E0;
+  }
+
+  &:active {
+    background-color: #D6D6D6;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+}
+
+.icon {
+  display: flex;
+  margin-right: 8px;
+}

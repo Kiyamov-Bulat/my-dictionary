@@ -1,0 +1,16 @@
+.rmBtn {
+  position: absolute;
+
+  cursor: pointer;
+  opacity: 0.3;
+
+  > button {
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}

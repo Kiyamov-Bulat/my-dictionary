@@ -1,0 +1,48 @@
+@use 'styles/mixins.scss' as m;
+@use "styles/constants.scss" as c;
+
+.translationUnit {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 14px;
+  line-height: 18px;
+  gap: 2px;
+
+  span {
+    display: flex;
+  }
+}
+
+.text {
+  @include m.textEllipsis;
+}
+
+.lang {
+  display: flex;
+  flex-grow: 1;
+  font-size: 10px;
+  line-height: 12px;
+  color: c.$pale-color;
+  padding: 0 2px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+
+  > div {
+    position: relative;
+    opacity: 0.9;
+    button {
+      padding: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 6px;
+    }
+  }
+}

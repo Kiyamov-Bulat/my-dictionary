@@ -1,0 +1,102 @@
+@use "styles/constants.scss" as c;
+
+.groupContainer {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.group {
+  min-height: unset;
+
+  li {
+    padding: 8px 12px 8px 8px !important;
+  }
+}
+
+.header {
+  position: relative;
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+
+.rmBtn {
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+
+.selectedGroup {
+  $border: 2px solid #006fff;
+  position: relative;
+  box-shadow: 0px 0px 5px 1px #006ffff0;
+  &:after, &:before {
+    content: "";
+    position: absolute;
+    //top: 4px;
+    //right: -2px;
+    //transform: translate(-50%);
+    //width: 10px;
+    //height: 10px;
+    //border-top: $border;
+    //border-right: $border;
+  }
+  &:before {
+    //width: 8px;
+    //height: 8px;
+    //top: 7px;
+    //right: 2px;
+
+    top: 5px;
+    left: 5px;
+    //border: $border;
+    border-radius: 8px;
+    width: calc(100% - 13px);
+    height: calc(100% - 13px);
+  }
+}
+
+.memoryChart {
+  $size: 100px;
+  $line-width: 10px;
+  $percentage: 40;
+  $color: #006fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  position: relative;
+  box-sizing: border-box;
+  background:
+          radial-gradient(farthest-side, $color 98%,#0000) top/$line-width $line-width no-repeat,
+          conic-gradient($color calc($percentage * 1%),#0000 0);
+
+  .after {
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    width: $line-width;
+    height: $line-width;
+    background:$color;
+    transform: rotate(calc($percentage*3.6deg)) translateY(calc(50% - $size/2));
+  }
+
+  .inner {
+    width: $size - $line-width * 2;
+    height: $size - $line-width * 2;
+    background: white;
+    border-radius: 50%;
+  }
+}

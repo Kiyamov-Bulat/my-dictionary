@@ -1,0 +1,48 @@
+.textField {
+    font-family: Arial;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -0.3px;
+    border: 1px solid #bfc5ca;
+    background-color: white;
+    padding: 12px 16px 12px 16px;
+    outline: none;
+    resize: none;
+
+    &:disabled {
+        background-color: #eff0f1;
+        border: 1px solid #eff0f1;
+        color: #616e7c;
+    }
+
+    &.error {
+        border-color: red;
+    }
+}
+
+.wrapperTextField {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    margin-bottom: 8px;
+}
+
+.errorMsg {
+    position: absolute;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    bottom: -24px;
+    color: red;
+    z-index: 10;
+}

@@ -1,0 +1,29 @@
+@use 'src/styles/mixins' as m;
+
+.controlPanelContainer {
+  @include m.widget;
+  //flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  background: rgb(238,174,202);
+  background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+
+.selectedGroups {
+  @include m.textEllipsis;
+  width: 100%;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.btns {
+  display: flex;
+  gap: 4px;
+  > div > button {
+    padding: 5px;
+  }
+  > div > button > svg {
+    width: 12px;
+    height: 12px;
+  }
+}

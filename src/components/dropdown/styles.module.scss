@@ -1,0 +1,86 @@
+@use 'src/styles/mixins' as m;
+
+.dropdown {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 30px;
+  transition: 2s max-height;
+
+  .btn {
+    cursor: pointer;
+    display: flex;
+  }
+
+  &.open {
+    .btn {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.topField {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.dropdownList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  line-height: 30px;
+  padding: 14px 10px 14px 52px;
+  cursor: pointer;
+  flex: 0 1 auto;
+
+  &:first-child {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  &.selected {
+    padding-left: 16px;
+  }
+
+  &:not(.selected) {
+    color: #f1f1f1;
+    justify-content: start;
+  }
+}
+
+.isIconLeft {
+  margin-right: 22px;
+}
+
+.isIconRight {
+  margin-left: 8px;
+}
+
+.isIconRightContainer {
+  flex-direction: row-reverse;
+  padding: 12px 20px 12px 12px !important;
+  justify-content: space-between;
+  color: #131618 !important;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.2px;
+}
+
+.under {
+  top: -5px;
+  border-radius: 12px !important;
+}

@@ -1,0 +1,106 @@
+@use "styles/constants.scss" as c;
+
+.middleContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.unitList {
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.unit {
+  $bg-color: rgba(59, 98, 224, 0.9);
+  color: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: $bg-color;
+  cursor: pointer;
+  box-shadow: 0px 0px 4px 0px rgba(64, 91, 104, 1);
+  box-sizing: border-box;
+  border: 2px solid $bg-color;
+
+  &:hover {
+    background: rgb(50, 81, 189);
+
+  }
+  &.correctAnswer {
+    border: 2px solid #10bf6a;
+  }
+  &.incorrectAnswer {
+    border: 2px solid #E04D3B;
+  }
+  &.hasAnswer {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.index {
+  font-size: 16px;
+  opacity: 0.5;
+}
+
+.unitToStudy {
+  font-size: 48px;
+  line-height: 1.5;
+  font-weight: 600;
+  padding: 32px;
+}
+
+.navigationContainer {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 40px;
+  font-weight: 600;
+  line-height: 20px;
+  font-size: 18px;
+
+  > * {
+    position: absolute;
+    background: c.$primary-color;
+    padding: 8px 20px;
+    border-radius: 8px;
+    opacity: 0.3;
+    cursor: pointer;
+    color: white;
+
+    &:hover {
+      opacity: 1;
+    }
+    &:not(.prevArrow) {
+      right: 0;
+      top: 0;
+    }
+
+    &.prevArrow {
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+.score {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  opacity: 0.7;
+  color: #616e7c;
+  border-bottom: 1px solid #616e7c;
+}

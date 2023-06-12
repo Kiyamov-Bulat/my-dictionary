@@ -1,0 +1,124 @@
+.tooltip {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  padding: 4px 8px;
+  background-color: #262C31;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.3px;
+  color: white;
+  z-index: 2000;
+  white-space: nowrap;
+  transition: visibility 0.3s linear, opacity 0.3s linear;
+  cursor: default;
+  opacity: 0;
+  visibility: hidden;
+
+  &.isOpen {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &:after {
+    content: '';
+    background-image: url("src/assets/topTip.svg");
+    position: absolute;
+    width: 20px;
+    height: 8px;
+  }
+
+  &.hoverable {
+    pointer-events: none;
+  }
+}
+
+$gap: 12px;
+
+.S {
+  top: calc(100% + #{$gap});
+  left: 50%;
+  transform: translateX(-50%);
+
+  &:after {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 100%;
+  }
+}
+.N {
+  bottom: calc(100% + #{$gap});
+  left: 50%;
+  transform: translateX(-50%);
+
+  &:after {
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+    top: 100%;
+  }
+}
+.W {
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(100% + #{$gap});
+
+  &:after {
+    left: -14px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+  }
+}
+
+.E {
+  top: 50%;
+  transform: translateY(-50%);
+  right: calc(100% + #{$gap});
+
+  &:after {
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+  }
+}
+.SW {
+  top: calc(100% + #{$gap});
+  left: -16px;
+
+  &:after {
+    left: 20px;
+    bottom: 100%;
+  }
+}
+.SE {
+  top: calc(100% + #{$gap});
+  right: -16px;
+
+  &:after {
+    right: 20px;
+    bottom: 100%;
+  }
+}
+.NW {
+  bottom: calc(100% + #{$gap});
+  left: -16px;
+
+  &:after {
+    left: 20px;
+    top: 100%;
+    transform: rotate(180deg);
+  }
+}
+.NE {
+  bottom: calc(100% + #{$gap});
+  right: -16px;
+
+  &:after {
+    right: 15px;
+    top: 100%;
+    transform: rotate(180deg);
+  }
+}

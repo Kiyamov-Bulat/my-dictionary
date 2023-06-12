@@ -1,0 +1,28 @@
+@use 'styles/mixins.scss' as m;
+@use 'styles/constants.scss' as c;
+
+.addGroupContainer {
+  @include m.widget;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  flex-direction: column;
+}
+
+.title {
+  width: 100%;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 2px;
+  border-bottom: 1px solid c.$primary-color;
+  font-weight: 600;
+}
+
+.addField {
+  input:last-of-type {
+    &, &::placeholder {
+      font-size: 12px;
+    }
+    padding: 8px 10px;
+  }
+}

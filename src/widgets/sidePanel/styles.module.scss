@@ -1,0 +1,29 @@
+@use 'styles/constants.scss' as c;
+
+.sidePanel {
+  display: flex;
+  flex-direction: column;
+  gap: c.$gap;
+  min-width: 300px;
+  box-sizing: border-box;
+}
+
+.adderContainer {
+  position: relative;
+}
+
+.changeAdder {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  z-index: 1;
+
+  > button {
+    padding: 4px;
+    opacity: 0.3;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

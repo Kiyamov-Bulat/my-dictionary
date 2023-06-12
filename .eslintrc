@@ -1,0 +1,23 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-duplicate-imports": "error",
+    "no-restricted-imports": "error",
+    "no-console": "warn",
+    "semi": "error",
+    "quotes": [ "error", "single", { "allowTemplateLiterals": true }],
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "no-undef": "error"
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ]
+}

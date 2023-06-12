@@ -1,0 +1,66 @@
+@use 'styles/constants.scss' as c;
+@use 'styles/mixins.scss' as m;
+
+.settingsWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(29, 29, 29, 0.7);
+  z-index: 1100;
+}
+
+.settingsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 90%;
+  gap: c.$gap;
+}
+
+.groupsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: c.$gap;
+}
+
+.dictionary {
+  height: fit-content;
+  background: none;
+  box-shadow: none;
+
+  > div {
+    background: white;
+  }
+}
+
+.translate {
+  width: 50%;
+
+  > div:first-of-type  {
+    flex-direction: column;
+    > * {
+      width: 100%;
+    }
+    > p {
+      height: 200px;
+      @include m.textEllipsis;
+    }
+  }
+  > div:last-of-type > div {
+    align-items: flex-start;
+
+    button {
+      margin-top: 8px;
+    }
+  }
+
+  textarea {
+    height: 300px;
+  }
+}
