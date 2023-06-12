@@ -1,15 +1,10 @@
 import React, {FC} from 'react';
-import TooltipWrapper, {ETooltipPosition} from '../../components/tooltip/TooltipWrapper';
-import Button from '../../components/button';
-import {openSettings} from '../../store/slices/configuration';
-import {DownloadIcon, ExportIcon, SettingIcon, SwapIcon} from '../../icons';
-import {useDispatch, useSelector} from 'react-redux';
+import {ExportIcon, SwapIcon} from '../../icons';
+import {useSelector} from 'react-redux';
 import styles from './styles.module.scss';
-import {selectDictionaryValue, selectSelectedGroupsTitlesAsString} from '../../store/selectors/dictionary';
+import {selectSelectedGroupsTitlesAsString} from '../../store/selectors/dictionary';
 import ButtonWithTooltip from '../../components/button/ButtonWithTooltip';
-import {swapSelectedGroupsTextAndTranslation, swapTextAndTranslation} from '../../store/slices/dictionary';
-import downloadObjectAsJson from '../../utils/downloadObjectAsJson';
-import store from '../../store';
+import {swapSelectedGroupsTextAndTranslation} from '../../store/slices/dictionary';
 import DictionaryModel from '../../models/dictionary';
 
 const ControlPanel: FC = () => {

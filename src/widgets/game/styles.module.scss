@@ -7,8 +7,8 @@
   padding: 16px;
   height: 100%;
   gap: 30px;
-  background: rgb(238,174,202);
-  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+  background: transparent;
+  box-shadow: unset;
 
   > div {
     display: flex;
