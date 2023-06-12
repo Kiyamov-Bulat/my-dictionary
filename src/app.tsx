@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 import Settings from './widgets/settings';
 import useDictionarySaver from './hooks/useDictionarySaver';
 import SidePanel from './widgets/sidePanel';
+import Help from './widgets/help';
 
 const App = () => {
     useDictionarySaver();
@@ -16,6 +17,7 @@ const App = () => {
                 <SidePanel/>
             </div>
             <Settings/>
+            {/*<Help/>*/}
         </div>
     );
 };
