@@ -1,5 +1,5 @@
 import {createSlice, current, PayloadAction} from '@reduxjs/toolkit';
-import DictionaryModel from '../../models/dictionary';
+import DictionaryModel, {Dictionary} from '../../models/dictionary';
 import GroupModel, {Group} from '../../models/group';
 import {TranslationUnit} from '../../models/types';
 
@@ -20,6 +20,10 @@ const dictionary = createSlice({
     name: 'dictionary',
     initialState: dictionaryState,
     reducers: {
+        setDictionary(state, { payload }: PayloadAction<Dictionary>) {
+            state.value = payload;
+        },
+
         exportDictionary(state, { payload }: PayloadAction<TranslationUnit>) {
             //
         },
@@ -107,11 +111,12 @@ const dictionary = createSlice({
                 return { ...group, units: group.units.map(swap) };
             });
             state.value.groups = state.value.groups.map((g) => updatedGroups.find((next) => next.id === g.id) ?? g);
-        }
+        },
     },
 });
 
 export const {
+    setDictionary,
     addTranslationUnit,
     addGroup,
     removeTranslationUnit,

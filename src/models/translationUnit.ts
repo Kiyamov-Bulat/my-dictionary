@@ -4,6 +4,8 @@ import {MAIN_GROUP_TITLE} from './group';
 import {DropdownOption} from '../components/dropdown/dropdownList';
 import {ReactNode} from 'react';
 import {DEFAULT_TEXT_LANG, DEFAULT_TRANS_LANG} from './configuration';
+import preloadImages from '../utils/preloadImages';
+import getRemoteImage from '../utils/getRemoteImage';
 
 export const DEFAULT_GAME_STUDY_PERCENT = 25;
 
@@ -18,30 +20,37 @@ const getTranslationURL = (sourceText: string, sourceLang: string, targetLang: s
         `&q=${encodeURI(sourceText)}`);
 };
 
-const responseToTranslationUnit = ({ sentences }: RawResponse, sourceLang: string, targetLang: string): TranslationUnit => {
-    const res = {} as TranslationUnit;
+const responseToTranslationUnit = (
+    { sentences }: RawResponse,
+    sourceLang: string,
+    targetLang: string
+): Promise<TranslationUnit> => {
     const translations = sentences.filter((s): s is Sentence => 'trans' in s);
 
-    res.id = uuidv4();
-    res.textLang = sourceLang;
-    res.transLang = targetLang;
-    res.text = translations.map(s => s.orig).join('');
-    res.translation = translations.map(s => s.trans).join('');
-    res.createdAt = Date.now();
-    res.group = MAIN_GROUP_TITLE;
-    res.memoryPercent = 0;
-    res.currMistakes = 0;
-    res.totalMistakes = 0;
-    res.totalResets = 0;
-
-    return res;
+    return TranslationUnitModel.updateImageSrc({
+        id: uuidv4(),
+        textLang: sourceLang,
+        transLang: targetLang,
+        text: translations.map(s => s.orig).join(''),
+        translation: translations.map(s => s.trans).join(''),
+        createdAt: Date.now(),
+        group: MAIN_GROUP_TITLE,
+        memoryPercent: 0,
+        currMistakes: 0,
+        totalMistakes: 0,
+        totalResets: 0,
+        imageSrc: '',
+    });
 };
 
 const TranslationUnitModel = {
     async translate(text: string, textLang = DEFAULT_TEXT_LANG, transLang = DEFAULT_TRANS_LANG): Promise<TranslationUnit> {
         const res = await fetch(getTranslationURL(text, textLang, transLang));
+        //@TODO try/catch
+        const unit = await responseToTranslationUnit((await res.json()) as RawResponse, textLang, transLang);
 
-        return responseToTranslationUnit((await res.json()) as RawResponse, textLang, transLang);
+        this.preloadImage(unit);
+        return unit;
     },
 
     toDropdownOption(unit: TranslationUnit, value: ReactNode): DropdownOption {
@@ -67,7 +76,7 @@ const TranslationUnitModel = {
         return res;
     },
 
-    provideIncorrectAnswer(unit: TranslationUnit) {
+    provideIncorrectAnswer(unit: TranslationUnit): TranslationUnit {
         const res = { ...unit };
 
         res.currMistakes += 1;
@@ -76,8 +85,15 @@ const TranslationUnitModel = {
     },
     isTranslationUnit(obj: any): obj is TranslationUnit {
         return typeof obj.text === 'string' && typeof obj.translation === 'string' && typeof obj.transLang === 'string' && typeof obj.textLang === 'string';
+    },
+    
+    async updateImageSrc(unit: TranslationUnit): Promise<TranslationUnit> {
+        return { ...unit, imageSrc: await getRemoteImage(unit.text) };
+    },
+    
+    preloadImage(unit: TranslationUnit): void {
+        preloadImages(unit.imageSrc);
     }
-
 };
 
 export default TranslationUnitModel;

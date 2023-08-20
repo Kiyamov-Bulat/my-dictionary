@@ -19,9 +19,6 @@ const Game: FC = () => {
     const state = useSelector(selectGameState);
     const Widget = GAME_WIDGETS[state];
 
-    // useEffect(() => {
-    //     GameModel.startGame(EGameType.TRANSLATION_FROM_LIST);
-    // }, []);
     return <div className={styles.gameContainer}><Widget/></div>;
 };
 

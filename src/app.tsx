@@ -6,9 +6,11 @@ import Settings from './widgets/settings';
 import useDictionarySaver from './hooks/useDictionarySaver';
 import SidePanel from './widgets/sidePanel';
 import Help from './widgets/help';
+import useDictionaryImagePreloader from './hooks/useDictionaryImagePreloader';
 
 const App = () => {
     useDictionarySaver();
+    useDictionaryImagePreloader();
 
     return (
         <div className={styles.appContainer}>

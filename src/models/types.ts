@@ -30,4 +30,5 @@ export interface TranslationUnit {
     totalResets: number
     currMistakes: number
     totalMistakes: number
+    imageSrc: string
 }

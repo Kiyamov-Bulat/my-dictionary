@@ -10,9 +10,12 @@ const Unit: FC<UnitProps> = ({ reverse }) => {
     const currentUnitNumber = useSelector(selectCurrentUnitNumber);
 
     return (
-        <p className={styles.unitToStudy}>
-            {currentUnitNumber}. {reverse ? currentUnit?.translation :  currentUnit?.text}
-        </p>
+        <div>
+            <img src={currentUnit?.imageSrc}/>
+            <p className={styles.unitToStudy}>
+                {currentUnitNumber}. {reverse ? currentUnit?.translation :  currentUnit?.text}
+            </p>
+        </div>
     );
 };
 
