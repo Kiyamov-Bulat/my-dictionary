@@ -8,7 +8,7 @@ const COUNTDOWN_DURATION = 3;
 
 const Start: FC = () => {
     const dispatch = useDispatch();
-    const countdown = useTimer(COUNTDOWN_DURATION, 0.7);
+    const countdown = useTimer(COUNTDOWN_DURATION, 0.5);
 
     useEffect(() => {
         if (countdown === 0) {

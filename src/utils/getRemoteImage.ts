@@ -1,4 +1,4 @@
-const REMOTE_URL = '';// 'http://api.flickr.com/services/feeds/photos_public.gne?tagmode=any&format=json&';
+const REMOTE_URL = 'http://api.flickr.com/services/feeds/photos_public.gne?tagmode=any&format=json&';
 
 type IFlickrData = {
     items: { media: { m: string } }[]
