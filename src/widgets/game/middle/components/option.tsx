@@ -23,7 +23,10 @@ const Option: FC<OptionProps> = ({ unit, index, reverse }) => {
         }
     );
 
-    const provideAnswer = () => GameModel.provideAnswer(unit);
+    const provideAnswer = () => {
+        GameModel.provideAnswer(unit);
+        GameModel.playAnswerSound(unit);
+    };
 
     useHotkey(`${index + 1}`, provideAnswer);
 

@@ -6,6 +6,8 @@ import {TranslationUnit} from './types';
 import {selectCurrentUnit} from '../store/selectors/game';
 import TranslationUnitModel from './translationUnit';
 import {updateTranslationUnit} from '../store/slices/dictionary';
+import correctAnswerSound from '../assets/audio/piu.mp3';
+import incorrectAnswerSound from '../assets/audio/bep2.mp3';
 
 export enum EGameType {
     TRANSLATION_FROM_LIST = '@game-type/translation-from-list',
@@ -73,12 +75,20 @@ const GameModel = {
             return;
         }
 
-        const isCorrect = this.isCorrectAnswer(answer) as boolean;
+        const isCorrect = this.isCorrectAnswer(answer);
         const updatedUnit = TranslationUnitModel.provideAnswer(currUnit, isCorrect);
 
         store.dispatch(updateTranslationUnit(updatedUnit));
         store.dispatch(addAnswer({ unit: answer, isCorrect }));
     },
+
+    playAnswerSound(answer: TranslationUnit): void {
+        const src = this.isCorrectAnswer(answer) ? correctAnswerSound : incorrectAnswerSound;
+        const audio = new Audio(src);
+
+        // @TODO ?
+        void audio.play();
+    }
 };
 
 export default GameModel;
