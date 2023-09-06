@@ -13,7 +13,7 @@ const End: FC = () => {
         dispatch(toGameList());
     };
 
-    useHotkey(HOTKEYS.END_GAME, goToGameList);
+    useHotkey(HOTKEYS.END_GAME.key, goToGameList);
 
     return (
         <div className={styles.endContainer}>

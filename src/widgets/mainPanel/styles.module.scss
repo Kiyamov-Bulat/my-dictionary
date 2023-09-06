@@ -1,6 +1,12 @@
+.header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  z-index: 2;
+}
+
 .switch {
-  position: absolute;
-  top: 32px;
-  left: 32px;
   transform: scale(0.75);
 }

@@ -8,13 +8,13 @@ import HOTKEYS from '../../../../../utils/hotkeys';
 const Navigation: FC = () => {
     return (
         <div className={styles.navigationContainer}>
-            <NavArrow hotkey={HOTKEYS.PREV_UNIT} className={styles.prevArrow} hideSelector={selectIsFirstUnit} action={prevUnit}>
+            <NavArrow hotkey={HOTKEYS.PREV_UNIT.key} className={styles.prevArrow} hideSelector={selectIsFirstUnit} action={prevUnit}>
                 Назад
             </NavArrow>
-            <NavArrow hotkey={HOTKEYS.NEXT_UNIT} hideSelector={selectIsLastUnit} action={nextUnit}>
+            <NavArrow hotkey={HOTKEYS.NEXT_UNIT.key} hideSelector={selectIsLastUnit} action={nextUnit}>
                 Вперед
             </NavArrow>
-            <NavArrow hotkey={HOTKEYS.NEXT_UNIT} hideSelector={selectIsNotLastUnit} action={endGame}>
+            <NavArrow hotkey={HOTKEYS.NEXT_UNIT.key} hideSelector={selectIsNotLastUnit} action={endGame}>
                 Завершить
             </NavArrow>
         </div>

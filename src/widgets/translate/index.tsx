@@ -70,7 +70,7 @@ const Translate: FC<TranslateProps> = ({ extended = false, className, placeholde
             </div>
             <div>
                 <AddField
-                    hotkey={HOTKEYS.FOCUS_TRANSLATE}
+                    hotkey={HOTKEYS.FOCUS_TRANSLATE.key}
                     onAdd={onAdd}
                     textFieldProps={{
                         className: styles.addField,

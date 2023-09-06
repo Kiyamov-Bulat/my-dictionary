@@ -1,12 +1,43 @@
+const SWAP_KEY = {
+    ArrowRight: '→',
+    ArrowLeft: '←',
+    ' ': 'Space',
+};
+
 const HOTKEYS = {
-    NEXT_UNIT: 'ArrowRight',
-    PREV_UNIT: 'ArrowLeft',
-    END_GAME: [' ', 'ArrowRight'],
-    OPEN_SETTINGS: { key: 's', ctrl: true },
-    CLOSE_SETTINGS: 'Escape',
-    FOCUS_TRANSLATE: '/',
-    FOCUS_LANG: 't',
-    SWITCH_PANEL_VIEW: 's',
+    NEXT_UNIT: { key: 'ArrowRight', description: 'Следующий юнит', },
+    PREV_UNIT: { key: 'ArrowLeft', description: 'Предыдущий юнит', },
+    END_GAME: { key: [' ', 'ArrowRight'], description: 'Закончить игру', },
+    OPEN_SETTINGS: { key: 's', ctrl: true, description: 'Открыть настройки', },
+    CLOSE_SETTINGS: { key: 'Escape', description: 'Закрыть', },
+    FOCUS_TRANSLATE: { key: '/', description: 'Фокус нв перевод', },
+    FOCUS_LANG: { key: 't', description: 'Фокус на язык перевода', },
+    SWITCH_PANEL_VIEW: { key: 's', description: 'Переключить главную панель', },
+    OPEN_HELP: { key: '?', description: 'Открыть подсказки', },
+    
+    toStringList<T = string>(cb?: (key: string, description: string) => T): T[] {
+        return (Object.values(this) as ISingleHotkey[]).map((hotkey) => {
+            const keyAsStr = singleHotKeyToString(hotkey);
+            
+            return cb ? cb(keyAsStr, hotkey.description) : `${keyAsStr} - ${hotkey.description}` as T;
+        });
+    }
+};
+
+Object.defineProperty(HOTKEYS, 'toStringList', { enumerable: false});
+
+type ISingleHotkey = {
+    key: string | string[],
+    ctrl?: boolean,
+    description: string,
+}
+
+const singleHotKeyToString = (hotkey: ISingleHotkey): string => {
+    const keys = (Array.isArray(hotkey.key) ? hotkey.key : [hotkey.key])
+        .map((key) => key in SWAP_KEY ? SWAP_KEY[key as keyof typeof SWAP_KEY] : key);
+    const key = keys.join(' / ');
+
+    return hotkey.ctrl ? `ctrl + ${key}` : key;
 };
 
 export default HOTKEYS;

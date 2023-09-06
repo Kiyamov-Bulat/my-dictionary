@@ -60,7 +60,7 @@ const EditableLabel: FC<EditableLabelProps> = (
     }, [value]);
 
     useOutsideAlerter(makeInactive, inputRef);
-    useHotkey(HOTKEYS.FOCUS_LANG, makeActive, { block: editable });
+    useHotkey(HOTKEYS.FOCUS_LANG.key, makeActive, { block: editable });
 
     return (
         <TextField

@@ -24,3 +24,14 @@
   line-height: 22px;
   color: rgba(128, 128, 128, 0.35);
 }
+
+@mixin smallTitle {
+  line-height: 18px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+@mixin smallText {
+  font-size: 12px;
+  line-height: 14px;
+}

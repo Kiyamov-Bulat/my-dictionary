@@ -1,17 +1,56 @@
+@use 'src/styles/mixins' as m;
+
 .helpContainer {
-  position: fixed;
-  top: 16px;
-  left: 16px;
+  position: relative;
 }
 
 .helpBtn {
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0.5;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.helpContent {
+  @include m.widget;
+  @include m.smallText;
+  position: absolute;
+  top: calc(100% + 16px);
+  flex-direction: column;
+  width: 300px;
+}
+
+.hotkeys {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  @include m.smallTitle;
+}
+
+.hotkeysList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+
+  > * {
+    display: flex;
+    justify-content: space-between;
+
+  }
+  .key {
+    color: #7f7f7f;
+    font-weight: 600;
+  }
 }

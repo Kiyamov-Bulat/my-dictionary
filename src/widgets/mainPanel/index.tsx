@@ -8,17 +8,21 @@ import Text from '../text';
 import styles from './styles.module.scss';
 import useHotkey from '../../components/hotkeyManger/useHotkey';
 import HOTKEYS from '../../utils/hotkeys';
+import Help from '../help';
 
 const MainPanel: FC = () => {
     const dispatch = useDispatch();
     const panelViewIsGamesList = useSelector(selectPanelViewIsGamesList);
     const switchPanel = () => dispatch(togglePanelView());
 
-    useHotkey(HOTKEYS.SWITCH_PANEL_VIEW, switchPanel);
+    useHotkey(HOTKEYS.SWITCH_PANEL_VIEW.key, switchPanel);
 
     return (
         <div>
-            <Switch className={styles.switch} value={panelViewIsGamesList} onChange={switchPanel}/>
+            <div className={styles.header}>
+                <Help/>
+                <Switch className={styles.switch} value={panelViewIsGamesList} onChange={switchPanel}/>
+            </div>
             {panelViewIsGamesList ? <Games/> : <Text/>}
         </div>
     );
