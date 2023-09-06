@@ -15,7 +15,7 @@ const MainPanel: FC = () => {
     const panelViewIsGamesList = useSelector(selectPanelViewIsGamesList);
     const switchPanel = () => dispatch(togglePanelView());
 
-    useHotkey(HOTKEYS.SWITCH_PANEL_VIEW.key, switchPanel);
+    useHotkey(HOTKEYS.SWITCH_PANEL_VIEW.key, switchPanel, { ctrl: HOTKEYS.SWITCH_PANEL_VIEW.ctrl });
 
     return (
         <div>

@@ -7,13 +7,13 @@ export type UseHotkeyOptions = {
     keyup?: boolean
 }
 
-const skipEvent = (e: KeyboardEvent, key: string[], blocks: string[], ctrl: boolean) => {
-    return (!key.includes(e.key) || (ctrl && !(e.ctrlKey || e.metaKey)) || blocks.includes(e.key));
+const skipEvent = (e: KeyboardEvent, key: string[], blocks: string[], ctrl?: boolean) => {
+    return (!key.includes(e.key) || (ctrl !== undefined && ctrl !== (e.ctrlKey || e.metaKey)) || blocks.includes(e.key));
 };
 
 const useHotkey = (key: string | string[], callback: (e: KeyboardEvent) => void, options?: UseHotkeyOptions) => {
     const { block: globalBlock } = useContext(HotkeyManagerContext);
-    const { block = false, ctrl = false, keyup = false } = options || {} as UseHotkeyOptions;
+    const { block = false, ctrl, keyup = false } = options || {} as UseHotkeyOptions;
 
     useEffect(() => {
         if (block || (typeof globalBlock === 'boolean' && globalBlock)) {

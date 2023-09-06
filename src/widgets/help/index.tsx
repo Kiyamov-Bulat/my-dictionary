@@ -7,7 +7,7 @@ import useHotkey from '../../components/hotkeyManger/useHotkey';
 import HOTKEYS from '../../utils/hotkeys';
 
 const Help: FC = () => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => setIsOpen((prevState) => !prevState);
     
     useHotkey(HOTKEYS.OPEN_HELP.key, toggleOpen);

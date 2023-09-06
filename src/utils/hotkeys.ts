@@ -12,7 +12,7 @@ const HOTKEYS = {
     CLOSE_SETTINGS: { key: 'Escape', description: 'Закрыть', },
     FOCUS_TRANSLATE: { key: '/', description: 'Фокус нв перевод', },
     FOCUS_LANG: { key: 't', description: 'Фокус на язык перевода', },
-    SWITCH_PANEL_VIEW: { key: 's', description: 'Переключить главную панель', },
+    SWITCH_PANEL_VIEW: { key: 's', ctrl: false, description: 'Переключить главную панель', },
     OPEN_HELP: { key: '?', description: 'Открыть подсказки', },
     
     toStringList<T = string>(cb?: (key: string, description: string) => T): T[] {
