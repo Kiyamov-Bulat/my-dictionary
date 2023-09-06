@@ -14,6 +14,7 @@ const HelpContent: FC = () => {
                     )}
                 </ul>
             </div>
+            <div className={styles.separator}></div>
         </div>
     );
 };

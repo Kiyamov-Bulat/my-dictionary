@@ -14,8 +14,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.5;
-  &:hover {
+  opacity: 0.3;
+  &:hover, &.active {
     opacity: 1;
   }
 }
@@ -53,4 +53,11 @@
     color: #7f7f7f;
     font-weight: 600;
   }
+}
+
+.separator {
+  background: #7f7f7f;
+  min-width: 100%;
+  min-height: 1px;
+  margin: 4px 0;
 }

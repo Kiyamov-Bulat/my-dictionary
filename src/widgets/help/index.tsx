@@ -5,6 +5,7 @@ import Button from '../../components/button';
 import HelpContent from './helpContent';
 import useHotkey from '../../components/hotkeyManger/useHotkey';
 import HOTKEYS from '../../utils/hotkeys';
+import cx from 'classnames';
 
 const Help: FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,10 @@ const Help: FC = () => {
             <TooltipWrapper
                 position={ETooltipPosition.S}
                 tipContent={'Помощь'}>
-                <Button className={styles.helpBtn} variant={'primary'}>?</Button>
+                <Button
+                    onClick={toggleOpen}
+                    className={cx(styles.helpBtn, {[styles.active]: isOpen})}
+                    variant={'primary'}>?</Button>
             </TooltipWrapper>
             {isOpen && <HelpContent/>}
         </div>
