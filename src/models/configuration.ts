@@ -4,6 +4,11 @@ const TRANS_LANG_LOCAL_STORAGE_KEY = 'trans-lang';
 export const DEFAULT_TEXT_LANG = 'auto';
 export const DEFAULT_TRANS_LANG = 'ru';
 
+export enum EPanelView {
+    GAMES_LIST = '@panel-view/games-list',
+    TEXT = '@panel-view/text',
+}
+
 export interface Configuration {
     textLang: string
     transLang: string

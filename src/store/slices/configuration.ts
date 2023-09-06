@@ -1,9 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import ConfigurationModel from '../../models/configuration';
+import ConfigurationModel, {EPanelView} from '../../models/configuration';
 
 const configurationState = {
     ...ConfigurationModel.get(),
     isOpen: false,
+    panelView: EPanelView.GAMES_LIST,
 };
 
 const configuration = createSlice({
@@ -21,6 +22,12 @@ const configuration = createSlice({
         },
         closeSetting(state) {
             state.isOpen = false;
+        },
+        setPanelView(state, { payload }: PayloadAction<EPanelView>) {
+            state.panelView = payload;
+        },
+        togglePanelView(state) {
+            state.panelView = state.panelView === EPanelView.GAMES_LIST ? EPanelView.TEXT : EPanelView.GAMES_LIST;
         }
     },
 });
@@ -30,6 +37,8 @@ export const {
     setTransLang,
     openSettings,
     closeSetting,
+    setPanelView,
+    togglePanelView,
 } = configuration.actions;
 
 export default configuration.reducer;

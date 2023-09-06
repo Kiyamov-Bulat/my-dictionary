@@ -7,6 +7,7 @@ import Translate from '../translate';
 import AddGroup from '../addGroup';
 import {closeSetting, openSettings} from '../../store/slices/configuration';
 import useHotkey from '../../components/hotkeyManger/useHotkey';
+import HOTKEYS from '../../utils/hotkeys';
 
 const Settings: FC = () => {
     const dispatch = useDispatch();
@@ -14,8 +15,8 @@ const Settings: FC = () => {
     const close = () => dispatch(closeSetting());
     const open = () => dispatch(openSettings());
 
-    useHotkey('Escape', close, { block: !isOpen });
-    useHotkey('s', open, { block: isOpen });
+    useHotkey(HOTKEYS.CLOSE_SETTINGS, close, { block: !isOpen });
+    useHotkey(HOTKEYS.OPEN_SETTINGS.key, open, { block: isOpen, ctrl: HOTKEYS.OPEN_SETTINGS.ctrl });
 
     if (!isOpen) {
         return null;

@@ -12,6 +12,7 @@ import EditableLabel from '../../components/editableLabel';
 import Notice from '../../components/notice';
 import ConfigurationModel, {DEFAULT_TEXT_LANG} from '../../models/configuration';
 import {setTransLang} from '../../store/slices/configuration';
+import HOTKEYS from '../../utils/hotkeys';
 
 export type TranslateProps = {
     extended?: boolean
@@ -69,7 +70,7 @@ const Translate: FC<TranslateProps> = ({ extended = false, className, placeholde
             </div>
             <div>
                 <AddField
-                    hotkey={'/'}
+                    hotkey={HOTKEYS.FOCUS_TRANSLATE}
                     onAdd={onAdd}
                     textFieldProps={{
                         className: styles.addField,

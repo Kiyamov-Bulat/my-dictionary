@@ -5,6 +5,7 @@ import Button from '../../../components/button';
 import {useDispatch} from 'react-redux';
 import {toGameList} from '../../../store/slices/game';
 import useHotkey from '../../../components/hotkeyManger/useHotkey';
+import HOTKEYS from '../../../utils/hotkeys';
 
 const End: FC = () => {
     const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const End: FC = () => {
         dispatch(toGameList());
     };
 
-    useHotkey([' ', 'ArrowRight'], goToGameList);
+    useHotkey(HOTKEYS.END_GAME, goToGameList);
 
     return (
         <div className={styles.endContainer}>

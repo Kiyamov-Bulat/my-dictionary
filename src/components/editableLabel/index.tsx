@@ -4,6 +4,7 @@ import useOutsideAlerter from '../../hooks/useOutsideAlerter';
 import useHotkey from '../hotkeyManger/useHotkey';
 import cx from 'classnames';
 import styles from './styles.module.scss';
+import HOTKEYS from '../../utils/hotkeys';
 
 export type EditableLabelProps = {
     value: string
@@ -59,7 +60,7 @@ const EditableLabel: FC<EditableLabelProps> = (
     }, [value]);
 
     useOutsideAlerter(makeInactive, inputRef);
-    useHotkey('t', makeActive, { block: editable });
+    useHotkey(HOTKEYS.FOCUS_LANG, makeActive, { block: editable });
 
     return (
         <TextField
