@@ -31,6 +31,11 @@
   font-weight: bold;
 }
 
+@mixin commonText {
+  font-size: 16px;
+  line-height: 18px;
+}
+
 @mixin smallText {
   font-size: 12px;
   line-height: 14px;

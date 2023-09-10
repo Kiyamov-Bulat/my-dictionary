@@ -1,0 +1,35 @@
+@use "styles/constants.scss" as c;
+@use "styles/mixins.scss" as m;
+
+.translationUnitCardContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.text {
+  @include m.commonText;
+  display: flex;
+}
+
+.lang {
+  display: flex;
+  flex-grow: 1;
+  font-size: 10px;
+  line-height: 12px;
+  color: c.$pale-color;
+  padding: 0 2px;
+}
+
+.imgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80px;
+
+  img {
+    border-radius: 8px;
+    max-width: 80px;
+    max-height: 80px;
+  }
+}

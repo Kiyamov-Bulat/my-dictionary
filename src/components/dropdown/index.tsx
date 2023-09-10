@@ -37,7 +37,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     );
     
     return (
-        <div className={cx(className, styles.dropdown, { [styles.open]: open })}>
+        <div className={cx(className, styles.dropdown, { [styles.open]: isOpen })}>
             <div onClick={onClick} className={styles.topField}>
                 {children}
                 <button className={styles.btn}>
