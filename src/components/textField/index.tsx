@@ -30,11 +30,19 @@ const TextField: React.ForwardRefExoticComponent<ITextField & React.RefAttribute
     error = 'Некорректное значение',
     onChange,
     onClick,
-    onKeyDown,
     onKeyUp,
     onFocus,
     ...props
 }, ref) => {
+    const onKeyDown: React.KeyboardEventHandler<HTMLElement> = (e) => {
+        props.onKeyDown?.(e);
+        if (document.activeElement !== e.target) {
+            return;
+        }
+        if (e.key === 'Escape') {
+            (e.target as HTMLElement)?.blur?.();
+        }
+    };
     const innerProps = {
         className: cx(styles.textField, { [styles.error]: invalid }),
         value,

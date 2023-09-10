@@ -17,18 +17,13 @@ export type AddFieldProps = {
 const AddField: FC<AddFieldProps> = ({ onAdd, textFieldProps, buttonProps, hotkey = '' }) => {
     const textFieldRef = useRef<HTMLInputElement | null>(null);
     const onKeyDown: KeyboardEventHandler = (e) => {
-        if (document.activeElement !== textFieldRef.current) {
+        if (document.activeElement !== e.target) {
             return;
         }
-        e.stopPropagation();
 
         if (e.key === 'Enter') {
             onAdd();
             return;
-        }
-
-        if (e.key === 'Escape') {
-            textFieldRef.current?.blur();
         }
     };
 
