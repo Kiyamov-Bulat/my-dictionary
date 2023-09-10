@@ -1,5 +1,8 @@
+import text from '../widgets/text';
+
 const TEXT_LANG_LOCAL_STORAGE_KEY = 'text-lang';
 const TRANS_LANG_LOCAL_STORAGE_KEY = 'trans-lang';
+const TEXT_STORAGE_KEY = 'text';
 
 export const DEFAULT_TEXT_LANG = 'auto';
 export const DEFAULT_TRANS_LANG = 'ru';
@@ -27,6 +30,14 @@ const ConfigurationModel = {
             textLang: localStorage.getItem(TEXT_LANG_LOCAL_STORAGE_KEY) || DEFAULT_TEXT_LANG,
             transLang: localStorage.getItem(TRANS_LANG_LOCAL_STORAGE_KEY) || DEFAULT_TRANS_LANG,
         };
+    },
+
+    saveText(text: string): void {
+        localStorage.setItem(TEXT_STORAGE_KEY, text);
+    },
+
+    getCachedText(): string {
+        return localStorage.getItem(TEXT_STORAGE_KEY) || '';
     },
 };
 

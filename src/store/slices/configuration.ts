@@ -28,7 +28,7 @@ const configuration = createSlice({
         },
         togglePanelView(state) {
             state.panelView = state.panelView === EPanelView.GAMES_LIST ? EPanelView.TEXT : EPanelView.GAMES_LIST;
-        }
+        },
     },
 });
 

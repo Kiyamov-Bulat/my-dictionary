@@ -3,7 +3,6 @@ import store from '../store';
 import {selectDictionaryValue, selectSelectedGroupsIds} from '../store/selectors/dictionary';
 import downloadObjectAsJson from '../utils/downloadObjectAsJson';
 import TranslationUnitModel from './translationUnit';
-import {setDictionary} from '../store/slices/dictionary';
 
 const LOCAL_STORAGE_KEY = 'dictionary';
 const SELECTED_GROUPS_LOCAL_STORAGE_KEY = 'dictionary-selected-groups';
