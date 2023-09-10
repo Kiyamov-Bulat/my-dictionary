@@ -15,7 +15,7 @@ const Settings: FC = () => {
     const close = () => dispatch(closeSetting());
     const open = () => dispatch(openSettings());
 
-    useHotkey([HOTKEYS.CLOSE_SETTINGS.key, HOTKEYS.OPEN_SETTINGS.key], close, { block: !isOpen });
+    useHotkey([HOTKEYS.CLOSE.key, HOTKEYS.OPEN_SETTINGS.key], close, { block: !isOpen });
     useHotkey(HOTKEYS.OPEN_SETTINGS.key, open, { block: isOpen, ctrl: HOTKEYS.OPEN_SETTINGS.ctrl });
 
     if (!isOpen) {

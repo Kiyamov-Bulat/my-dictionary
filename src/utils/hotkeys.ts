@@ -9,7 +9,7 @@ const HOTKEYS = {
     PREV_UNIT: { key: 'ArrowLeft', description: 'Предыдущий юнит', },
     END_GAME: { key: [' ', 'ArrowRight'], description: 'Закончить игру', },
     OPEN_SETTINGS: { key: 's', ctrl: true, description: 'Открыть настройки', },
-    CLOSE_SETTINGS: { key: 'Escape', description: 'Закрыть', },
+    CLOSE: { key: 'Escape', description: 'Закрыть', },
     FOCUS_TRANSLATE: { key: '/', description: 'Фокус нв перевод', },
     FOCUS_LANG: { key: 't', description: 'Фокус на язык перевода', },
     SWITCH_PANEL_VIEW: { key: 's', ctrl: false, description: 'Переключить главную панель', },
