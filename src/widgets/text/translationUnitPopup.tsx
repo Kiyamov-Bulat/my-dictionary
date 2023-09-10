@@ -4,6 +4,9 @@ import {useSelector} from 'react-redux';
 import TranslationUnitCard from '../translationUnitCard';
 import styles from './styles.module.scss';
 import useOutsideAlerter from '../../hooks/useOutsideAlerter';
+import TranslationUnitModel from '../../models/translationUnit';
+import {DEFAULT_TEXT_LANG} from '../../models/configuration';
+import {TranslationUnit} from '../../models/types';
 
 type TranslationUnitPopupProps = {
     text: string
@@ -13,27 +16,18 @@ type TranslationUnitPopupProps = {
 
 const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, coords }) => {
     const $popup = useRef<HTMLElement | null>(null);
-    const [unit, setUnit] = useState({
-        'id': 'a33261d1-5a4f-4799-a682-c63220b7b7b0',
-        'textLang': 'auto',
-        'transLang': 'ko',
-        'text': 'text',
-        'translation': '텍스트',
-        'createdAt': 1694351673011,
-        'group': 'Main',
-        'memoryPercent': 0,
-        'currMistakes': 0,
-        'totalMistakes': 0,
-        'totalResets': 0,
-        'imageSrc': 'https://live.staticflickr.com/65535/53177555665_e807b2c2ac_b.jpg'
-    });
+    const [unit, setUnit] = useState<TranslationUnit | null>(null);
     const transLang = useSelector(selectTransLang);
     const [position, setPosition] = useState({ x: -10000, y: -10000 });
 
     useEffect(() => {
-        // TranslationUnitModel
-        //     .translate(text, DEFAULT_TEXT_LANG, transLang).then(setUnit as any);
+        TranslationUnitModel
+            .translate(text, DEFAULT_TEXT_LANG, transLang).then(setUnit);
     }, [text]);
+
+    useEffect(() => {
+        unit && TranslationUnitModel.vocalize(unit);
+    }, [unit]);
 
     useOutsideAlerter(onClose, $popup);
     

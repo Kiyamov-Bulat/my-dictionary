@@ -12,12 +12,15 @@ type TranslateViewProps = {
 const POPUP_MARGIN = 16;
 
 const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
-    const [selectedWord, setSelectedWord] = useState('text');
-    const words = useMemo(() => 'text for test! the world is the beautiful place'.split(' '), [text]);
+    const [selectedWord, setSelectedWord] = useState('');
+    const words = useMemo(() => text.split(' '), [text]);
     const [popupCoords, setPopupCoords] = useState<{ x: number, y: number } | null>(null);
-    const openPopup: React.MouseEventHandler = (e) => {
+    const openPopup = (word: string, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         const target = e.target as HTMLElement;
-
+        
+        if (!selectedWord) {
+            setSelectedWord(word);
+        }
         setPopupCoords({
             x: target.offsetLeft + target.offsetWidth / 2,
             y: target.offsetTop + target.offsetHeight + POPUP_MARGIN
@@ -31,7 +34,7 @@ const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
                 {words?.map((word, idx) =>
                     <span key={idx}>
                         {!!idx && ' '}
-                        <span className={styles.word} key={idx} onClick={openPopup}>{word}</span>
+                        <span className={styles.word} key={idx} onClick={openPopup.bind(null, word)}>{word}</span>
                     </span>
                 )}
             </p>
@@ -39,9 +42,12 @@ const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
                 Вернутся
             </Button>
             {popupCoords && <TranslationUnitPopup
-                text={text}
+                text={selectedWord}
                 coords={popupCoords}
-                onClose={() => setPopupCoords(null)}
+                onClose={() => {
+                    setSelectedWord('');
+                    setPopupCoords(null);
+                }}
             />}
         </div>
     );

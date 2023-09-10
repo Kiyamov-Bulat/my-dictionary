@@ -4,7 +4,7 @@ import TranslateView from './translateView';
 
 const Text: FC = () => {
     const [text, setText] = useState('');
-    const [isInput, setIsInput] = useState(false);
+    const [isInput, setIsInput] = useState(true);
     const toTranslateView = () => setIsInput(false);
     const toInputView = () => setIsInput(true);
 

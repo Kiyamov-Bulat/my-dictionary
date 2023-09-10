@@ -97,15 +97,15 @@ const TranslationUnitModel = {
 
     vocalize(unit: TranslationUnit): void {
         const msg = new SpeechSynthesisUtterance();
-        const voices = window.speechSynthesis.getVoices();
+        // const voices = window.speechSynthesis.getVoices();
 
-        msg.voice = voices[0];
+        // msg.voice = voices[0];
         msg.volume = 1; // From 0 to 1
         msg.rate = 1; // From 0.1 to 10
         msg.pitch = 1; // From 0 to 2
         msg.text = unit.translation;
         msg.lang = unit.transLang;
-        speechSynthesis.speak(msg);
+        window.speechSynthesis.speak(msg);
     }
 };
 
