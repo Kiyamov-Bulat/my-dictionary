@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-grow: 1;
+}
+
+.textField {
+  flex-grow: 1;
+  textarea {
+    height: 100%;
+  }
+}

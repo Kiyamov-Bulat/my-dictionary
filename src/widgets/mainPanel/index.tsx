@@ -18,7 +18,7 @@ const MainPanel: FC = () => {
     useHotkey(HOTKEYS.SWITCH_PANEL_VIEW.key, switchPanel, { ctrl: HOTKEYS.SWITCH_PANEL_VIEW.ctrl });
 
     return (
-        <div>
+        <div className={styles.mainPanelContainer}>
             <div className={styles.header}>
                 <Help/>
                 <Switch className={styles.switch} value={panelViewIsGamesList} onChange={switchPanel}/>

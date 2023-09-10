@@ -8,7 +8,13 @@ export type UseHotkeyOptions = {
 }
 
 const skipEvent = (e: KeyboardEvent, key: string[], blocks: string[], ctrl?: boolean) => {
-    return (!key.includes(e.key) || (ctrl !== undefined && ctrl !== (e.ctrlKey || e.metaKey)) || blocks.includes(e.key));
+    return (
+        e.target instanceof HTMLTextAreaElement ||
+        e.target instanceof HTMLInputElement ||
+        !key.includes(e.key) ||
+        (ctrl !== undefined && ctrl !== (e.ctrlKey || e.metaKey))
+        || blocks.includes(e.key)
+    );
 };
 
 const useHotkey = (key: string | string[], callback: (e: KeyboardEvent) => void, options?: UseHotkeyOptions) => {
