@@ -4,11 +4,11 @@ import styles from './styles.module.scss';
 import {useDispatch} from 'react-redux';
 import {toMiddleOfGame} from '../../../store/slices/game';
 
-const COUNTDOWN_DURATION = 3;
+const COUNTDOWN_DURATION = 0;
 
 const Start: FC = () => {
     const dispatch = useDispatch();
-    const countdown = useTimer(COUNTDOWN_DURATION, 0.5);
+    const countdown = useTimer(COUNTDOWN_DURATION, 0.75);
 
     useEffect(() => {
         if (countdown === 0) {

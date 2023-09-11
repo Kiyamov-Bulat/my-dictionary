@@ -116,3 +116,16 @@
   color: #616e7c;
   border-bottom: 1px solid #616e7c;
 }
+
+.wordfallContainer {
+  justify-content: flex-end;
+  padding-bottom: 60px;
+  overflow: hidden;
+
+  .fallingWord {
+    font-weight: 600;
+    position: absolute;
+    top: 0%;
+    //transform: translateY(-100%);
+  }
+}

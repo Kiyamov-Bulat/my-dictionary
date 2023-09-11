@@ -33,7 +33,7 @@ export const selectCurrentUnit = (state: RootState): TranslationUnit | undefined
 
 export const selectListSize = (state: RootState): number => selectGame(state).listSize;
 
-export const selectUnitsNumber = (state: RootState): number => selectGame(state).unitsNumber;
+export const selectUnitsNumber = (state: RootState): number => selectGame(state).unitsNumber || 1;
 
 export const selectCurrentUnitNumber = (state: RootState): number => {
     const index = selectCurrentUnitIndex(state);

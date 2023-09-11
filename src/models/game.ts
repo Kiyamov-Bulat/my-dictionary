@@ -37,7 +37,6 @@ export const GAME_PROPS = {
     [EGameType.WORDFALL]: {
         Icon: WaterFallIcon,
         title: 'Словопад',
-        disabled: true,
     },
     [EGameType.BUILD_WORD]: {
         Icon: PuzzleIcon,
@@ -52,13 +51,12 @@ const GameModel = {
     startGame(type: EGameType): void {
         const units = selectSelectedGroupsUnlearnedUnits(store.getState());
 
-        console.log(units);
         store.dispatch(startGame({ type, units }));
     },
 
     hasUnlearnedUnits() {
         //@TODO
-        return selectSelectedGroupsUnlearnedUnits(store.getState()).length > 1;
+        return selectSelectedGroupsUnlearnedUnits(store.getState()).length > 0;
     },
 
     isCorrectAnswer(answer: TranslationUnit): boolean {
@@ -81,6 +79,10 @@ const GameModel = {
 
         store.dispatch(updateTranslationUnit(updatedUnit));
         store.dispatch(addAnswer({ unit: answer, isCorrect }));
+    },
+
+    provideEmptyAnswer(): void {
+        this.provideAnswer(TranslationUnitModel.empty());
     },
 
     playAnswerSound(answer: TranslationUnit): void {

@@ -28,22 +28,32 @@ const responseToTranslationUnit = (
     const translations = sentences.filter((s): s is Sentence => 'trans' in s);
 
     return TranslationUnitModel.updateImageSrc({
-        id: uuidv4(),
+        ...TranslationUnitModel.empty(),
         textLang: sourceLang,
         transLang: targetLang,
         text: translations.map(s => s.orig).join(''),
         translation: translations.map(s => s.trans).join(''),
-        createdAt: Date.now(),
-        group: MAIN_GROUP_TITLE,
-        memoryPercent: 0,
-        currMistakes: 0,
-        totalMistakes: 0,
-        totalResets: 0,
-        imageSrc: '',
     });
 };
 
 const TranslationUnitModel = {
+    empty(): TranslationUnit {
+        return {
+            id: uuidv4(),
+            textLang: DEFAULT_TEXT_LANG,
+            transLang: DEFAULT_TRANS_LANG,
+            text: '',
+            translation: '',
+            createdAt: Date.now(),
+            group: MAIN_GROUP_TITLE,
+            memoryPercent: 0,
+            currMistakes: 0,
+            totalMistakes: 0,
+            totalResets: 0,
+            imageSrc: '',
+        };
+    },
+
     async translate(text: string, textLang = DEFAULT_TEXT_LANG, transLang = DEFAULT_TRANS_LANG): Promise<TranslationUnit> {
         const res = await fetch(getTranslationURL(text, textLang, transLang));
         //@TODO try/catch
