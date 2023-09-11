@@ -1,7 +1,6 @@
 import React, {FC, useMemo, useState} from 'react';
 import Button from '../../components/button';
 import styles from './styles.module.scss';
-import text from './index';
 import TranslationUnitPopup from './translationUnitPopup';
 
 type TranslateViewProps = {
@@ -13,7 +12,7 @@ const POPUP_MARGIN = 16;
 
 const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
     const [selectedWord, setSelectedWord] = useState('');
-    const words = useMemo(() => text.split(' '), [text]);
+    const words = useMemo(() => text.split(/(\s+)/), [text]);
     const [popupCoords, setPopupCoords] = useState<{ x: number, y: number } | null>(null);
     const openPopup = (word: string, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         const target = e.target as HTMLElement;
@@ -31,11 +30,12 @@ const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
         <div className={styles.container}>
             <h1>Интерактивный перевод</h1>
             <p className={styles.words}>
-                {words?.map((word, idx) =>
-                    <span key={idx}>
-                        {!!idx && ' '}
-                        <span className={styles.word} key={idx} onClick={openPopup.bind(null, word)}>{word}</span>
-                    </span>
+                {words?.map((word, idx) => {
+                    return /\s+/.test(word) ? word : <span
+                            className={styles.word}
+                            key={idx}
+                            onClick={openPopup.bind(null, word)}>{word}</span>;
+                    }
                 )}
             </p>
             <Button variant={'primary'} onClick={onBack}>

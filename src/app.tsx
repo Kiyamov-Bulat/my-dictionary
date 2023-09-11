@@ -4,12 +4,11 @@ import styles from './styles.module.scss';
 import Settings from './widgets/settings';
 import useDictionarySaver from './hooks/useDictionarySaver';
 import SidePanel from './widgets/sidePanel';
-import useDictionaryImagePreloader from './hooks/useDictionaryImagePreloader';
 import MainPanel from './widgets/mainPanel';
 
 const App = () => {
     useDictionarySaver();
-    useDictionaryImagePreloader();
+    // useDictionaryImagePreloader();
 
     return (
         <div className={styles.appContainer}>
