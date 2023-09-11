@@ -59,7 +59,7 @@ const TranslationUnitModel = {
         //@TODO try/catch
         const unit = await responseToTranslationUnit((await res.json()) as RawResponse, textLang, transLang);
 
-        this.preloadImage(unit);
+        // this.preloadImage(unit);
         return unit;
     },
 
@@ -100,7 +100,7 @@ const TranslationUnitModel = {
     async updateImageSrc(unit: TranslationUnit): Promise<TranslationUnit> {
         return { ...unit, imageSrc: await getRemoteImage(unit.text) };
     },
-    
+
     preloadImage(unit: TranslationUnit): void {
         try {
             preloadImages(unit.imageSrc);

@@ -1,6 +1,5 @@
-import React, {FC, useCallback, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import styles from './styles.module.scss';
-import {debounce} from 'lodash';
 import TranslationUnitModel from '../../models/translationUnit';
 import {TranslationUnit} from '../../models/types';
 import {useDispatch, useSelector} from 'react-redux';
@@ -22,25 +21,28 @@ export type TranslateProps = {
 
 const Translate: FC<TranslateProps> = ({ extended = false, className, placeholder = '' }) => {
     const dispatch = useDispatch();
+    const [text, setText] = useState('');
     const transLang = useSelector(selectTransLang);
     const [translation, setTranslation] = useState<TranslationUnit | null>(null);
-    const onTextChange = useCallback(debounce((value: string) => {
-        if (value === '') {
-            setTranslation(null);
-            return;
-        }
-        TranslationUnitModel.translate(value, DEFAULT_TEXT_LANG, transLang)
-            .then((translation) => setTranslation(translation));
-    }, 2000), [transLang]);
+    const $translateTimeoutId = useRef<number | null>(null);
 
-    const onAdd = () => {
-        if (!translation) {
+    const onAdd = async (): Promise<void> => {
+        if (!text) {
             Notice.warn('Пустая строка!');
             return;
         }
+        let unit = translation as TranslationUnit;
 
-        dispatch(addTranslationUnit(translation));
+        if (!translation || translation.text !== text) {
+            $translateTimeoutId.current && window.clearTimeout($translateTimeoutId.current);
+            $translateTimeoutId.current = null;
+            unit = await TranslationUnitModel.translate(text, DEFAULT_TEXT_LANG, transLang);
+        }
+        console.trace();
+
+        dispatch(addTranslationUnit(unit));
         setTranslation(null);
+        setText('');
     };
 
     const onTransLangChange = (lang: string): boolean => {
@@ -51,6 +53,22 @@ const Translate: FC<TranslateProps> = ({ extended = false, className, placeholde
         ConfigurationModel.saveTransLang(lang);
         return false;
     };
+    
+    useEffect(() => {
+        if (!text) {
+            setTranslation(null);
+            return;
+        }
+
+        $translateTimeoutId.current = window.setTimeout(() => {
+            TranslationUnitModel.translate(text, DEFAULT_TEXT_LANG, transLang).then(setTranslation);
+        }, 1500);
+
+        return () => {
+            $translateTimeoutId.current && window.clearTimeout($translateTimeoutId.current);
+            $translateTimeoutId.current = null;
+        };
+    }, [transLang, text]);
 
     return (
         <div className={cx(styles.translateContainer, className)}>
@@ -73,9 +91,10 @@ const Translate: FC<TranslateProps> = ({ extended = false, className, placeholde
                     hotkey={HOTKEYS.FOCUS_TRANSLATE.key}
                     onAdd={onAdd}
                     textFieldProps={{
+                        value: text,
                         className: styles.addField,
                         multiline: extended,
-                        onChange: onTextChange,
+                        onChange: setText,
                         maxLength: 1000
                     }}
                 />
