@@ -61,6 +61,8 @@ export const selectAnswer = (state: RootState): Answer | undefined => {
     return answers[selectCurrentUnitNumber(state) - 1];
 };
 
+export const selectHasAnswer = (state: RootState): boolean => !!selectAnswers(state);
+
 export const selectAnswersNumber = (state: RootState): number => selectAnswers(state).length;
 
 export const selectCorrectAnswersNumber = (state: RootState): number => {

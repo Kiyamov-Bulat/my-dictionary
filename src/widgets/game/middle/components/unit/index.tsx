@@ -11,10 +11,10 @@ const Unit: FC<UnitProps> = ({ reverse }) => {
     const currentUnitNumber = useSelector(selectCurrentUnitNumber);
 
     useEffect(() => {
-        if (currentUnit) {
+        if (reverse && currentUnit) {
             TranslationUnitModel.vocalize(currentUnit);
         }
-    }, [currentUnit]);
+    }, [currentUnit, reverse]);
 
     return (
         <div className={styles.unitToStudy}>

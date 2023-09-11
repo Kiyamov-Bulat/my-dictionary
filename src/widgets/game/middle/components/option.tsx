@@ -4,8 +4,9 @@ import {TranslationUnit} from '../../../../models/types';
 import GameModel from '../../../../models/game';
 import {useSelector} from 'react-redux';
 import cx from 'classnames';
-import {selectAnswer} from '../../../../store/selectors/game';
+import {selectAnswer, selectCurrentUnit} from '../../../../store/selectors/game';
 import useHotkey from '../../../../components/hotkeyManger/useHotkey';
+import TranslationUnitModel from '../../../../models/translationUnit';
 
 type OptionProps = {
     index: number
@@ -15,17 +16,19 @@ type OptionProps = {
 
 const Option: FC<OptionProps> = ({ unit, index, reverse }) => {
     const answer = useSelector(selectAnswer);
+    const currentUnit = useSelector(selectCurrentUnit);
     const className = cx(styles.unit,
         {
             [styles.hasAnswer]: !!answer,
-            [styles.correctAnswer]: answer && GameModel.isCorrectAnswer(unit),
+            [styles.correctAnswer]: answer && unit.id === currentUnit?.id,
             [styles.incorrectAnswer]: answer && answer.unit.id === unit.id && !answer.isCorrect
         }
     );
 
     const provideAnswer = () => {
         GameModel.provideAnswer(unit);
-        GameModel.playAnswerSound(unit);
+        // GameModel.playAnswerSound(unit);
+        !reverse && currentUnit && TranslationUnitModel.vocalize(currentUnit);
     };
 
     useHotkey(`${index + 1}`, provideAnswer);

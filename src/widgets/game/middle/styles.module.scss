@@ -27,17 +27,16 @@
   cursor: pointer;
   box-shadow: 0px 0px 4px 0px rgba(64, 91, 104, 1);
   box-sizing: border-box;
-  border: 2px solid $bg-color;
 
   &:hover {
     background: rgb(50, 81, 189);
 
   }
   &.correctAnswer {
-    border: 2px solid #10bf6a;
+    background: #10bf6a;
   }
   &.incorrectAnswer {
-    border: 2px solid #E04D3B;
+    background: #E04D3B;
   }
   &.hasAnswer {
     cursor: default;
@@ -91,13 +90,9 @@
     background: c.$primary-color;
     padding: 8px 20px;
     border-radius: 8px;
-    opacity: 0.3;
     cursor: pointer;
     color: white;
 
-    &:hover {
-      opacity: 1;
-    }
     &:not(.prevArrow) {
       right: 0;
       top: 0;
