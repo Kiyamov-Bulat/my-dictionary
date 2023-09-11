@@ -63,16 +63,18 @@ const EditableLabel: FC<EditableLabelProps> = (
     useHotkey(HOTKEYS.FOCUS_LANG.key, makeActive, { block: editable });
 
     return (
-        <TextField
-            onKeyDown={handleKeyDown}
-            className={cx(styles.editableLabelContainer, className, { [styles.editable]: editable })}
-            ref={inputRef}
-            value={text}
-            onChange={handleChange}
-            disabled={!editable}
-            onClick={makeActive}
-            {...rest}
-        />
+        <div className={styles.editableLabelWrapper}>
+            <TextField
+                onKeyDown={handleKeyDown}
+                className={cx(styles.editableLabelContainer, className, { [styles.editable]: editable })}
+                ref={inputRef}
+                value={text}
+                onChange={handleChange}
+                disabled={!editable}
+                {...rest}
+            />
+            <div className={styles.bg} onClick={makeActive}/>
+        </div>
     );
 };
 

@@ -29,16 +29,13 @@ const TextField: React.ForwardRefExoticComponent<ITextField & React.RefAttribute
     invalid,
     error = 'Некорректное значение',
     onChange,
-    onClick,
     onKeyUp,
     onFocus,
     ...props
 }, ref) => {
     const onKeyDown: React.KeyboardEventHandler<HTMLElement> = (e) => {
         props.onKeyDown?.(e);
-        if (document.activeElement !== e.target) {
-            return;
-        }
+
         if (e.key === 'Escape') {
             (e.target as HTMLElement)?.blur?.();
         }
@@ -52,7 +49,7 @@ const TextField: React.ForwardRefExoticComponent<ITextField & React.RefAttribute
         onChange?.(e.target.value);
 
     return (
-        <div className={cx(styles.wrapperTextField, className)} onClick={onClick} onKeyDown={onKeyDown} onKeyUp={onKeyUp}>
+        <div className={cx(styles.wrapperTextField, className)} onKeyDown={onKeyDown} onKeyUp={onKeyUp}>
             {label && <div className={styles.label}>{label}</div>}
             {multiline
                 ? <textarea
@@ -64,7 +61,7 @@ const TextField: React.ForwardRefExoticComponent<ITextField & React.RefAttribute
                     onFocus={onFocus}
                     ref={ref as React.ForwardedRef<HTMLInputElement>}
                     onChange={handleChange}
-                    {...innerProps} />
+                    {...innerProps}/>
             }
             {invalid && <p className={styles.errorMsg}>{error}</p>}
         </div>

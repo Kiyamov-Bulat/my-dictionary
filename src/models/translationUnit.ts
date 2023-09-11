@@ -92,7 +92,11 @@ const TranslationUnitModel = {
     },
     
     preloadImage(unit: TranslationUnit): void {
-        preloadImages(unit.imageSrc);
+        try {
+            preloadImages(unit.imageSrc);
+        } catch (e) {
+            console.error('Не удалось загрузить картинки');
+        }
     },
 
     vocalize(unit: TranslationUnit): void {

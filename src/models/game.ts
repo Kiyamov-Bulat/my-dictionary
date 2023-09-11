@@ -52,6 +52,7 @@ const GameModel = {
     startGame(type: EGameType): void {
         const units = selectSelectedGroupsUnlearnedUnits(store.getState());
 
+        console.log(units);
         store.dispatch(startGame({ type, units }));
     },
 
