@@ -98,7 +98,13 @@ const TranslationUnitModel = {
     },
     
     async updateImageSrc(unit: TranslationUnit): Promise<TranslationUnit> {
-        return { ...unit, imageSrc: await getRemoteImage(unit.text) };
+        const u = { ...unit };
+
+        try {
+            u.imageSrc = await getRemoteImage(unit.text);
+        } catch (_) {/* pass */}
+
+        return u;
     },
 
     preloadImage(unit: TranslationUnit): void {

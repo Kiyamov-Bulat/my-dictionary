@@ -4,10 +4,11 @@ import styles from '../styles.module.scss';
 import UnitList from '../components/unitList';
 import Navigation from '../components/navigation';
 import {useSelector} from 'react-redux';
-import {selectCurrentUnit} from '../../../../store/selectors/game';
+import {selectCurrentUnit, selectHasAnswer, selectIsLastUnit} from '../../../../store/selectors/game';
 import cx from 'classnames';
 import GameModel from '../../../../models/game';
 import getRandomInt from '../../../../utils/getRandomInt';
+import {has} from 'lodash';
 
 const WORDFALL_DURATION = 3000;
 const ANIMATION_INTERVAL_MS = 1000 / 60;
@@ -15,8 +16,14 @@ const ANIMATION_INTERVAL_MS = 1000 / 60;
 const Wordfall: FC = () => {
     const $word = useRef<HTMLParagraphElement | null>(null);
     const currentUnit = useSelector(selectCurrentUnit);
+    const isLastUnit = useSelector(selectIsLastUnit);
+    const hasAnswer = useSelector(selectHasAnswer);
 
     useEffect(() => {
+        if (isLastUnit && hasAnswer) {
+            return;
+        }
+
         let passed = 0;
 
         if ($word.current) {
@@ -37,7 +44,7 @@ const Wordfall: FC = () => {
         return () => {
             clearInterval(intervalId);
         };
-    }, [currentUnit]);
+    }, [currentUnit, hasAnswer, isLastUnit]);
     
     return (
         <div className={cx(styles.wordfallContainer, styles.middleContainer)}>
