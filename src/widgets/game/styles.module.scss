@@ -5,10 +5,10 @@
   display: flex;
   flex-wrap: wrap;
   padding: 16px;
-  min-height: 100%;
   gap: 30px;
   background: transparent;
   box-shadow: unset;
+  flex-grow: 1;
 
   > div {
     display: flex;

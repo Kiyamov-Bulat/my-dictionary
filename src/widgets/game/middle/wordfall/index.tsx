@@ -20,7 +20,7 @@ const Wordfall: FC = () => {
         let passed = 0;
 
         if ($word.current) {
-            $word.current.style.left = `${getRandomInt(20, 80)}%`;
+            $word.current.style.left = `${getRandomInt(40, 60)}%`;
         }
         const intervalId = setInterval(() => {
             passed += ANIMATION_INTERVAL_MS;
@@ -42,6 +42,7 @@ const Wordfall: FC = () => {
     return (
         <div className={cx(styles.wordfallContainer, styles.middleContainer)}>
             <p
+                key={currentUnit?.id}
                 className={styles.fallingWord}
                 style={{ animationDuration: `${WORDFALL_DURATION}ms`}}
                 ref={$word}
