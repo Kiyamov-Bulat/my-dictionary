@@ -6,7 +6,6 @@ import HelpContent from './helpContent';
 import useHotkey from '../../components/hotkeyManger/useHotkey';
 import HOTKEYS from '../../utils/hotkeys';
 import cx from 'classnames';
-import useOutsideAlerter from '../../hooks/useOutsideAlerter';
 
 const Help: FC = () => {
     const [isOpen, setIsOpen] = useState(false);
