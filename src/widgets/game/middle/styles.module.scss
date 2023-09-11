@@ -122,10 +122,26 @@
   padding-bottom: 60px;
   overflow: hidden;
 
+  > * {
+    z-index: 2;
+  }
   .fallingWord {
+    line-height: 48px;
+    font-size: 32px;
     font-weight: 600;
     position: absolute;
-    top: 0%;
+    top: 0;
+    z-index: 1;
     //transform: translateY(-100%);
+    animation: fall linear forwards;
+  }
+}
+
+@keyframes fall {
+  from {
+    top: 0;
+  }
+  to {
+    top: 100%;
   }
 }

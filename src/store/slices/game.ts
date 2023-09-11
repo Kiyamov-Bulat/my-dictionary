@@ -24,7 +24,7 @@ const game = createSlice({
             state.state = EGameState.START;
             state.currentUnitIndex = 0;
             state.answers = [];
-            state.unitsNumber = Math.min(state.unitsNumber, Math.floor(state.units.length / state.listSize));
+            state.unitsNumber = Math.floor(state.units.length / state.listSize);
         },
         toMiddleOfGame(state) {
             state.state = EGameState.MIDDLE;
