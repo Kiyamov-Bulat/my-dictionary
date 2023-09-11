@@ -9,20 +9,25 @@ import styles from './styles.module.scss';
 import useHotkey from '../../components/hotkeyManger/useHotkey';
 import HOTKEYS from '../../utils/hotkeys';
 import Help from '../help';
+import {selectGameState} from '../../store/selectors/game';
+import {EGameState} from '../../models/game';
 
 const MainPanel: FC = () => {
     const dispatch = useDispatch();
     const panelViewIsGamesList = useSelector(selectPanelViewIsGamesList);
     const switchPanel = () => dispatch(togglePanelView());
+    const state = useSelector(selectGameState);
 
     useHotkey(HOTKEYS.SWITCH_PANEL_VIEW.key, switchPanel, { ctrl: HOTKEYS.SWITCH_PANEL_VIEW.ctrl });
 
     return (
         <div className={styles.mainPanelContainer}>
-            <div className={styles.header}>
-                <Help/>
-                <Switch className={styles.switch} value={panelViewIsGamesList} onChange={switchPanel}/>
-            </div>
+            {state === EGameState.SELECT &&
+                <div className={styles.header}>
+                    <Help/>
+                    <Switch className={styles.switch} value={panelViewIsGamesList} onChange={switchPanel}/>
+                </div>
+            }
             {panelViewIsGamesList ? <Games/> : <Text/>}
         </div>
     );

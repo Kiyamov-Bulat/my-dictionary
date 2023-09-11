@@ -24,7 +24,18 @@ const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, co
 
     useEffect(() => {
         TranslationUnitModel
-            .translate(text, DEFAULT_TEXT_LANG, transLang).then(setUnit);
+            .translate(text, DEFAULT_TEXT_LANG, transLang)
+            .then((unit) => {
+                if (unit.text === unit.translation) {
+                    return new Promise<TranslationUnit>(resolve => {
+                        setTimeout(() =>
+                            resolve(TranslationUnitModel.translate(text, transLang, DEFAULT_TEXT_LANG))
+                        , 300);
+                    });
+                }
+                return unit;
+            })
+            .then(setUnit);
     }, [text]);
 
     useEffect(() => {
