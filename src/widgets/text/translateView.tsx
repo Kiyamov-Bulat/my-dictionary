@@ -26,9 +26,15 @@ const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
         });
     };
 
+    const wordsWOSpaces = words.filter((w) => !/\s+/.test(w));
+    const letters = wordsWOSpaces.reduce((acc, word) => acc + word.length, 0);
+
     return (
         <div className={styles.container}>
-            <h1>Интерактивный перевод</h1>
+            <header>
+                <h1>Интерактивный перевод</h1>
+                <p><span>Слов: {wordsWOSpaces.length}</span> | <span>Символов: {letters}</span></p>
+            </header>
             <p className={styles.words}>
                 {words?.map((word, idx) => {
                     return /\s+/.test(word) ? word : <span

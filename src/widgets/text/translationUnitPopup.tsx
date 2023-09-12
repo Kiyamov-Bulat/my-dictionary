@@ -1,11 +1,10 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {selectTransLang} from '../../store/selectors/configuration';
+import {selectTextLang, selectTransLang} from '../../store/selectors/configuration';
 import {useDispatch, useSelector} from 'react-redux';
 import TranslationUnitCard from '../translationUnitCard';
 import styles from './styles.module.scss';
 import useOutsideAlerter from '../../hooks/useOutsideAlerter';
 import TranslationUnitModel from '../../models/translationUnit';
-import {DEFAULT_TEXT_LANG} from '../../models/configuration';
 import {TranslationUnit} from '../../models/types';
 import {addTranslationUnit} from '../../store/slices/dictionary';
 
@@ -18,18 +17,19 @@ type TranslationUnitPopupProps = {
 const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, coords }) => {
     const $popup = useRef<HTMLElement | null>(null);
     const [unit, setUnit] = useState<TranslationUnit | null>(null);
+    const textLang = useSelector(selectTextLang);
     const transLang = useSelector(selectTransLang);
     const [position, setPosition] = useState({ x: -10000, y: -10000 });
     const dispatch = useDispatch();
 
     useEffect(() => {
         TranslationUnitModel
-            .translate(text, DEFAULT_TEXT_LANG, transLang)
+            .translate(text, textLang, transLang)
             .then((unit) => {
                 if (unit.text === unit.translation) {
                     return new Promise<TranslationUnit>(resolve => {
                         setTimeout(() =>
-                            resolve(TranslationUnitModel.translate(text, transLang, DEFAULT_TEXT_LANG))
+                            resolve(TranslationUnitModel.translate(text, transLang, textLang))
                         , 300);
                     });
                 }

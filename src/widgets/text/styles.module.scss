@@ -6,6 +6,17 @@
   gap: 16px;
   flex-grow: 1;
   position: relative;
+
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      color: #1f1f1f;
+    }
+  }
 }
 
 .textField {
