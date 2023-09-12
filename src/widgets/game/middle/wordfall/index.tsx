@@ -8,6 +8,7 @@ import {selectCurrentUnit, selectHasAnswer, selectIsLastUnit} from '../../../../
 import cx from 'classnames';
 import GameModel from '../../../../models/game';
 import {random} from 'lodash';
+import GameTemplate from '../components/gameTemplate';
 
 const WORDFALL_DURATION = 3000;
 const ANIMATION_INTERVAL_MS = 1000 / 60;
@@ -46,17 +47,14 @@ const Wordfall: FC = () => {
     }, [currentUnit, hasAnswer, isLastUnit]);
     
     return (
-        <div className={cx(styles.wordfallContainer, styles.middleContainer)}>
+        <GameTemplate className={styles.wordfallContainer} reverse={true}>
             <p
                 key={currentUnit?.id}
                 className={styles.fallingWord}
                 style={{ animationDuration: `${WORDFALL_DURATION}ms`}}
                 ref={$word}
             >{currentUnit?.translation}</p>
-            <Score className={styles.score}/>
-            <UnitList reverse={true}/>
-            <Navigation/>
-        </div>
+        </GameTemplate>
     );
 };
 

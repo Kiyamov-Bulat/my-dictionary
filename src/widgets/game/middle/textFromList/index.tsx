@@ -1,9 +1,6 @@
 import React, {FC} from 'react';
-import TranslationFromList from '../translationFromList';
+import GameTemplate from '../components/gameTemplate';
 
-const TextFromList: FC = () => {
-
-    return (<TranslationFromList reverse={true}/>);
-};
+const TextFromList: FC = () => (<GameTemplate reverse={true}/>);
 
 export default TextFromList;

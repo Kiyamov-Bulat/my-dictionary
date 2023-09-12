@@ -11,11 +11,14 @@
 }
 
 .unitList {
+  font-size: 24px;
+  line-height: 32px;
   padding: 16px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 8px;
+  text-align: center;
 }
 
 .unit {
