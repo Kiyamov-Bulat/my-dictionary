@@ -12,7 +12,7 @@ module.exports = {
   mode: 'development',
   entry: 'index.tsx',
   output: {
-    filename: `bundle.js`,
+    filename: 'bundle_[hash].js',
     path: path.resolve(__dirname, 'build'),
     clean: true,
     // publicPath: './',
