@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, {memo, useCallback} from 'react';
+import React, {memo, useCallback, useEffect, useRef} from 'react';
 import DropdownList, {DropdownOption} from './dropdownList';
 import styles from './styles.module.scss';
 import {ArrowDownIcon} from '../../icons';
@@ -29,23 +29,27 @@ const Dropdown: React.FC<DropdownProps> = ({
     onClick,
     children
 }) => {
+    const $dropdownList = useRef<HTMLUListElement | null>(null);
     const handleSelect = useCallback(
         (option: DropdownOption, selectedName?: string) => {
             onSelect?.(option, selectedName);
         },
         [onSelect]
     );
-    
-    const animateDropdown = (instance: HTMLElement | null) => {
+
+    // @TODO
+    const animateDropdown = (instance: HTMLUListElement | null) => {
+        $dropdownList.current = instance;
+
         if (!instance) { return; }
 
         if (isOpen) {
-            instance.style.height = `${instance.scrollHeight}px`;
+            instance.style.maxHeight = `${instance.scrollHeight}px`;
         } else {
-            instance.style.removeProperty('height');
+            instance.style.removeProperty('max-height');
         }
     };
-    
+
     return (
         <div className={cx(className, styles.dropdown, { [styles.open]: isOpen })}>
             <div onClick={onClick} className={styles.topField}>

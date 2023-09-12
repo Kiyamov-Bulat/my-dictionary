@@ -34,8 +34,9 @@
   transition-property: all;
   transition-duration: .2s;
   transition: all 0.3s ease;
-  height: 0;
+  height: fit-content;
   overflow: hidden;
+  max-height: 0;
 
   &:not(&.isOpen) {
     visibility: hidden;
