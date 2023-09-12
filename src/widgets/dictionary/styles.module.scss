@@ -12,4 +12,7 @@
   box-shadow: unset;
   background: transparent;
   overflow: auto;
+  @media screen and (max-width: 900px) {
+    overflow: visible;
+  }
 }
