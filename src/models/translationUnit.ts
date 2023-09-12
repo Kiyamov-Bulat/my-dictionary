@@ -9,6 +9,7 @@ import getRemoteImage from '../utils/getRemoteImage';
 
 export const DEFAULT_GAME_STUDY_PERCENT = 25;
 
+const DETECT_LANGUAGE_URL = 'https://translation.googleapis.com/language/translate/v2/detect';
 const getTranslationURL = (sourceText: string, sourceLang: string, targetLang: string): string => {
     return (`https://translate.googleapis.com/translate_a/single` +
         '?client=gtx' +
@@ -21,15 +22,15 @@ const getTranslationURL = (sourceText: string, sourceLang: string, targetLang: s
 };
 
 const responseToTranslationUnit = (
-    { sentences }: RawResponse,
+    response: RawResponse,
     sourceLang: string,
     targetLang: string
 ): Promise<TranslationUnit> => {
-    const translations = sentences.filter((s): s is Sentence => 'trans' in s);
+    const translations = response.sentences.filter((s): s is Sentence => 'trans' in s);
 
     return TranslationUnitModel.updateImageSrc({
         ...TranslationUnitModel.empty(),
-        textLang: sourceLang,
+        textLang: response.src || sourceLang,
         transLang: targetLang,
         text: translations.map(s => s.orig).join(''),
         translation: translations.map(s => s.trans).join(''),
@@ -38,13 +39,16 @@ const responseToTranslationUnit = (
 
 const TranslationUnitModel = {
     empty(): TranslationUnit {
+        const now = Date.now();
+
         return {
             id: uuidv4(),
             textLang: DEFAULT_TEXT_LANG,
             transLang: DEFAULT_TRANS_LANG,
             text: '',
             translation: '',
-            createdAt: Date.now(),
+            createdAt: now,
+            updatedAt: now,
             group: MAIN_GROUP_TITLE,
             memoryPercent: 0,
             currMistakes: 0,
@@ -52,6 +56,20 @@ const TranslationUnitModel = {
             totalResets: 0,
             imageSrc: '',
         };
+    },
+    
+    normalize(tu: Partial<TranslationUnit>): TranslationUnit {
+        const empty = this.empty();
+        
+        Object.keys(empty).forEach((key) => {
+            if (key in tu) {
+                // @TODO check types
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                empty[key] = tu[key];
+            }
+        });
+        return empty;
     },
 
     async translate(text: string, textLang = DEFAULT_TEXT_LANG, transLang = DEFAULT_TRANS_LANG): Promise<TranslationUnit> {
@@ -126,6 +144,14 @@ const TranslationUnitModel = {
         msg.text = unit.translation;
         msg.lang = unit.transLang;
         window.speechSynthesis.speak(msg);
+    },
+
+    async detectLanguage(word: string) {
+        const res = await fetch(DETECT_LANGUAGE_URL, {
+            body: `{ "q": "${word}" }`,
+            method: 'POST'
+        });
+        console.log(res);
     }
 };
 

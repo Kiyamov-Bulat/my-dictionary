@@ -52,6 +52,28 @@ const DictionaryModel = {
             g.units.forEach((u) => TranslationUnitModel.preloadImage(u))
         );
     },
+    parse(rawDict: string): Dictionary {
+        try {
+            const partialDict = JSON.parse(rawDict) as Partial<Dictionary>;
+            
+            if (partialDict.groups) {
+                return {
+                    ...partialDict,
+                    groups: partialDict.groups.map((g) => GroupModel.normalize(g))
+                };
+            } else if (Array.isArray(partialDict)) {
+                return { groups: partialDict.map((g) => GroupModel.normalize(g))};
+            } else if (GroupModel.isMain(partialDict as Group)) { // @TODO надежнее проверка
+                return { groups: [GroupModel.normalize(partialDict as Group)]};
+            }
+            return { groups: [] };
+        } catch (e) {
+            const lines = rawDict.split(/\n+/);
+            const wordPairs = lines.map((line) => line.split(/[\s-|,:_]+/));
+
+
+        }
+    }
 };
 
 export default DictionaryModel;

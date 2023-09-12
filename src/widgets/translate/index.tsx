@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import TranslationUnitModel from '../../models/translationUnit';
 import {TranslationUnit} from '../../models/types';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectTransLang} from '../../store/selectors/configuration';
+import {selectTextLang, selectTransLang} from '../../store/selectors/configuration';
 import AddField from '../../components/addField';
 import {addTranslationUnit} from '../../store/slices/dictionary';
 import cx from 'classnames';
@@ -12,6 +12,7 @@ import Notice from '../../components/notice';
 import ConfigurationModel, {DEFAULT_TEXT_LANG} from '../../models/configuration';
 import {setTransLang} from '../../store/slices/configuration';
 import HOTKEYS from '../../utils/hotkeys';
+import Header from './header';
 
 export type TranslateProps = {
     extended?: boolean
@@ -22,9 +23,10 @@ export type TranslateProps = {
 const Translate: FC<TranslateProps> = ({ extended = false, className, placeholder = '' }) => {
     const dispatch = useDispatch();
     const [text, setText] = useState('');
-    const transLang = useSelector(selectTransLang);
     const [translation, setTranslation] = useState<TranslationUnit | null>(null);
     const $translateTimeoutId = useRef<number | null>(null);
+    const textLang = useSelector(selectTextLang);
+    const transLang = useSelector(selectTransLang);
 
     const onAdd = async (): Promise<void> => {
         if (!text) {
@@ -36,22 +38,12 @@ const Translate: FC<TranslateProps> = ({ extended = false, className, placeholde
         if (!translation || translation.text !== text) {
             $translateTimeoutId.current && window.clearTimeout($translateTimeoutId.current);
             $translateTimeoutId.current = null;
-            unit = await TranslationUnitModel.translate(text, DEFAULT_TEXT_LANG, transLang);
+            unit = await TranslationUnitModel.translate(text, textLang, transLang);
         }
-        console.trace();
 
         dispatch(addTranslationUnit(unit));
         setTranslation(null);
         setText('');
-    };
-
-    const onTransLangChange = (lang: string): boolean => {
-        if (!lang) {
-            return true;
-        }
-        dispatch(setTransLang(lang));
-        ConfigurationModel.saveTransLang(lang);
-        return false;
     };
     
     useEffect(() => {
@@ -61,27 +53,19 @@ const Translate: FC<TranslateProps> = ({ extended = false, className, placeholde
         }
 
         $translateTimeoutId.current = window.setTimeout(() => {
-            TranslationUnitModel.translate(text, DEFAULT_TEXT_LANG, transLang).then(setTranslation);
+            TranslationUnitModel.translate(text, textLang, transLang).then(setTranslation);
         }, 1500);
 
         return () => {
             $translateTimeoutId.current && window.clearTimeout($translateTimeoutId.current);
             $translateTimeoutId.current = null;
         };
-    }, [transLang, text]);
+    }, [textLang, transLang, text]);
 
     return (
         <div className={cx(styles.translateContainer, className)}>
             <div className={styles.translation}>
-                <div className={styles.transLangContainer}>
-                    Перевод (
-                    <EditableLabel
-                        maxLength={3}
-                        className={styles.transLang}
-                        value={transLang}
-                        onSetInactive={onTransLangChange}/>
-                    ):
-                </div>
+                <Header textLang={textLang} transLang={transLang}/>
                 <p className={cx({ [styles.placeholder]: !translation?.translation })}>
                     {translation?.translation || placeholder}
                 </p>

@@ -11,6 +11,7 @@ export interface Group {
     createAt: number
     units: TranslationUnit[]
     color: string
+    updatedAt: number
 }
 
 const GROUP_COLORS = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
@@ -28,10 +29,12 @@ const GROUP_COLORS = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
 
 const GroupModel = {
     create(title: string): Group {
+        const now = Date.now();
         return {
             id: uuidv4(),
             title: title,
-            createAt: Date.now(),
+            createAt: now,
+            updatedAt: now,
             units: [],
             color: sample(GROUP_COLORS) as string
         };
@@ -48,6 +51,23 @@ const GroupModel = {
     },
     isMain(group: Group) {
         return group.title === MAIN_GROUP_TITLE;
+    },
+
+    normalize(group: Partial<Group>): Group {
+        const empty = this.create(`group_${uuidv4()}`);
+        
+        Object.keys(empty).forEach((key) => {
+            if (key in group) {
+                // @TODO check types
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                empty[key] = group[key];
+                if (key === 'units') {
+                    empty.units = empty.units.map((u) => TranslationUnitModel.normalize(u));
+                }
+            }
+        });
+        return empty;
     }
 };
 

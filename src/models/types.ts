@@ -26,6 +26,7 @@ export interface TranslationUnit {
     textLang: string
     transLang: string
     createdAt: number
+    updatedAt: number
     memoryPercent: number
     totalResets: number
     currMistakes: number
