@@ -74,17 +74,7 @@ const GroupModel = {
     },
 
     addRawUnits(group: Group, rawUnits: string): Group {
-        const lines = rawUnits.split(/\n+/);
-        const wordPairs = lines.map((line) => line.split(/[\s-|,:_]+/));
-        const state = store.getState();
-        const textLang = selectTextLang(state);
-        const transLang = selectTransLang(state);
-
-        wordPairs.forEach(([text, translation]) =>
-            group.units.push(TranslationUnitModel.normalize(
-                { text: text || '', translation: translation || '', textLang, transLang }
-            )));
-        return group;
+        return { ...group, units: TranslationUnitModel.listFromRawString(rawUnits) };
     },
 
     createFromRawUnits(rawUnits: string, title = `group_${uuidv4()}`): Group {

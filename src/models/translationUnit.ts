@@ -6,6 +6,8 @@ import {ReactNode} from 'react';
 import {DEFAULT_TEXT_LANG, DEFAULT_TRANS_LANG} from './configuration';
 import preloadImages from '../utils/preloadImages';
 import getRemoteImage from '../utils/getRemoteImage';
+import store from '../store';
+import {selectTextLang, selectTransLang} from '../store/selectors/configuration';
 
 export const DEFAULT_GAME_STUDY_PERCENT = 25;
 
@@ -146,12 +148,17 @@ const TranslationUnitModel = {
         window.speechSynthesis.speak(msg);
     },
 
-    async detectLanguage(word: string) {
-        const res = await fetch(DETECT_LANGUAGE_URL, {
-            body: `{ "q": "${word}" }`,
-            method: 'POST'
-        });
-        console.log(res);
+    listFromRawString(rawUnits: string): TranslationUnit[] {
+        const lines = rawUnits.split(/\n+/);
+        const wordPairs = lines.map((line) => line.split(/[\s-|,:_]+/));
+        const state = store.getState();
+        const textLang = selectTextLang(state);
+        const transLang = selectTransLang(state);
+
+        return wordPairs.map(([text, translation]) =>
+            TranslationUnitModel.normalize(
+                { text: text || '', translation: translation || '', textLang, transLang }
+            ));
     }
 };
 

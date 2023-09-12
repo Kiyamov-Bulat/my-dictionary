@@ -16,6 +16,21 @@ export const getSelectedGroups = (groups: Group[], selectedIds: string[]): Group
         ? [GroupModel.getMainGroup(groups)]
         : selectedIds.map((id) => groups.find((group) => group.id === id) as Group);
 
+const updateGroups = (state: typeof dictionaryState, cb: (group: Group) => Group) => {
+    const updatedGroups = getSelectedGroups(state.value.groups, state.selectedGroups).map(cb);
+
+    state.value.groups = state.value.groups.map((g) => updatedGroups.find((next) => next.id === g.id) ?? g);
+};
+
+const swapLangs = (unit: TranslationUnit): TranslationUnit =>
+    ({
+        ...unit,
+        text: unit.translation,
+        translation: unit.text,
+        textLang: unit.transLang,
+        transLang: unit.textLang,
+    });
+
 const dictionary = createSlice({
     name: 'dictionary',
     initialState: dictionaryState,
@@ -98,20 +113,15 @@ const dictionary = createSlice({
             return;
         },
         swapSelectedGroupsTextAndTranslation(state) {
-            const updatedGroups = getSelectedGroups(state.value.groups, state.selectedGroups).map((group) => {
-                const swap = (unit: TranslationUnit): TranslationUnit =>
-                    ({
-                        ...unit,
-                        text: unit.translation,
-                        translation: unit.text,
-                        textLang: unit.transLang,
-                        transLang: unit.textLang,
-                    });
-
-                return { ...group, units: group.units.map(swap) };
+            updateGroups(state, (group) => {
+                return { ...group, units: group.units.map(swapLangs) };
             });
-            state.value.groups = state.value.groups.map((g) => updatedGroups.find((next) => next.id === g.id) ?? g);
         },
+        addUnits(state, { payload }: PayloadAction<TranslationUnit[]>) {
+            updateGroups(state, (group) => {
+                return { ...group, units: [...group.units, ...payload ]};
+            });
+        }
     },
 });
 
