@@ -2,7 +2,6 @@ import React, {FC, ReactNode} from 'react';
 import cx from 'classnames';
 import styles from '../../styles.module.scss';
 import {useDispatch, useSelector} from 'react-redux';
-import {nextUnit, prevUnit} from '../../../../../store/slices/game';
 import {RootState} from '../../../../../store';
 import useHotkey from '../../../../../components/hotkeyManger/useHotkey';
 

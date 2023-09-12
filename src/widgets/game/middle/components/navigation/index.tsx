@@ -1,39 +1,13 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC} from 'react';
 import styles from '../../styles.module.scss';
 import NavArrow from './navArrow';
-import {
-    selectHasAnswer,
-    selectIsFirstUnit,
-    selectIsLastUnit,
-    selectIsNotLastUnit
-} from '../../../../../store/selectors/game';
+import {selectIsFirstUnit, selectIsLastUnit, selectIsNotLastUnit} from '../../../../../store/selectors/game';
 import {endGame, nextUnit, prevUnit} from '../../../../../store/slices/game';
 import HOTKEYS from '../../../../../utils/hotkeys';
-import {useDispatch, useSelector} from 'react-redux';
+import useAutoNextNavigation from './useAutoNextNavigation';
 
 const Navigation: FC = () => {
-    const hasAnswer = useSelector(selectHasAnswer);
-    const $timeoutId = useRef<number | null>(null);
-    const dispatch = useDispatch();
-    const isLastUnit = useSelector(selectIsLastUnit);
-
-    const goNext = () => {
-        $timeoutId.current && window.clearTimeout($timeoutId.current);
-        $timeoutId.current = null;
-        return nextUnit();
-    };
-    
-    useEffect(() => {
-        if (hasAnswer) {
-            $timeoutId.current = window.setTimeout(() =>
-                dispatch(isLastUnit ? endGame() : goNext())
-            , 1500);
-        }
-        return () => {
-            $timeoutId.current && window.clearTimeout($timeoutId.current);
-        };
-    }, [hasAnswer, isLastUnit]);
-
+    useAutoNextNavigation();
     return (
         <div className={styles.navigationContainer}>
             <NavArrow hotkey={HOTKEYS.PREV_UNIT.key} className={styles.prevArrow} hideSelector={selectIsFirstUnit} action={prevUnit}>
