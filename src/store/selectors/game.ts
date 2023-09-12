@@ -1,6 +1,7 @@
 import {RootState} from '../index';
 import {Answer, EGameState, EGameType, GameUnit} from '../../models/game';
 import {TranslationUnit} from '../../models/types';
+import {createSelector} from '@reduxjs/toolkit';
 
 export const selectGame = (state: RootState) => state.game;
 
@@ -16,8 +17,8 @@ export const selectGameUnits = (state: RootState): GameUnit[] => selectGame(stat
 
 export const selectCurrentUnitIndex = (state: RootState): number => selectGame(state).currentUnitIndex;
 
-export const selectCurrentGameUnit = (state: RootState): GameUnit | undefined =>
-    selectGameUnits(state)[selectCurrentUnitIndex(state)];
+export const selectCurrentGameUnit = createSelector(selectGameUnits, selectCurrentUnitIndex,
+    (units, index): GameUnit | undefined => units[index]);
 
 export const selectCurrentUnitOptions = (state: RootState): TranslationUnit[] =>
     selectCurrentGameUnit(state)?.options || [];
@@ -25,17 +26,12 @@ export const selectCurrentUnitOptions = (state: RootState): TranslationUnit[] =>
 export const selectCurrentUnit = (state: RootState): TranslationUnit | undefined =>
     selectCurrentGameUnit(state)?.value;
 
-
 export const selectUnitsNumber = (state: RootState): number => selectGame(state).unitsNumber || 1;
 
 export const selectCurrentUnitNumber = (state: RootState): number => selectCurrentUnitIndex(state) + 1;
 
-export const selectIsLastUnit = (state: RootState): boolean => {
-    const unitsNumber = selectUnitsNumber(state);
-    const currentUnitNumber = selectCurrentUnitNumber(state);
-
-    return currentUnitNumber >= unitsNumber;
-};
+export const selectIsLastUnit = createSelector(selectUnitsNumber, selectCurrentUnitNumber,
+    (unitsNumber, currentNumber) => currentNumber >= unitsNumber);
 
 export const selectIsFirstUnit = (state: RootState): boolean => selectCurrentUnitIndex(state) === 0;
 
@@ -45,6 +41,5 @@ export const selectAnswer = (state: RootState): Answer | undefined => selectCurr
 
 export const selectHasAnswer = (state: RootState): boolean => !!selectAnswer(state);
 
-export const selectCorrectAnswersNumber = (state: RootState): number =>
-    selectGameUnits(state)
-        .reduce((acc, unit) => acc + Number(!!unit.answer?.isCorrect), 0);
+export const selectCorrectAnswersNumber = createSelector(selectGameUnits, (units) =>
+    units.reduce((acc, unit) => acc + Number(!!unit.answer?.isCorrect), 0));
