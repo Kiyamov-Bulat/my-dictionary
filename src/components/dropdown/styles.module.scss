@@ -35,6 +35,7 @@
   transition-duration: .2s;
   transition: all 0.3s ease;
   height: 0;
+  overflow: hidden;
 
   &:not(&.isOpen) {
     visibility: hidden;
