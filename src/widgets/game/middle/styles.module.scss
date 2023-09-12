@@ -140,6 +140,23 @@
   }
 }
 
+.endGameBtn {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  opacity: 0.3;
+
+  &.hidden {
+    display: none;
+  }
+  &:hover {
+    opacity: 1;
+  }
+}
+
 @keyframes fall {
   from {
     top: 0;

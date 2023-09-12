@@ -24,6 +24,7 @@ const useAutoNextNavigation = (): void => {
         $oldUnit.current = currentUnit;
         return (): void => {
             $timeoutId.current && window.clearTimeout($timeoutId.current);
+            $timeoutId.current = null;
         };
     }, [currentUnit]);
 };
