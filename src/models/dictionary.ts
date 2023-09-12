@@ -3,6 +3,7 @@ import store from '../store';
 import {selectDictionaryValue, selectSelectedGroupsIds} from '../store/selectors/dictionary';
 import downloadObjectAsJson from '../utils/downloadObjectAsJson';
 import TranslationUnitModel from './translationUnit';
+import {selectTextLang, selectTransLang} from '../store/selectors/configuration';
 
 const LOCAL_STORAGE_KEY = 'dictionary';
 const SELECTED_GROUPS_LOCAL_STORAGE_KEY = 'dictionary-selected-groups';
@@ -27,9 +28,9 @@ const DictionaryModel = {
     },
     
     get(): Dictionary {
-        const defaultDictionary = { groups: [ GroupModel.createMainGroup() ] };
+        const rawDict = localStorage.getItem(LOCAL_STORAGE_KEY);
 
-        return getFromLocalStorage(LOCAL_STORAGE_KEY, defaultDictionary);
+        return (rawDict && this.parse(rawDict)) || { groups: [ GroupModel.createMainGroup() ] };
     },
     saveSelectedGroups(selectedGroups?: string[]): void {
         localStorage.setItem(SELECTED_GROUPS_LOCAL_STORAGE_KEY, JSON.stringify(selectedGroups || selectSelectedGroupsIds(store.getState())));
@@ -52,10 +53,10 @@ const DictionaryModel = {
             g.units.forEach((u) => TranslationUnitModel.preloadImage(u))
         );
     },
-    parse(rawDict: string): Dictionary {
+    parse(rawDict: string): Dictionary | null {
         try {
             const partialDict = JSON.parse(rawDict) as Partial<Dictionary>;
-            
+
             if (partialDict.groups) {
                 return {
                     ...partialDict,
@@ -66,13 +67,8 @@ const DictionaryModel = {
             } else if (GroupModel.isMain(partialDict as Group)) { // @TODO надежнее проверка
                 return { groups: [GroupModel.normalize(partialDict as Group)]};
             }
-            return { groups: [] };
-        } catch (e) {
-            const lines = rawDict.split(/\n+/);
-            const wordPairs = lines.map((line) => line.split(/[\s-|,:_]+/));
-
-
-        }
+        } catch (e) { /* pass */ }
+        return null;
     }
 };
 

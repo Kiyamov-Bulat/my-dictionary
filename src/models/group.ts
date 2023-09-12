@@ -1,7 +1,10 @@
 import {v4 as uuidv4} from 'uuid';
 import {TranslationUnit} from './types';
-import {sample} from 'lodash';
+import {create, sample} from 'lodash';
 import TranslationUnitModel from './translationUnit';
+import store from '../store';
+import {selectTextLang, selectTransLang} from '../store/selectors/configuration';
+import translate from '../widgets/translate';
 
 export const MAIN_GROUP_TITLE = 'Main';
 
@@ -68,6 +71,24 @@ const GroupModel = {
             }
         });
         return empty;
+    },
+
+    addRawUnits(group: Group, rawUnits: string): Group {
+        const lines = rawUnits.split(/\n+/);
+        const wordPairs = lines.map((line) => line.split(/[\s-|,:_]+/));
+        const state = store.getState();
+        const textLang = selectTextLang(state);
+        const transLang = selectTransLang(state);
+
+        wordPairs.forEach(([text, translation]) =>
+            group.units.push(TranslationUnitModel.normalize(
+                { text: text || '', translation: translation || '', textLang, transLang }
+            )));
+        return group;
+    },
+
+    createFromRawUnits(rawUnits: string, title = `group_${uuidv4()}`): Group {
+        return this.addRawUnits(this.create(title), rawUnits);
     }
 };
 
