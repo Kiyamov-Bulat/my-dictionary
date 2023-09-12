@@ -36,15 +36,26 @@ const Dropdown: React.FC<DropdownProps> = ({
         [onSelect]
     );
     
+    const animateDropdown = (instance: HTMLElement | null) => {
+        if (!instance) { return; }
+
+        if (isOpen) {
+            instance.style.height = `${instance.scrollHeight}px`;
+        } else {
+            instance.style.removeProperty('height');
+        }
+    };
+    
     return (
         <div className={cx(className, styles.dropdown, { [styles.open]: isOpen })}>
             <div onClick={onClick} className={styles.topField}>
                 {children}
                 <button className={styles.btn}>
-                    <ArrowDownIcon width={btnSize} height={btnSize} color={btnColor} />
+                    <ArrowDownIcon strokeWidth={3} width={btnSize} height={btnSize} color={btnColor} />
                 </button>
             </div>
             <DropdownList
+                ref={animateDropdown}
                 isOpen={isOpen}
                 name={name}
                 selectedOption={selectedOption}

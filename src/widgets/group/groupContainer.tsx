@@ -22,7 +22,7 @@ const GroupContainer: FC<PropsWithChildren<GroupContainerProps>> = ({ id, color,
         >
             <header>
                 <div className={styles.checkbox} onClick={select}>
-                    <input type='checkbox' checked={isSelected}/>
+                    <input type='checkbox' checked={isSelected} onChange={select}/>
                     <label/>
                 </div>
             </header>

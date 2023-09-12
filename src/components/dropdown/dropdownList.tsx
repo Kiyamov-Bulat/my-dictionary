@@ -40,13 +40,9 @@ const DropdownList = React.forwardRef<HTMLUListElement, DropdownProps>(
         },
         ref
     ) => {
-        if (!isOpen) {
-            return null;
-        }
-
         return (
             <Portal isOn={usePortal} container={container}>
-                <ul ref={ref} className={cx(styles.dropdownList, className, { [styles.under]: isUnder })} id={id}>
+                <ul ref={ref} className={cx(styles.dropdownList, className, { [styles.under]: isUnder, [styles.isOpen]: isOpen })} id={id}>
                     {options.map((option) => (
                         <li
                             className={cx(styles.option, {
