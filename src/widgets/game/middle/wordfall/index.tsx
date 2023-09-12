@@ -1,11 +1,7 @@
 import React, {FC, useEffect, useRef} from 'react';
-import Score from '../../score';
 import styles from '../styles.module.scss';
-import UnitList from '../components/unitList';
-import Navigation from '../components/navigation';
 import {useSelector} from 'react-redux';
-import {selectCurrentUnit, selectHasAnswer, selectIsLastUnit} from '../../../../store/selectors/game';
-import cx from 'classnames';
+import {selectCurrentUnit, selectHasAnswer} from '../../../../store/selectors/game';
 import GameModel from '../../../../models/game';
 import {random} from 'lodash';
 import GameTemplate from '../components/gameTemplate';
@@ -16,19 +12,20 @@ const ANIMATION_INTERVAL_MS = 1000 / 60;
 const Wordfall: FC = () => {
     const $word = useRef<HTMLParagraphElement | null>(null);
     const currentUnit = useSelector(selectCurrentUnit);
-    const isLastUnit = useSelector(selectIsLastUnit);
     const hasAnswer = useSelector(selectHasAnswer);
 
     useEffect(() => {
-        if (isLastUnit && hasAnswer) {
+        if (!$word.current) { return; }
+        if (hasAnswer) {
+            $word.current.style.animationPlayState = 'paused';
             return;
         }
 
-        let passed = 0;
 
-        if ($word.current) {
-            $word.current.style.left = `${random(40, 60)}%`;
-        }
+        $word.current.style.animationPlayState = 'running';
+        $word.current.style.left = `${random(40, 60)}%`;
+
+        let passed = 0;
         const intervalId = setInterval(() => {
             passed += ANIMATION_INTERVAL_MS;
 
@@ -37,17 +34,15 @@ const Wordfall: FC = () => {
                 GameModel.provideEmptyAnswer();
                 return;
             }
-            // if (!$word.current) { return; }
-            // $word.current.style.top = `${passed / WORDFALL_DURATION * 100}%`;
         }, ANIMATION_INTERVAL_MS);
         
         return () => {
             clearInterval(intervalId);
         };
-    }, [currentUnit, hasAnswer, isLastUnit]);
+    }, [currentUnit, hasAnswer]);
     
     return (
-        <GameTemplate className={styles.wordfallContainer} reverse={true}>
+        <GameTemplate className={styles.wordfallContainer} reverse={true} hideNavigation={true} nextNavigationTimeout={500}>
             <p
                 key={currentUnit?.id}
                 className={styles.fallingWord}
