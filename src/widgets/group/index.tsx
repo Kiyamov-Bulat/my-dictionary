@@ -12,6 +12,7 @@ import {removeGroup, toggleSelectedGroup} from '../../store/slices/dictionary';
 import MemoryChart from './memoryChart';
 import Selectable from '../../components/selectable';
 import {getSelectIsGroupSelected} from '../../store/selectors/dictionary';
+import GroupContainer from './groupContainer';
 
 const toDropdownOptions = (units: TranslationUnit[]): DropdownOption[] => {
     if (units.length) {
@@ -25,32 +26,15 @@ const toDropdownOptions = (units: TranslationUnit[]): DropdownOption[] => {
 };
 
 const Group: FC<IGroup> = (group) => {
+    const dispatch = useDispatch();
     const { units, title, id, color } = group;
     const [isOpen, setIsOpen] = useState(true);
-    const dispatch = useDispatch();
-    const isSelected = useSelector(getSelectIsGroupSelected(id));
     const memorizedUnitsNumber = GroupModel.getMemorizedUnitsNumber(units);
-    const preventToggleIsOpen = useRef(false);
-    const select = (_: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        dispatch(toggleSelectedGroup(id));
-        preventToggleIsOpen.current = true;
-    };
-    const toggleIsOpen = () => {
-        if (!preventToggleIsOpen.current) {
-            setIsOpen((isOpen) => !isOpen);
-        }
-    };
+    const toggleIsOpen = () => setIsOpen((isOpen) => !isOpen);
     
 
     return (
-        <Selectable
-            onMouseDown={() => preventToggleIsOpen.current = false}
-            selected={isSelected}
-            onSelect={select}
-            className={styles.groupContainer}
-            selectedClassName={styles.selectedGroup}
-            style={{ border: `3px solid ${color}`}}
-        >
+        <GroupContainer id={id} color={color}>
             <Dropdown
                 onClick={toggleIsOpen}
                 className={cx(styles.group, {[styles.noUnits]: units.length === 0})}
@@ -69,7 +53,7 @@ const Group: FC<IGroup> = (group) => {
                     }
                 </div>
             </Dropdown>
-        </Selectable>
+        </GroupContainer>
     );
 };
 
