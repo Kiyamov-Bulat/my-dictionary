@@ -1,13 +1,14 @@
 import {ListIcon, PuzzleIcon, ReverseListIcon, WaterFallIcon} from '../icons';
 import store from '../store';
 import {addAnswer, startGame} from '../store/slices/game';
-import {selectSelectedGroupsUnlearnedUnits} from '../store/selectors/dictionary';
+import {selectSelectedGroupsUnits, selectSelectedGroupsUnlearnedUnits} from '../store/selectors/dictionary';
 import {TranslationUnit} from './types';
-import {selectCurrentUnit} from '../store/selectors/game';
+import {selectCurrentUnit, selectGameListSize} from '../store/selectors/game';
 import TranslationUnitModel from './translationUnit';
 import {updateTranslationUnit} from '../store/slices/dictionary';
 import correctAnswerSound from '../assets/audio/piu.mp3';
 import incorrectAnswerSound from '../assets/audio/bep2.mp3';
+import {random, sampleSize} from 'lodash';
 
 export enum EGameType {
     TRANSLATION_FROM_LIST = '@game-type/translation-from-list',
@@ -24,6 +25,7 @@ export enum EGameState {
 }
 
 export type Answer = { unit: TranslationUnit, isCorrect: boolean };
+export type GameUnit = { value: TranslationUnit, options: TranslationUnit[], answer?: Answer }
 
 export const GAME_PROPS = {
     [EGameType.TRANSLATION_FROM_LIST]: {
@@ -49,9 +51,20 @@ export const GAME_TYPES = Object.values(EGameType);
 
 const GameModel = {
     startGame(type: EGameType): void {
-        const units = selectSelectedGroupsUnlearnedUnits(store.getState());
+        const state = store.getState();
+        const units = selectSelectedGroupsUnits(state);
+        const unlearnedUnits = selectSelectedGroupsUnlearnedUnits(state);
+        const listSizeM1 = selectGameListSize(state) - 1;
+        const gameUnits = unlearnedUnits.map((value) => {
+            const unitsWOValue = units.filter((u) => u.id !== value.id);
+            const options = sampleSize(unitsWOValue , listSizeM1);
 
-        store.dispatch(startGame({ type, units }));
+            options.splice(random(0, listSizeM1), 0, value);
+
+            return { value, options };
+        });
+
+        store.dispatch(startGame({ type, units: gameUnits }));
     },
 
     hasUnlearnedUnits() {

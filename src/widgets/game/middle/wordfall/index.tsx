@@ -7,8 +7,7 @@ import {useSelector} from 'react-redux';
 import {selectCurrentUnit, selectHasAnswer, selectIsLastUnit} from '../../../../store/selectors/game';
 import cx from 'classnames';
 import GameModel from '../../../../models/game';
-import getRandomInt from '../../../../utils/getRandomInt';
-import {has} from 'lodash';
+import {random} from 'lodash';
 
 const WORDFALL_DURATION = 3000;
 const ANIMATION_INTERVAL_MS = 1000 / 60;
@@ -27,7 +26,7 @@ const Wordfall: FC = () => {
         let passed = 0;
 
         if ($word.current) {
-            $word.current.style.left = `${getRandomInt(40, 60)}%`;
+            $word.current.style.left = `${random(40, 60)}%`;
         }
         const intervalId = setInterval(() => {
             passed += ANIMATION_INTERVAL_MS;

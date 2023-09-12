@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Answer, EGameState, EGameType} from '../../models/game';
+import {Answer, EGameState, EGameType, GameUnit} from '../../models/game';
 import {TranslationUnit} from '../../models/types';
 import {shuffle} from 'lodash';
 
@@ -9,22 +9,20 @@ const gameState = {
     listSize: 4,
     duration: 0,
     unitsNumber: 10,
-    units: [] as TranslationUnit[],
+    units: [] as GameUnit[],
     currentUnitIndex: 0,
-    answers: [] as Answer[],
 };
 
 const game = createSlice({
     name: 'game',
     initialState: gameState,
     reducers: {
-        startGame(state, { payload }: PayloadAction<{ type: EGameType, units: TranslationUnit[] }>) {
+        startGame(state, { payload }: PayloadAction<{ type: EGameType, units: GameUnit[] }>) {
             state.type = payload.type;
             state.units = shuffle(payload.units);
             state.state = EGameState.START;
             state.currentUnitIndex = 0;
-            state.answers = [];
-            state.unitsNumber = Math.floor(state.units.length / state.listSize);
+            state.unitsNumber = state.units.length;
         },
         toMiddleOfGame(state) {
             state.state = EGameState.MIDDLE;
@@ -44,18 +42,17 @@ const game = createSlice({
         setUnitsNumber(state, { payload }: PayloadAction<number>) {
             state.unitsNumber = payload;
         },
-        setUnits(state, { payload }: PayloadAction<TranslationUnit[]>) {
+        setUnits(state, { payload }: PayloadAction<GameUnit[]>) {
             state.units = shuffle(payload);
         },
         addAnswer(state, { payload }: PayloadAction<Answer>) {
-            state.answers[state.currentUnitIndex / state.listSize] = payload;
-
+            state.units[state.currentUnitIndex].answer = payload;
         },
         prevUnit(state) {
-            state.currentUnitIndex -= state.listSize;
+            state.currentUnitIndex--;
         },
         nextUnit(state) {
-            state.currentUnitIndex += state.listSize;
+            state.currentUnitIndex++;
         },
     },
 });

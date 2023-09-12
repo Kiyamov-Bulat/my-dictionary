@@ -2,12 +2,12 @@ import React, {FC} from 'react';
 import styles from '../../styles.module.scss';
 import Option from '../option';
 import {useSelector} from 'react-redux';
-import {selectNextUnitList} from '../../../../../store/selectors/game';
+import {selectCurrentUnitOptions} from '../../../../../store/selectors/game';
 
 type UnitListProps = { reverse?: boolean };
 
 const UnitList: FC<UnitListProps> = ({ reverse }) => {
-    const units = useSelector(selectNextUnitList);
+    const units = useSelector(selectCurrentUnitOptions);
 
     return (
         <div className={styles.unitList}>
