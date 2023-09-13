@@ -136,5 +136,6 @@ export const {
     toggleSelectedGroup,
     swapTextAndTranslation,
     swapSelectedGroupsTextAndTranslation,
+    addUnits,
 } = dictionary.actions;
 export default dictionary.reducer;

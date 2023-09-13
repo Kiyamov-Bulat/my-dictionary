@@ -12,9 +12,9 @@ import {RestIcon, SwapIcon} from '../../../icons';
 const TranslationUnit: FC<ITranslationUnit> = (translationUnit) => {
     const { text, translation, textLang, transLang, memoryPercent } = translationUnit;
     const dispatch = useDispatch();
-    const swapTextAndTransl = () => swapTextAndTranslation(translationUnit);
+    const swapTextAndTransl = () => dispatch(swapTextAndTranslation(translationUnit));
     const rmTransitionUnit = () => dispatch(removeTranslationUnit(translationUnit));
-    const resetTransitionUnit = () => resetTranslationUnit(translationUnit);
+    const resetTransitionUnit = () => dispatch(resetTranslationUnit(translationUnit));
 
     return (
         <span className={styles.translationUnit}>

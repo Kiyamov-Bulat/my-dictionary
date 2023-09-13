@@ -27,3 +27,21 @@
     height: 12px;
   }
 }
+
+.addUnitsModal {
+  section {
+    align-items: flex-start;
+  }
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.addUnitsModalTextField {
+  flex-grow: 1;
+  textarea {
+    height: 100%;
+  }
+}

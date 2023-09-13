@@ -10,7 +10,7 @@ interface ButtonWithTooltipProps extends Omit<TooltipWrapperProps, 'action'> {
     disp?: boolean
 }
 
-const ButtonWithTooltip: FC<ButtonWithTooltipProps> = ({ tipContent, action, Icon, disp = true, ...props}) => {
+const ButtonWithTooltip: FC<ButtonWithTooltipProps> = ({ tipContent, action, Icon, disp = false, ...props}) => {
     const dispatch = useDispatch();
     const onClick = disp ? () => dispatch(action()) : action;
 

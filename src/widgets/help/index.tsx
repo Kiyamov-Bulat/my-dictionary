@@ -6,10 +6,10 @@ import HelpContent from './helpContent';
 import useHotkey from '../../components/hotkeyManger/useHotkey';
 import HOTKEYS from '../../utils/hotkeys';
 import cx from 'classnames';
+import useModalState from '../../hooks/useModalState';
 
 const Help: FC = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const toggleOpen = () => setIsOpen((prevState) => !prevState);
+    const { toggle: toggleOpen, isOpen } = useModalState(false);
 
     useHotkey(HOTKEYS.OPEN_HELP.key, toggleOpen);
     useHotkey(HOTKEYS.CLOSE.key, toggleOpen, { block: !isOpen });

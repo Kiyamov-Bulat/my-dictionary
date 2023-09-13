@@ -1,11 +1,13 @@
 import React, {FC} from 'react';
-import {DownloadIcon, ExportIcon, PlusIcon, SwapIcon} from '../../icons';
+import {ExportIcon, SwapIcon} from '../../icons';
 import {useSelector} from 'react-redux';
 import styles from './styles.module.scss';
 import {selectSelectedGroupsTitlesAsString} from '../../store/selectors/dictionary';
 import ButtonWithTooltip from '../../components/button/ButtonWithTooltip';
 import {swapSelectedGroupsTextAndTranslation} from '../../store/slices/dictionary';
 import DictionaryModel from '../../models/dictionary';
+import ImportDictButton from './importDictButton';
+import AddUnitsButton from './addUnitsButton';
 
 const ControlPanel: FC = () => {
     const selectedGroupsTitles = useSelector(selectSelectedGroupsTitlesAsString);
@@ -16,10 +18,10 @@ const ControlPanel: FC = () => {
             <p className={styles.selectedGroups}>Выбраны: {selectedGroupsTitles}</p>
             <div className={styles.btns}>
                 {/*<ButtonWithTooltip Icon={SettingIcon} action={openSettings} tipContent={'Настройки'}/>*/}
-                {/*<ButtonWithTooltip Icon={DownloadIcon} action={} tipContent={'Импортировать словарь'} disp={false}/>*/}
-                {/*<ButtonWithTooltip Icon={PlusIcon} action={} tipContent={'Добавить в группы'}/>*/}
-                <ButtonWithTooltip Icon={ExportIcon} action={downloadDictionary} tipContent={'Экспортировать словарь'} disp={false}/>
-                <ButtonWithTooltip Icon={SwapIcon} action={swapSelectedGroupsTextAndTranslation} tipContent={'Поменять местами'}/>
+                <AddUnitsButton/>
+                {/*<ImportDictButton/>*/}
+                <ButtonWithTooltip Icon={ExportIcon} action={downloadDictionary} tipContent={'Экспортировать словарь'}/>
+                <ButtonWithTooltip Icon={SwapIcon} action={swapSelectedGroupsTextAndTranslation} tipContent={'Поменять местами'} disp={true}/>
             </div>
         </div>
     );
