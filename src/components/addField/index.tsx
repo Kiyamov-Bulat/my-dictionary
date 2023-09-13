@@ -1,4 +1,4 @@
-import React, {FC, KeyboardEventHandler, useRef} from 'react';
+import React, {FC, useRef} from 'react';
 import TextField, {ITextField} from '../textField';
 import TooltipWrapper, {ETooltipPosition} from '../tooltip/TooltipWrapper';
 import Button, {IButtonProps} from '../button';
@@ -6,6 +6,7 @@ import {PlusIcon} from '../../icons';
 import styles from './styles.module.scss';
 import useHotkey from '../hotkeyManger/useHotkey';
 import cx from 'classnames';
+import useEnterHandler from '../../hooks/useEnterHandler';
 
 export type AddFieldProps = {
     onAdd: () => void
@@ -16,16 +17,7 @@ export type AddFieldProps = {
 
 const AddField: FC<AddFieldProps> = ({ onAdd, textFieldProps, buttonProps, hotkey = '' }) => {
     const textFieldRef = useRef<HTMLInputElement | null>(null);
-    const onKeyDown: KeyboardEventHandler = (e) => {
-        if (document.activeElement !== e.target) {
-            return;
-        }
-
-        if (e.key === 'Enter') {
-            onAdd();
-            return;
-        }
-    };
+    const onKeyDown = useEnterHandler(onAdd);
 
     useHotkey(hotkey, () => textFieldRef.current?.focus(), { keyup: true, block: !hotkey });
 

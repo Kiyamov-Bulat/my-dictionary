@@ -11,8 +11,7 @@ import TranslationUnitModel from '../../models/translationUnit';
 import {useDispatch} from 'react-redux';
 import {addUnits} from '../../store/slices/dictionary';
 import {HotkeyManagerContext} from '../../components/hotkeyManger';
-import HOTKEYS from '../../utils/hotkeys';
-import useHotkey from '../../components/hotkeyManger/useHotkey';
+import useCloseHotkey from '../../hooks/useCloseHotkey';
 
 const ADD_UNITS_MODAL_CONTEXT = 'ADD_UNITS_MODAL_CONTEXT';
 
@@ -32,7 +31,6 @@ const AddUnitsButton: FC = () => {
     };
 
     useEffect(() => {
-        console.log(isOpen);
         if (isOpen) {
             setBlock({ block: true, excludeContext: ADD_UNITS_MODAL_CONTEXT });
         } else {
@@ -40,8 +38,8 @@ const AddUnitsButton: FC = () => {
         }
         setRawUnits('');
     }, [isOpen]);
-    
-    useHotkey(HOTKEYS.CLOSE.key, close, { block: !isOpen, context: ADD_UNITS_MODAL_CONTEXT });
+
+    useCloseHotkey(close, isOpen, { context: ADD_UNITS_MODAL_CONTEXT });
     
     return (
         <>

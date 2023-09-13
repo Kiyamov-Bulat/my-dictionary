@@ -7,12 +7,13 @@ import useHotkey from '../../components/hotkeyManger/useHotkey';
 import HOTKEYS from '../../utils/hotkeys';
 import cx from 'classnames';
 import useModalState from '../../hooks/useModalState';
+import useCloseHotkey from '../../hooks/useCloseHotkey';
 
 const Help: FC = () => {
     const { toggle: toggleOpen, isOpen } = useModalState(false);
 
     useHotkey(HOTKEYS.OPEN_HELP.key, toggleOpen);
-    useHotkey(HOTKEYS.CLOSE.key, toggleOpen, { block: !isOpen });
+    useCloseHotkey(toggleOpen, isOpen);
     return (
         <div className={styles.helpContainer}>
             <TooltipWrapper
