@@ -7,12 +7,9 @@ import {selectTextLang, selectTransLang} from '../../store/selectors/configurati
 import AddField from '../../components/addField';
 import {addTranslationUnit} from '../../store/slices/dictionary';
 import cx from 'classnames';
-import EditableLabel from '../../components/editableLabel';
 import Notice from '../../components/notice';
-import ConfigurationModel, {DEFAULT_TEXT_LANG} from '../../models/configuration';
-import {setTransLang} from '../../store/slices/configuration';
 import HOTKEYS from '../../utils/hotkeys';
-import Header from './header';
+import Languages from './languages';
 
 export type TranslateProps = {
     extended?: boolean
@@ -65,7 +62,7 @@ const Translate: FC<TranslateProps> = ({ extended = false, className, placeholde
     return (
         <div className={cx(styles.translateContainer, className)}>
             <div className={styles.translation}>
-                <Header textLang={textLang} transLang={transLang}/>
+                <Languages/>
                 <p className={cx({ [styles.placeholder]: !translation?.translation })}>
                     {translation?.translation || placeholder}
                 </p>

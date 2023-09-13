@@ -12,6 +12,7 @@ import {useDispatch} from 'react-redux';
 import {addUnits} from '../../store/slices/dictionary';
 import {HotkeyManagerContext} from '../../components/hotkeyManger';
 import useCloseHotkey from '../../hooks/useCloseHotkey';
+import Languages from '../translate/languages';
 
 const ADD_UNITS_MODAL_CONTEXT = 'ADD_UNITS_MODAL_CONTEXT';
 
@@ -45,6 +46,7 @@ const AddUnitsButton: FC = () => {
         <>
             <ButtonWithTooltip Icon={PlusIcon} action={open} tipContent={'Добавить в группы'}/>
             <Modal className={styles.addUnitsModal} isOpen={isOpen} title={'Добавить слова'} onClose={close}>
+                <Languages className={styles.languages}/>
                 <TextField className={styles.addUnitsModalTextField} placeholder={'Напимер: кот - dog'} value={rawUnits} onChange={setRawUnits} multiline={true} maxLength={1000}/>
                 <Button variant={'primary'} onClick={handleAddUnits}>Добавить</Button>
             </Modal>
