@@ -1,3 +1,5 @@
+import {keys} from 'lodash';
+
 const SWAP_KEY = {
     ArrowRight: '→',
     ArrowLeft: '←',
@@ -23,6 +25,13 @@ const HOTKEYS = {
         });
     }
 };
+
+export const HOTKEYS_LIST = (Object.values(HOTKEYS) as ISingleHotkey[]).reduce(
+    (acc, { key }) => Array.isArray(key) ? [...acc, ...key] : [...acc, key], [] as string[]);
+
+export const HOTKEYS_LIST_WITHOUT_ESCAPE = HOTKEYS_LIST.filter((key) => key !== 'Escape');
+
+export const HOTKEYS_LIST_WITHOUT_ESCAPE_AND_ENTER = HOTKEYS_LIST.filter((key) => key !== 'Escape');
 
 Object.defineProperty(HOTKEYS, 'toStringList', { enumerable: false});
 

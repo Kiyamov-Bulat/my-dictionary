@@ -1,4 +1,4 @@
-import {createSlice, current, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import DictionaryModel, {Dictionary} from '../../models/dictionary';
 import GroupModel, {Group} from '../../models/group';
 import {TranslationUnit} from '../../models/types';

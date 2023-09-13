@@ -73,11 +73,11 @@ const GroupModel = {
         return empty;
     },
 
-    addRawUnits(group: Group, rawUnits: string): Group {
-        return { ...group, units: TranslationUnitModel.listFromRawString(rawUnits) };
+    async addRawUnits(group: Group, rawUnits: string): Promise<Group> {
+        return { ...group, units: await TranslationUnitModel.listFromRawString(rawUnits) };
     },
 
-    createFromRawUnits(rawUnits: string, title = `group_${uuidv4()}`): Group {
+    createFromRawUnits(rawUnits: string, title = `group_${uuidv4()}`): Promise<Group> {
         return this.addRawUnits(this.create(title), rawUnits);
     }
 };

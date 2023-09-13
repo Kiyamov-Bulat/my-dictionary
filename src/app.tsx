@@ -5,20 +5,23 @@ import Settings from './widgets/settings';
 import useDictionarySaver from './hooks/useDictionarySaver';
 import SidePanel from './widgets/sidePanel';
 import MainPanel from './widgets/mainPanel';
+import HotkeyManager from './components/hotkeyManger';
 
 const App = () => {
     useDictionarySaver();
     // useDictionaryImagePreloader();
 
     return (
-        <div className={styles.appContainer}>
-            <div className={styles.widgetContainer}>
-                <MainPanel/>
-                <SidePanel/>
+        <HotkeyManager block={false}>
+            <div className={styles.appContainer}>
+                <div className={styles.widgetContainer}>
+                    <MainPanel/>
+                    <SidePanel/>
+                </div>
+                <Settings/>
+                {/*<Help/>*/}
             </div>
-            <Settings/>
-            {/*<Help/>*/}
-        </div>
+        </HotkeyManager>
     );
 };
 

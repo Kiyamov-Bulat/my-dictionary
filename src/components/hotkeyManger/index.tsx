@@ -1,6 +1,17 @@
 import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
 
-export type HotkeyBlock = boolean | string | string[];
+export type SimpleBlock = boolean | string | string[]
+
+export type ComplexBlock = {
+    block: true | string | string[]
+    excludeContext: string | string[]
+}
+
+export type HotkeyBlock = SimpleBlock | ComplexBlock;
+
+export const isComplexHotkeyBlock = (block: HotkeyBlock): block is ComplexBlock => {
+    return typeof block === 'object' && !Array.isArray(block);
+};
 
 export type HotkeyManagerProps = {
     block: HotkeyBlock
@@ -19,10 +30,6 @@ export const HotkeyManagerContext = createContext<HotkeyManagerContextValue>({
 
 const HotkeyManager: FC<HotkeyManagerProps> = ({ block, children }) => {
     const [value, setValue] = useState(block);
-
-    useEffect(() => {
-        setValue(block);
-    }, [block]);
 
     return (
         <HotkeyManagerContext.Provider value={{ block: value, setBlock: setValue }}>{children}</HotkeyManagerContext.Provider>

@@ -9,6 +9,8 @@ import getRemoteImage from '../utils/getRemoteImage';
 import store from '../store';
 import {selectTextLang, selectTransLang} from '../store/selectors/configuration';
 
+const LINES_SEPARATOR = /\n+/;
+
 export const DEFAULT_GAME_STUDY_PERCENT = 25;
 
 const DETECT_LANGUAGE_URL = 'https://translation.googleapis.com/language/translate/v2/detect';
@@ -148,12 +150,20 @@ const TranslationUnitModel = {
         window.speechSynthesis.speak(msg);
     },
 
-    listFromRawString(rawUnits: string): TranslationUnit[] {
-        const lines = rawUnits.split(/\n+/);
+    async listFromRawString(rawUnits: string): Promise<TranslationUnit[]> {
+        const lines = rawUnits.split(LINES_SEPARATOR);
         const wordPairs = lines.map((line) => line.split(/[\s-|,:_]+/));
         const state = store.getState();
         const textLang = selectTextLang(state);
         const transLang = selectTransLang(state);
+
+        if (wordPairs[0].length === 1 && wordPairs.at(-1)?.length === 1) {
+            const bigUnit = await TranslationUnitModel.translate(rawUnits, textLang, transLang);
+            const translations = bigUnit.translation.split(LINES_SEPARATOR);
+
+            return lines.map((text, idx) =>
+                ({ ...bigUnit, id: uuidv4(), text: text.trim(), translation: translations[idx].trim(), imageSrc: '' }));
+        }
 
         return wordPairs.map(([text, translation]) =>
             TranslationUnitModel.normalize(

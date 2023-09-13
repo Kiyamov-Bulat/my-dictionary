@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Answer, EGameState, EGameType, GameUnit} from '../../models/game';
-import {TranslationUnit} from '../../models/types';
 import {shuffle} from 'lodash';
 
 const gameState = {

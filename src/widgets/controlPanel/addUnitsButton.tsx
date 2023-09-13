@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import Modal from '../../components/modal';
 import ButtonWithTooltip from '../../components/button/ButtonWithTooltip';
 import {PlusIcon} from '../../icons';
@@ -10,19 +10,39 @@ import Notice from '../../components/notice';
 import TranslationUnitModel from '../../models/translationUnit';
 import {useDispatch} from 'react-redux';
 import {addUnits} from '../../store/slices/dictionary';
+import {HotkeyManagerContext} from '../../components/hotkeyManger';
+import HOTKEYS from '../../utils/hotkeys';
+import useHotkey from '../../components/hotkeyManger/useHotkey';
+
+const ADD_UNITS_MODAL_CONTEXT = 'ADD_UNITS_MODAL_CONTEXT';
 
 const AddUnitsButton: FC = () => {
     const dispatch = useDispatch();
     const { isOpen, open, close } = useModalState(true);
     const [rawUnits, setRawUnits] = useState('');
-    const handleAddUnits = () => {
+    const { setBlock } = useContext(HotkeyManagerContext);
+    const handleAddUnits = async () => {
         if (!rawUnits) {
             Notice.warn('Пустая строка!');
             return;
         }
 
-        dispatch(addUnits(TranslationUnitModel.listFromRawString(rawUnits)));
+        dispatch(addUnits(await TranslationUnitModel.listFromRawString(rawUnits)));
+        setRawUnits('');
     };
+
+    useEffect(() => {
+        console.log(isOpen);
+        if (isOpen) {
+            setBlock({ block: true, excludeContext: ADD_UNITS_MODAL_CONTEXT });
+        } else {
+            setBlock(false);
+        }
+        setRawUnits('');
+    }, [isOpen]);
+    
+    useHotkey(HOTKEYS.CLOSE.key, close, { block: !isOpen, context: ADD_UNITS_MODAL_CONTEXT });
+    
     return (
         <>
             <ButtonWithTooltip Icon={PlusIcon} action={open} tipContent={'Добавить в группы'}/>
