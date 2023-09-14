@@ -18,7 +18,7 @@ const ADD_UNITS_MODAL_CONTEXT = 'ADD_UNITS_MODAL_CONTEXT';
 
 const AddUnitsButton: FC = () => {
     const dispatch = useDispatch();
-    const { isOpen, open, close } = useModalState(true);
+    const { isOpen, open, close } = useModalState(false);
     const [rawUnits, setRawUnits] = useState('');
     const { setBlock } = useContext(HotkeyManagerContext);
     const handleAddUnits = async () => {
