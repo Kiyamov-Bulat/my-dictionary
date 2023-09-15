@@ -8,11 +8,16 @@
   align-items: center;
   font-size: 18px;
   line-height: 24px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden auto;
+  box-sizing: border-box;
+  padding: 72px 0px 44px; // 68 + 4 40 + 4
 }
 
 .unitList {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: 20px;
+  line-height: 28px;
   padding: 16px;
   display: flex;
   flex-direction: row;
@@ -30,6 +35,7 @@
   cursor: pointer;
   box-shadow: 0px 0px 4px 0px rgba(64, 91, 104, 1);
   box-sizing: border-box;
+  overflow-wrap: anywhere;
 
   &:hover {
     background: rgb(50, 81, 189);
@@ -61,6 +67,10 @@
   line-height: 1.5;
   font-weight: 600;
   padding: 32px;
+  
+  @media screen and (min-width: 500px) {
+    max-height: calc(100% - 100px - 32px * 2);
+  }
 
   .imageWrapper {
     display: flex;

@@ -1,7 +1,7 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {useSelector} from 'react-redux';
 import {selectGameState} from '../../store/selectors/game';
-import GameModel, {EGameState, EGameType} from '../../models/game';
+import {EGameState} from '../../models/game';
 import End from './end';
 import Middle from './middle';
 import Start from './start';

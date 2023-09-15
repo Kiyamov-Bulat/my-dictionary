@@ -1,4 +1,4 @@
-import React, {FC, useRef, useState} from 'react';
+import React, {FC, useState} from 'react';
 import GroupModel, {Group as IGroup} from '../../models/group';
 import Dropdown from '../../components/dropdown';
 import TranslationUnitComponent from './translationUnit';
@@ -7,11 +7,9 @@ import {DropdownOption} from '../../components/dropdown/dropdownList';
 import styles from './styles.module.scss';
 import cx from 'classnames';
 import RemoveBtn from '../../components/removeBtn';
-import {useDispatch, useSelector} from 'react-redux';
-import {removeGroup, toggleSelectedGroup} from '../../store/slices/dictionary';
+import {useDispatch} from 'react-redux';
+import {removeGroup} from '../../store/slices/dictionary';
 import MemoryChart from './memoryChart';
-import Selectable from '../../components/selectable';
-import {getSelectIsGroupSelected} from '../../store/selectors/dictionary';
 import GroupContainer from './groupContainer';
 
 const toDropdownOptions = (units: TranslationUnit[]): DropdownOption[] => {

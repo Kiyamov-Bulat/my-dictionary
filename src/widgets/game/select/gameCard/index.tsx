@@ -27,7 +27,7 @@ const GameCard: FC<GameCardProps> = ({ type }) => {
     return (
         <div onClick={startGame} className={cx(styles.gameCardContainer, { [styles.disabled]: disabled })}>
             <p className={styles.title}>{title}</p>
-            <Icon width={100} height={100}/>
+            <Icon/>
         </div>
     );
 };

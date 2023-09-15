@@ -13,6 +13,8 @@ export const selectGameDuration = (state: RootState): number => selectGame(state
 
 export const selectGameState = (state: RootState): EGameState => selectGame(state).state;
 
+export const selectGameIsStarted = (state: RootState): boolean => selectGameState(state) === EGameState.START;
+
 export const selectGameUnits = (state: RootState): GameUnit[] => selectGame(state).units;
 
 export const selectCurrentUnitIndex = (state: RootState): number => selectGame(state).currentUnitIndex;
