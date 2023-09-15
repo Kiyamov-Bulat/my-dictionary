@@ -36,10 +36,10 @@
 
   }
   &.correctAnswer {
-    background: #10bf6a;
+    background: c.$correct-answer-color;
   }
   &.incorrectAnswer {
-    background: #E04D3B;
+    background: c.$incorrect-answer-color;
   }
   &.hasAnswer {
     cursor: default;

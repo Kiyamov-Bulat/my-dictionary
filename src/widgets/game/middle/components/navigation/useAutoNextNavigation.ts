@@ -7,7 +7,7 @@ import {GameUnit} from '../../../../../models/game';
 
 const justAnswered = (oldState?: GameUnit, newState?: GameUnit): boolean =>
     (!!oldState && !!newState && oldState.value.id === newState.value.id && !oldState.answer && !!newState.answer);
-const useAutoNextNavigation = (timeout = 1000): void => {
+const useAutoNextNavigation = (timeout = 2000): void => {
     const currentUnit = useSelector(selectCurrentGameUnit);
     const dispatch = useDispatch();
     const $timeoutId = useRef<number | null>(null);

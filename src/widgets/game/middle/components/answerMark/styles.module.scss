@@ -1,0 +1,116 @@
+@use "styles/constants.scss" as c;
+
+$width  : 73px;
+$height : 72px;
+$primary_color : transparent;
+$stroke : 8px;
+$transition_duration:50ms;
+$pipes : 4;
+
+.answerMark {
+  width: $width ;
+  height: $height;
+  box-sizing: border-box;
+  background: $primary_color;
+  position: absolute;
+  top: 150px;
+  right: 32px;
+  margin: auto;
+  border: $stroke solid transparent;
+  text-align: center;
+  color: #fff;
+  border-radius: 50%;
+
+  &:before, &:after, *:before, *:after {
+    position: absolute;
+    content: "";
+    animation-timing-function: linear;
+    animation-duration: $transition_duration;
+    animation-fill-mode: forwards;
+    background: c.$incorrect-answer-color;
+  }
+
+  svg {
+    stroke: c.$incorrect-answer-color;
+  }
+
+  &.check {
+    &:before, &:after, *:before, *:after {
+      background: c.$correct-answer-color;
+    }
+    svg {
+      stroke: c.$correct-answer-color;
+    }
+  }
+
+  &:before {
+    width: 0;
+    height:$stroke;
+    top:-$stroke;
+    left:-$stroke;
+    animation-name: changeBordersW;
+  }
+  &:after {
+    width:$stroke;
+    height:0;
+    top:-$stroke;
+    right: -$stroke;
+    animation-name: changeBordersH;
+    animation-delay: $transition_duration;
+  }
+
+  * {
+    $innerWidth: $width - $stroke * 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: $innerWidth;
+    height: $height - $stroke * 2;
+    svg {
+      width: 100%;
+      height: 100%;
+      padding: 12px;
+      box-sizing: border-box;
+      animation: scaleIcon 0.4s $transition_duration * 2 linear;
+    }
+    &:after {
+      width: 0;
+      height: $stroke;
+      bottom: -$stroke;
+      right: -$stroke;
+      animation-name: changeBordersW;
+      animation-delay: $transition_duration * 2;
+    }
+
+    &:before {
+      width: $stroke;
+      height: 0;
+      bottom: -$stroke;
+      left: -$stroke;
+      animation-name: changeBordersH;
+      animation-delay: $transition_duration * 3;
+    }
+  }
+}
+
+@keyframes changeBordersW {
+  to {
+    width: $width;
+  }
+}
+
+@keyframes changeBordersH {
+  to {
+    height: $height;
+  }
+}
+
+@keyframes scaleIcon {
+  50% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

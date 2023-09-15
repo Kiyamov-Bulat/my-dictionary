@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {selectGameType} from '../../../store/selectors/game';
-import {EGameType} from '../../../models/game';
+import GameModel, {EGameType} from '../../../models/game';
 import TranslationFromList from './translationFromList';
 import Wordfall from './wordfall';
 import TextFromList from './textFromList';

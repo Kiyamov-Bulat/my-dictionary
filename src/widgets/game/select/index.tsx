@@ -5,6 +5,9 @@ import styles from './styles.module.scss';
 
 const Select: FC = () => {
 
+    // useEffect(() => {
+    //     GameModel.startGame(EGameType.TRANSLATION_FROM_LIST);
+    // }, []);
     return (
         <div className={styles.selectContainer}>
             {GAME_TYPES.map((gameType) => <GameCard key={gameType} type={gameType}/>)}

@@ -143,7 +143,7 @@ const TranslationUnitModel = {
 
         // msg.voice = voices[0];
         msg.volume = 1; // From 0 to 1
-        msg.rate = 1; // From 0.1 to 10
+        msg.rate = 0.8; // From 0.1 to 10
         msg.pitch = 1; // From 0 to 2
         msg.text = unit.translation;
         msg.lang = unit.transLang;

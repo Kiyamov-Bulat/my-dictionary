@@ -7,6 +7,7 @@ import Navigation from '../navigation';
 import EndGameButton from '../endGameButton';
 import cx from 'classnames';
 import useAutoNextNavigation from '../navigation/useAutoNextNavigation';
+import AnswerMark from '../answerMark';
 
 type GameTemplateProps = {
     reverse?: boolean
@@ -29,6 +30,7 @@ const GameTemplate: FC<PropsWithChildren<GameTemplateProps>> = (
         <div className={cx(styles.middleContainer, className)}>
             <Score className={styles.score}/>
             <EndGameButton/>
+            <AnswerMark/>
             {children}
             <UnitList reverse={reverse}/>
             {hideNavigation || <Navigation/>}

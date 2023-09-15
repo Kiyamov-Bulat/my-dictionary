@@ -9,12 +9,17 @@ export const ArrowDownIcon = ({ width = '24px', height = '24px', fill = 'black',
 );
 
 export const CheckIcon = ({ width = '24px', height = '24px', fill = 'none', stroke = 'black', ...props }: IconProps) => (
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={fill} width={width} height={height} stroke={stroke}  {...props}>
-    <g id="Interface / Check">
-        <path id="Vector" d="M6 12L10.2426 16.2426L18.727 7.75732" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill={fill} width={width} height={height} stroke={stroke}  {...props}>
+    <path d="M1 6L5 9L9 2"/>
 </svg>
 );
+
+export const CrossIcon = ({ width = '800px', height = '800px', fill = 'red', stroke = 'red', ...props }: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill={fill} width={width} height={height} stroke={stroke} {...props}>
+        <path d="M1 1L 9 9M9 1 L1 9"/>
+    </svg>
+);
+
 
 export const PlusIcon = ({ width = '24px', height = '24px', fill = 'none', stroke = 'black', ...props }: IconProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={fill} width={width} height={height} stroke={stroke}  {...props}>
