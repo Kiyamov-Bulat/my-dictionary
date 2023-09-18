@@ -2,6 +2,7 @@ import React, {FC, useMemo, useState} from 'react';
 import Button from '../../components/button';
 import styles from './styles.module.scss';
 import TranslationUnitPopup from './translationUnitPopup';
+import Switch from '../../components/switch';
 
 type TranslateViewProps = {
     text: string
@@ -14,6 +15,7 @@ const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
     const [selectedWord, setSelectedWord] = useState('');
     const words = useMemo(() => text.split(/(\s+)/), [text]);
     const [popupCoords, setPopupCoords] = useState<{ x: number, y: number } | null>(null);
+    const [reverseTranslate, setReverseTranslate] = useState(false);
     const openPopup = (word: string, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         const target = e.target as HTMLElement;
         
@@ -34,6 +36,13 @@ const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
             <header>
                 <h1>Интерактивный перевод</h1>
                 <p><span>Слов: {wordsWOSpaces.length}</span> | <span>Символов: {letters}</span></p>
+                <div className={styles.reverseTranslateContainer}>
+                    Перевод наоборот
+                    <Switch
+                        className={styles.reverseTranslate}
+                        value={reverseTranslate}
+                        onChange={() => setReverseTranslate((prevState) => !prevState)}/>
+                </div>
             </header>
             <p className={styles.words}>
                 {words?.map((word, idx) => {
@@ -50,6 +59,7 @@ const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
             {popupCoords && <TranslationUnitPopup
                 text={selectedWord}
                 coords={popupCoords}
+                reverse={reverseTranslate}
                 onClose={() => {
                     setSelectedWord('');
                     setPopupCoords(null);

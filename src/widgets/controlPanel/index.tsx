@@ -6,7 +6,6 @@ import {selectSelectedGroupsTitlesAsString} from '../../store/selectors/dictiona
 import ButtonWithTooltip from '../../components/button/ButtonWithTooltip';
 import {swapSelectedGroupsTextAndTranslation} from '../../store/slices/dictionary';
 import DictionaryModel from '../../models/dictionary';
-import ImportDictButton from './importDictButton';
 import AddUnitsButton from './addUnitsButton';
 
 const ControlPanel: FC = () => {

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC} from 'react';
 import Games from '../game';
 import Switch from '../../components/switch';
 import {togglePanelView} from '../../store/slices/configuration';
@@ -11,11 +11,16 @@ import HOTKEYS from '../../utils/hotkeys';
 import Help from '../help';
 import {selectGameState} from '../../store/selectors/game';
 import {EGameState} from '../../models/game';
+import ConfigurationModel, {EPanelView} from '../../models/configuration';
 
 const MainPanel: FC = () => {
     const dispatch = useDispatch();
     const panelViewIsGamesList = useSelector(selectPanelViewIsGamesList);
-    const switchPanel = () => dispatch(togglePanelView());
+    const switchPanel = () => {
+        //@TODO
+        ConfigurationModel.saveMainPanelView(panelViewIsGamesList ? EPanelView.TEXT : EPanelView.GAMES_LIST);
+        dispatch(togglePanelView());
+    };
     const state = useSelector(selectGameState);
 
     useHotkey(HOTKEYS.SWITCH_PANEL_VIEW.key, switchPanel, { ctrl: HOTKEYS.SWITCH_PANEL_VIEW.ctrl });

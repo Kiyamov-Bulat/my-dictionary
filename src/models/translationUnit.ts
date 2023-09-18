@@ -169,6 +169,13 @@ const TranslationUnitModel = {
             TranslationUnitModel.normalize(
                 { text: text || '', translation: translation || '', textLang, transLang }
             ));
+    },
+    swapTextAndTranslation(unit: TranslationUnit) {
+        const res = { ...unit };
+        
+        [res.text, res.translation, res.textLang, res.transLang] =
+            [res.translation, res.text, res.transLang, res.textLang];
+        return res;
     }
 };
 

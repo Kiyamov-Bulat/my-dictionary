@@ -73,3 +73,11 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+.reverseTranslateContainer {
+  display: flex;
+  align-items: center;
+}
+.reverseTranslate {
+  transform: scale(0.6);
+}

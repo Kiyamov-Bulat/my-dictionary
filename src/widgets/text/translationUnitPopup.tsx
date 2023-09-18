@@ -12,9 +12,10 @@ type TranslationUnitPopupProps = {
     text: string
     coords: { x: number, y: number }
     onClose: () => void
+    reverse?: boolean
 };
 
-const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, coords }) => {
+const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, coords, reverse = false }) => {
     const $popup = useRef<HTMLElement | null>(null);
     const [unit, setUnit] = useState<TranslationUnit | null>(null);
     const textLang = useSelector(selectTextLang);
@@ -35,8 +36,9 @@ const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, co
                 }
                 return unit;
             })
+            .then((unit) => reverse ? TranslationUnitModel.swapTextAndTranslation(unit) : unit)
             .then(setUnit);
-    }, [text]);
+    }, [text, textLang, transLang, reverse]);
 
     useEffect(() => {
         unit && TranslationUnitModel.vocalize(unit);

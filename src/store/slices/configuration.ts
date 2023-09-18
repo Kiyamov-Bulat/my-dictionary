@@ -4,7 +4,6 @@ import ConfigurationModel, {EPanelView} from '../../models/configuration';
 const configurationState = {
     ...ConfigurationModel.get(),
     isOpen: false,
-    panelView: EPanelView.GAMES_LIST,
 };
 
 const configuration = createSlice({
