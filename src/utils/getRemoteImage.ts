@@ -7,7 +7,7 @@ type IFlickrData = {
 let global_id = 1;
 
 const getRemoteImage = (query: string): Promise<string> => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         const elem = document.createElement('script');
         const id = `getRemoteImageJsonCallback${global_id++}`;
         const win = (window as unknown as Record<string, (data: IFlickrData) => void>);
@@ -19,6 +19,7 @@ const getRemoteImage = (query: string): Promise<string> => {
             elem.remove();
             delete win[id];
         };
+        elem.onerror = reject;
         
         elem.src = `${REMOTE_URL}jsoncallback=${id}&tags=${query}`;
         document.head.appendChild(elem);

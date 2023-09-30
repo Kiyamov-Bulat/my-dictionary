@@ -7,13 +7,14 @@ import styles from './styles.module.scss';
 import {ArrowDownIcon} from '../../icons';
 import cx from 'classnames';
 import TranslationUnitModel from '../../models/translationUnit';
+import {CLIPlugin} from 'webpack-cli/lib/plugins/CLIPlugin';
 
 type TranslatedTextProps = {
     text: string
 };
 
 const TranslatedText: FC<TranslatedTextProps> = ({ text }) => {
-    const { isOpen, toggle } = useModalState(true);
+    const { isOpen, toggle } = useModalState(false);
     const textLang = useSelector(selectTextLang);
     const transLang = useSelector(selectTransLang);
     const [translatedText, setTranslatedText] = useState('');
@@ -21,7 +22,8 @@ const TranslatedText: FC<TranslatedTextProps> = ({ text }) => {
     useEffect(() => {
         TranslationUnitModel
             .translate(text, textLang, transLang)
-            .then((u) => setTranslatedText(u.translation));
+            .then((u) => setTranslatedText(u.translation))
+            .catch((err) => console.error('Не удалось перевести:', err));
     }, [text, textLang, transLang]);
 
     return (

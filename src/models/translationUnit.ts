@@ -122,13 +122,17 @@ const TranslationUnitModel = {
     isTranslationUnit(obj: any): obj is TranslationUnit {
         return typeof obj.text === 'string' && typeof obj.translation === 'string' && typeof obj.transLang === 'string' && typeof obj.textLang === 'string';
     },
-    
+
     async updateImageSrc(unit: TranslationUnit): Promise<TranslationUnit> {
         const u = { ...unit };
 
         try {
-            u.imageSrc = await getRemoteImage(unit.text);
-        } catch (_) {/* pass */}
+            if (unit.text.length < 100) {
+                u.imageSrc = await getRemoteImage(unit.text);
+            }
+        } catch (err) {
+            console.error('updateImage error');
+        }
 
         return u;
     },
