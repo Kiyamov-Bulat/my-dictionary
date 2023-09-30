@@ -76,7 +76,11 @@ const TranslationUnitModel = {
         return empty;
     },
 
-    async translate(text: string, textLang = DEFAULT_TEXT_LANG, transLang = DEFAULT_TRANS_LANG): Promise<TranslationUnit> {
+    async translate(
+        text: string,
+        textLang = selectTextLang(store.getState()),
+        transLang = selectTransLang(store.getState())
+    ): Promise<TranslationUnit> {
         const res = await fetch(getTranslationURL(text, textLang, transLang));
         //@TODO try/catch
         const unit = await responseToTranslationUnit((await res.json()) as RawResponse, textLang, transLang);
