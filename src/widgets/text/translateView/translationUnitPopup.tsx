@@ -1,12 +1,12 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {selectTextLang, selectTransLang} from '../../store/selectors/configuration';
+import {selectTextLang, selectTransLang} from '../../../store/selectors/configuration';
 import {useDispatch, useSelector} from 'react-redux';
-import TranslationUnitCard from '../translationUnitCard';
+import TranslationUnitCard from '../../translationUnitCard';
 import styles from './styles.module.scss';
-import useOutsideAlerter from '../../hooks/useOutsideAlerter';
-import TranslationUnitModel from '../../models/translationUnit';
-import {TranslationUnit} from '../../models/types';
-import {addTranslationUnit} from '../../store/slices/dictionary';
+import useOutsideAlerter from '../../../hooks/useOutsideAlerter';
+import TranslationUnitModel from '../../../models/translationUnit';
+import {TranslationUnit} from '../../../models/types';
+import {addTranslationUnit} from '../../../store/slices/dictionary';
 
 type TranslationUnitPopupProps = {
     text: string

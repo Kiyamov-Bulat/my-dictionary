@@ -1,13 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
-import useModalState from '../../hooks/useModalState';
+import useModalState from '../../../hooks/useModalState';
 import {useSelector} from 'react-redux';
-import {selectTextLang, selectTransLang} from '../../store/selectors/configuration';
-import Button from '../../components/button';
-import styles from './styles.module.scss';
-import {ArrowDownIcon} from '../../icons';
+import {selectTextLang, selectTransLang} from '../../../store/selectors/configuration';
+import Button from '../../../components/button';
+import {ArrowDownIcon} from '../../../icons';
 import cx from 'classnames';
-import TranslationUnitModel from '../../models/translationUnit';
-import {CLIPlugin} from 'webpack-cli/lib/plugins/CLIPlugin';
+import TranslationUnitModel from '../../../models/translationUnit';
+import styles from './styles.module.scss';
 
 type TranslatedTextProps = {
     text: string

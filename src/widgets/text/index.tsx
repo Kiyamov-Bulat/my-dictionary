@@ -1,6 +1,6 @@
 import React, {FC, useMemo, useState} from 'react';
 import InputView from './inputView';
-import TranslateView from './translateView';
+import TranslateView from './translateView/translateView';
 import ConfigurationModel from '../../models/configuration';
 
 const Text: FC = () => {
