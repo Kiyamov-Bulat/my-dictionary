@@ -1,7 +1,9 @@
-import React, {FC, useRef, useState} from 'react';
+import React, {FC, useMemo, useRef, useState} from 'react';
 import styles from './styles.module.scss';
 import TranslationUnitPopup from './translationUnitPopup';
 import cx from 'classnames';
+import {getSelectHasWord} from '../../../store/selectors/dictionary';
+import {useSelector} from 'react-redux';
 
 type WordProps = {
     value: string
@@ -13,6 +15,9 @@ const POPUP_MARGIN = 8;
 const Word: FC<WordProps> = ({ value, reverseTranslate }) => {
     const [popupCoords, setPopupCoords] = useState<{ x: number, y: number } | null>(null);
     const translateIsCached = useRef(false);
+    const selectHasWord = useMemo(() => getSelectHasWord(value), [value]);
+    const hasWord = useSelector(selectHasWord);
+
     const openPopup = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         const target = e.target as HTMLElement;
 
@@ -25,7 +30,7 @@ const Word: FC<WordProps> = ({ value, reverseTranslate }) => {
     return (
         <>
             <span
-                className={cx(styles.word, { [styles.cached]: translateIsCached.current })}
+                className={cx(styles.word, { [styles.cached]: translateIsCached.current, [styles.hasWord]: hasWord })}
                 onClick={openPopup}>
                 {value}
             </span>

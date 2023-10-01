@@ -12,7 +12,7 @@ type TranslateViewProps = {
 
 const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
     const words = useMemo(() => text.split(/(\s+)/), [text]);
-    const [reverseTranslate, setReverseTranslate] = useState(false);
+    const [reverseTranslate, setReverseTranslate] = useState(true);
     const wordsWOSpaces = words.filter((w) => !/\s+/.test(w));
     const letters = wordsWOSpaces.reduce((acc, word) => acc + word.length, 0);
 
