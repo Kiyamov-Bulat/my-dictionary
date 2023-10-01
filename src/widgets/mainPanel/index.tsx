@@ -25,10 +25,10 @@ const MainPanel: FC = () => {
 
     return (
         <div className={styles.mainPanelContainer}>
-            <Navigation/>
             {state === EGameState.SELECT &&
                 <div className={styles.header}>
                     <Help/>
+                    <Navigation/>
                 </div>
             }
             {getPanel(panelView)}

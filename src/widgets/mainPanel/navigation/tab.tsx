@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import {EPanelView} from '../../../models/configuration';
 import {useDispatch} from 'react-redux';
 import {setPanelView} from '../../../store/slices/configuration';
+import Button from '../../../components/button';
 
 type TabProps = {
     isSelected: boolean
@@ -15,11 +16,12 @@ const Tab: FC<TabProps> = ({ isSelected, children, panelView }) => {
     const dispatch = useDispatch();
     const openPanel = () => dispatch(setPanelView(panelView));
     return (
-        <div
+        <Button
+            variant={'primary'}
             onClick={openPanel}
             className={cx(styles.tab, { [styles.isSelected]: isSelected })}>
             {children}
-        </div>
+        </Button>
     );
 };
 
