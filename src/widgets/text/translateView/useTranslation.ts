@@ -25,6 +25,10 @@ const useTranslation = (text: string, reverse = false): [TranslationUnit | null,
             .then((unit) => $reversed.current ? TranslationUnitModel.swapTextAndTranslation(unit) : unit)
             .then(setUnit);
     }, [text, textLang, transLang]);
+    
+    useEffect(() => {
+        setUnit(null);
+    }, [text, textLang, transLang]);
 
     useEffect(() => {
         if (unit && reverse !== $reversed.current) {

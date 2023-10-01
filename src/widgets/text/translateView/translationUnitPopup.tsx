@@ -30,7 +30,7 @@ const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, co
         }
 
         TranslationUnitModel.vocalize(unit);
-    }, [unit, coords]);
+    }, [unit, coords, translate]);
 
     useOutsideAlerter(() => {
         setPosition(INITIAL_POSITION);
