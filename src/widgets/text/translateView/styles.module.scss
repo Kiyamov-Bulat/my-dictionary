@@ -42,9 +42,12 @@
 
 .word {
   cursor: pointer;
-  border-radius: 8px;
   display: inline-block;
 
+  &.cached {
+    border-bottom: #2196f3 solid 2px;
+    margin-bottom: -4px;
+  }
   &:hover {
     position: relative;
 

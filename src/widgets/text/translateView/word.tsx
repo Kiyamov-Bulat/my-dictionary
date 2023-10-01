@@ -1,6 +1,7 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import styles from './styles.module.scss';
 import TranslationUnitPopup from './translationUnitPopup';
+import cx from 'classnames';
 
 type WordProps = {
     value: string
@@ -11,6 +12,7 @@ const POPUP_MARGIN = 8;
 
 const Word: FC<WordProps> = ({ value, reverseTranslate }) => {
     const [popupCoords, setPopupCoords] = useState<{ x: number, y: number } | null>(null);
+    const translateIsCached = useRef(false);
     const openPopup = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         const target = e.target as HTMLElement;
 
@@ -23,16 +25,19 @@ const Word: FC<WordProps> = ({ value, reverseTranslate }) => {
     return (
         <>
             <span
-                className={styles.word}
+                className={cx(styles.word, { [styles.cached]: translateIsCached.current })}
                 onClick={openPopup}>
                 {value}
             </span>
-            {popupCoords && <TranslationUnitPopup
+            <TranslationUnitPopup
                 text={value}
                 coords={popupCoords}
                 reverse={reverseTranslate}
-                onClose={() => setPopupCoords(null)}
-            />}
+                onClose={() => {
+                    translateIsCached.current = true;
+                    setPopupCoords(null);
+                }}
+            />
         </>
     );
 };

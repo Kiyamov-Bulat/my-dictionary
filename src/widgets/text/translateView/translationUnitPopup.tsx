@@ -9,25 +9,36 @@ import useTranslation from './useTranslation';
 
 type TranslationUnitPopupProps = {
     text: string
-    coords: { x: number, y: number }
+    coords: { x: number, y: number } | null
     onClose: () => void
     reverse?: boolean
 };
 
+const INITIAL_POSITION = { x: -10000, y: -10000 };
+
 const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, coords, reverse = false }) => {
-    const $popup = useRef<HTMLElement | null>(null);
-    const unit = useTranslation(text, reverse);
-    const [position, setPosition] = useState({ x: -10000, y: -10000 });
+    const $popup = useRef<HTMLDivElement | null>(null);
+    const [unit, translate] = useTranslation(text, reverse);
+    const [position, setPosition] = useState(INITIAL_POSITION);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        unit && TranslationUnitModel.vocalize(unit);
-    }, [unit]);
+        if (!coords) { return; }
+        if (!unit) {
+            translate();
+            return;
+        }
 
-    useOutsideAlerter(onClose, $popup);
+        TranslationUnitModel.vocalize(unit);
+    }, [unit, coords]);
+
+    useOutsideAlerter(() => {
+        setPosition(INITIAL_POSITION);
+        onClose();
+    }, $popup);
     
     // @TODO loader and error manager
-    if (!unit) { return null; }
+    if (!unit || !coords) { return null; }
     
     const initPosition = (instance: HTMLDivElement | null) => {
         $popup.current = instance;
