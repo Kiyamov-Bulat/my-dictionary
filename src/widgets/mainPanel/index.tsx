@@ -1,39 +1,37 @@
 import React, {FC} from 'react';
 import Games from '../game';
-import Switch from '../../components/switch';
-import {togglePanelView} from '../../store/slices/configuration';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectPanelViewIsGamesList} from '../../store/selectors/configuration';
+import {selectPanelView} from '../../store/selectors/configuration';
 import Text from '../text';
 import styles from './styles.module.scss';
-import useHotkey from '../../components/hotkeyManger/useHotkey';
-import HOTKEYS from '../../utils/hotkeys';
 import Help from '../help';
 import {selectGameState} from '../../store/selectors/game';
 import {EGameState} from '../../models/game';
-import ConfigurationModel, {EPanelView} from '../../models/configuration';
+import {EPanelView} from '../../models/configuration';
+import Navigation from './navigation/navigation';
+
+const getPanel = (panelView: EPanelView) => {
+    switch(panelView) {
+        case EPanelView.GAMES_LIST:
+            return <Games/>;
+        case EPanelView.TEXT:
+            return <Text/>;
+    }
+};
 
 const MainPanel: FC = () => {
-    const dispatch = useDispatch();
-    const panelViewIsGamesList = useSelector(selectPanelViewIsGamesList);
-    const switchPanel = () => {
-        //@TODO
-        ConfigurationModel.saveMainPanelView(panelViewIsGamesList ? EPanelView.TEXT : EPanelView.GAMES_LIST);
-        dispatch(togglePanelView());
-    };
+    const panelView = useSelector(selectPanelView);
     const state = useSelector(selectGameState);
-
-    useHotkey(HOTKEYS.SWITCH_PANEL_VIEW.key, switchPanel, { ctrl: HOTKEYS.SWITCH_PANEL_VIEW.ctrl });
 
     return (
         <div className={styles.mainPanelContainer}>
+            <Navigation/>
             {state === EGameState.SELECT &&
                 <div className={styles.header}>
                     <Help/>
-                    <Switch className={styles.switch} value={panelViewIsGamesList} onChange={switchPanel}/>
                 </div>
             }
-            {panelViewIsGamesList ? <Games/> : <Text/>}
+            {getPanel(panelView)}
         </div>
     );
 };
