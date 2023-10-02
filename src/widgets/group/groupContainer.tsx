@@ -1,28 +1,24 @@
 import React, {FC, PropsWithChildren} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {getSelectIsGroupSelected} from '../../store/selectors/dictionary';
-import {toggleSelectedGroup} from '../../store/slices/dictionary';
 import styles from './styles.module.scss';
 import cx from 'classnames';
 
 type GroupContainerProps = {
-    id: string
     color: string
+    isSelected: boolean
+    onClick: () => void
 };
 
-const GroupContainer: FC<PropsWithChildren<GroupContainerProps>> = ({ id, color, children }) => {
-    const dispatch = useDispatch();
-    const isSelected = useSelector(getSelectIsGroupSelected(id));
-    const select = () => dispatch(toggleSelectedGroup(id));
-
+const GroupContainer: FC<PropsWithChildren<GroupContainerProps>> = (
+    { color, isSelected, onClick, children }
+) => {
     return (
         <div
             className={cx(styles.groupContainer, { [styles.selected]: isSelected })}
             style={{ border: `3px solid ${color}`}}
         >
             <header>
-                <div className={styles.checkbox} onClick={select}>
-                    <input type='checkbox' checked={isSelected} onChange={select}/>
+                <div className={styles.checkbox} onClick={onClick}>
+                    <input type='checkbox' checked={isSelected} onChange={onClick}/>
                     <label/>
                 </div>
             </header>

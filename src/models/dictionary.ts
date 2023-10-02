@@ -1,42 +1,30 @@
 import GroupModel, {Group} from './group';
 import store from '../store';
-import {selectDictionaryValue, selectSelectedGroupsIds} from '../store/selectors/dictionary';
+import {selectDictionaryValue } from '../store/selectors/dictionary';
 import downloadObjectAsJson from '../utils/downloadObjectAsJson';
 import TranslationUnitModel from './translationUnit';
+import { set as idbSet, get as idbGet } from 'idb-keyval';
 
 const LOCAL_STORAGE_KEY = 'dictionary';
-const SELECTED_GROUPS_LOCAL_STORAGE_KEY = 'dictionary-selected-groups';
 
 export interface Dictionary {
-    groups: Group[]
+    groups: Group[],
 }
 
-const getFromLocalStorage = <T>(key: string, defaultValue: T): T => {
-    const item = localStorage.getItem(key);
-
-    try {
-        return item ? JSON.parse(item) : defaultValue;
-    } catch (_) {
-        return defaultValue;
-    }
-};
 
 const DictionaryModel = {
-    save(dictionary?: Dictionary): void {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dictionary || selectDictionaryValue(store.getState())));
+    save(dictionary?: Dictionary): Promise<void> {
+        return idbSet(LOCAL_STORAGE_KEY, JSON.stringify(dictionary || selectDictionaryValue(store.getState())));
     },
     
-    get(): Dictionary {
-        const rawDict = localStorage.getItem(LOCAL_STORAGE_KEY);
+    async get(): Promise<Dictionary> {
+        let rawDict;
+
+        try {
+            rawDict = await idbGet(LOCAL_STORAGE_KEY);
+        } catch (_) {/* pass */}
 
         return (rawDict && this.parse(rawDict)) || { groups: [ GroupModel.createMainGroup() ] };
-    },
-    saveSelectedGroups(selectedGroups?: string[]): void {
-        localStorage.setItem(SELECTED_GROUPS_LOCAL_STORAGE_KEY, JSON.stringify(selectedGroups || selectSelectedGroupsIds(store.getState())));
-    },
-
-    getSelectedGroups(): string[] {
-        return getFromLocalStorage(SELECTED_GROUPS_LOCAL_STORAGE_KEY, []);
     },
 
     getFileName(): string {

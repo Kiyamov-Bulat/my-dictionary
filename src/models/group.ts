@@ -1,10 +1,7 @@
 import {v4 as uuidv4} from 'uuid';
 import {TranslationUnit} from './types';
-import {create, sample} from 'lodash';
+import {sample} from 'lodash';
 import TranslationUnitModel from './translationUnit';
-import store from '../store';
-import {selectTextLang, selectTransLang} from '../store/selectors/configuration';
-import translate from '../widgets/translate';
 
 export const MAIN_GROUP_TITLE = 'Main';
 
@@ -15,6 +12,8 @@ export interface Group {
     units: TranslationUnit[]
     color: string
     updatedAt: number
+    selected: boolean
+    open: boolean
 }
 
 const GROUP_COLORS = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
@@ -39,7 +38,9 @@ const GroupModel = {
             createAt: now,
             updatedAt: now,
             units: [],
-            color: sample(GROUP_COLORS) as string
+            color: sample(GROUP_COLORS) as string,
+            selected: false,
+            open: false
         };
     },
     

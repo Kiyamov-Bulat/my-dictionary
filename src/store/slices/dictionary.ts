@@ -2,34 +2,24 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import DictionaryModel, {Dictionary} from '../../models/dictionary';
 import GroupModel, {Group} from '../../models/group';
 import {TranslationUnit} from '../../models/types';
-
-const dict = DictionaryModel.get();
-const selectedGroups = DictionaryModel.getSelectedGroups();
+import {selectSelectedGroups} from '../selectors/dictionary';
+import TranslationUnitModel from '../../models/translationUnit';
 
 const dictionaryState = {
-    value: dict,
-    selectedGroups: selectedGroups.length ? selectedGroups : [GroupModel.getMainGroup(dict.groups).id],
+    value: { groups: [GroupModel.getMainGroup([])] },
 };
 
-export const getSelectedGroups = (groups: Group[], selectedIds: string[]): Group[] =>
-    selectedIds.length === 0
-        ? [GroupModel.getMainGroup(groups)]
-        : selectedIds.map((id) => groups.find((group) => group.id === id) as Group);
+export const getSelectedGroups = (groups: Group[]): Group[] => groups.filter((g) => g.selected);
 
-const updateGroups = (state: typeof dictionaryState, cb: (group: Group) => Group) => {
-    const updatedGroups = getSelectedGroups(state.value.groups, state.selectedGroups).map(cb);
-
-    state.value.groups = state.value.groups.map((g) => updatedGroups.find((next) => next.id === g.id) ?? g);
+const updateSelectedGroups = (state: typeof dictionaryState, cb: (group: Group) => void) => {
+    state.value.groups.forEach((g) => g.selected && cb(g));
 };
 
-const swapLangs = (unit: TranslationUnit): TranslationUnit =>
-    ({
-        ...unit,
-        text: unit.translation,
-        translation: unit.text,
-        textLang: unit.transLang,
-        transLang: unit.textLang,
-    });
+const updateGroup = (state: typeof dictionaryState, id: string, cb: (group: Group) => void) => {
+    const group = state.value.groups.find((g) => g.id === id);
+
+    group && cb(group);
+};
 
 const dictionary = createSlice({
     name: 'dictionary',
@@ -43,7 +33,7 @@ const dictionary = createSlice({
             //
         },
         addTranslationUnit(state, { payload }: PayloadAction<TranslationUnit>) {
-            getSelectedGroups(state.value.groups, state.selectedGroups).forEach((group) => {
+            getSelectedGroups(state.value.groups).forEach((group) => {
                 group.units = [...group.units, { ...payload, group: group.title }];
             });
         },
@@ -60,7 +50,6 @@ const dictionary = createSlice({
         },
         removeGroup(state, { payload }: PayloadAction<string>) {
             state.value.groups = state.value.groups.filter((group) => group.id !== payload);
-            state.selectedGroups = state.selectedGroups.filter((groupId) => groupId !== payload);
         },
         updateTranslationUnit(state, { payload }: PayloadAction<TranslationUnit>) {
             const group = state.value.groups.find((group) => group.title === payload.group);
@@ -92,35 +81,32 @@ const dictionary = createSlice({
             unit.memoryPercent = 0;
             unit.currMistakes = 0;
         },
-        toggleSelectedGroup(state, { payload }: PayloadAction<string>) {
-            const index = state.selectedGroups.indexOf(payload);
+        toggleOpen(state, { payload }: PayloadAction<string>) {
+            updateGroup(state, payload, (g) => g.open = !g.open);
 
-            if (index === -1) {
-                state.selectedGroups.push(payload);
-            } else {
-                state.selectedGroups.splice(index, 1);
-            }
+        },
+        toggleSelected(state, { payload }: PayloadAction<string>) {
+            updateGroup(state, payload, (g) => g.selected = !g.selected);
         },
         swapTextAndTranslation(state, { payload }: PayloadAction<TranslationUnit>) {
             const g = state.value.groups.find((g) => g.title === payload.group);
-            const unit = g?.units.find((u) => u.id === payload.id);
 
-            if (!unit) {
+            if (!g) {
                 return;
             }
-            [unit.text, unit.translation, unit.textLang, unit.transLang] =
-                [unit.translation, unit.text, unit.transLang, unit.textLang];
+            const index = g.units.findIndex((u) => u.id === payload.id);
+
+            if (index === -1) {
+                return;
+            }
+            g.units[index] = TranslationUnitModel.swapTextAndTranslation(g.units[index]);
             return;
         },
         swapSelectedGroupsTextAndTranslation(state) {
-            updateGroups(state, (group) => {
-                return { ...group, units: group.units.map(swapLangs) };
-            });
+            updateSelectedGroups(state, (group) => group.units = group.units.map(TranslationUnitModel.swapTextAndTranslation));
         },
         addUnits(state, { payload }: PayloadAction<TranslationUnit[]>) {
-            updateGroups(state, (group) => {
-                return { ...group, units: [...group.units, ...payload ]};
-            });
+            updateSelectedGroups(state, group => group.units = [...group.units, ...payload ]);
         }
     },
 });
@@ -133,7 +119,8 @@ export const {
     resetTranslationUnit,
     removeGroup,
     updateTranslationUnit,
-    toggleSelectedGroup,
+    toggleOpen,
+    toggleSelected,
     swapTextAndTranslation,
     swapSelectedGroupsTextAndTranslation,
     addUnits,

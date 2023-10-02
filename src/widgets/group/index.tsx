@@ -8,7 +8,7 @@ import styles from './styles.module.scss';
 import cx from 'classnames';
 import RemoveBtn from '../../components/removeBtn';
 import {useDispatch} from 'react-redux';
-import {removeGroup} from '../../store/slices/dictionary';
+import {removeGroup, toggleOpen, toggleSelected} from '../../store/slices/dictionary';
 import MemoryChart from './memoryChart';
 import GroupContainer from './groupContainer';
 
@@ -25,18 +25,18 @@ const toDropdownOptions = (units: TranslationUnit[]): DropdownOption[] => {
 
 const Group: FC<IGroup> = (group) => {
     const dispatch = useDispatch();
-    const { units, title, id, color } = group;
-    const [isOpen, setIsOpen] = useState(true);
+    const { units, title, id, color, selected, open } = group;
     const memorizedUnitsNumber = GroupModel.getMemorizedUnitsNumber(units);
-    const toggleIsOpen = () => setIsOpen((isOpen) => !isOpen);
-    
+    const toggleIsSelected = () => dispatch(toggleSelected(id));
+    const toggleIsOpen = () => dispatch(toggleOpen(id));
+
 
     return (
-        <GroupContainer id={id} color={color}>
+        <GroupContainer isSelected={selected} color={color} onClick={toggleIsSelected}>
             <Dropdown
                 onClick={toggleIsOpen}
                 className={cx(styles.group, {[styles.noUnits]: units.length === 0})}
-                isOpen={isOpen}
+                isOpen={open}
                 btnSize={18}
                 selectedOption={''}
                 options={toDropdownOptions(units)}
