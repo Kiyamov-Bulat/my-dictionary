@@ -4,6 +4,9 @@ import styles from './styles.module.scss';
 import Switch from '../../../components/switch';
 import TranslatedText from './translatedText';
 import Word from './word';
+import {ArrowDownIcon} from '../../../icons';
+import useModalState from '../../../hooks/useModalState';
+import cx from 'classnames';
 
 type TranslateViewProps = {
     text: string
@@ -15,6 +18,7 @@ const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
     const [reverseTranslate, setReverseTranslate] = useState(true);
     const wordsWOSpaces = words.filter((w) => !/\s+/.test(w));
     const letters = wordsWOSpaces.reduce((acc, word) => acc + word.length, 0);
+    const { isOpen: translatedTextIsOpen, toggle } = useModalState(false);
 
     return (
         <div className={styles.container}>
@@ -30,7 +34,14 @@ const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
                 </div>
             </header>
             <article className={styles.wordsPanel}>
-                <TranslatedText text={text}/>
+                <Button
+                    variant={'primary'}
+                    onClick={toggle}
+                    className={cx(styles.openTranslatedTextBtn, { [styles.isOpen]: translatedTextIsOpen })}
+                >
+                    <ArrowDownIcon fill={'white'}/>
+                </Button>
+                <TranslatedText text={text} isOpen={translatedTextIsOpen}/>
                 <section className={styles.words}>
                     {words?.map((word, idx) => /\s+/.test(word)
                         ? word : <Word key={idx} value={word} reverseTranslate={reverseTranslate}/>)}

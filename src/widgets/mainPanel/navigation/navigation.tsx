@@ -11,6 +11,9 @@ const TABS = {
     },
     [EPanelView.GAMES_LIST]: {
         content: 'Тренажеры',
+    },
+    [EPanelView.NOTES]: {
+        content: 'Заметки',
     }
 };
 

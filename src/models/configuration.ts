@@ -13,6 +13,7 @@ export const DEFAULT_TRANS_LANG = 'ru';
 export enum EPanelView {
     GAMES_LIST = '@panel-view/games-list',
     TEXT = '@panel-view/text',
+    NOTES = '@panel-view/notes'
 }
 
 export const DEFAULT_PANEL_VIEW = EPanelView.GAMES_LIST;

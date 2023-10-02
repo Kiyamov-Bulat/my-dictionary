@@ -23,6 +23,10 @@
   font-family: Arial;
   box-sizing: border-box;
 
+  > * {
+    height: 100%;
+  }
+
   > *:first-child {
     flex-grow: 2;
     width: 70%;
