@@ -45,7 +45,7 @@ const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, co
 
         if (instance && position.x === -10000) {
             const x = Math.min(Math.max(coords.x - instance.offsetWidth / 2, 0), window.innerWidth);
-            const y = Math.min(Math.max(coords.y, 0), window.innerHeight);
+            const y = Math.max(coords.y, 0);
 
             setPosition({ x, y });
         }
