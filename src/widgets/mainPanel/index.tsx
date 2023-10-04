@@ -9,6 +9,7 @@ import {selectGameState} from '../../store/selectors/game';
 import {EGameState} from '../../models/game';
 import {EPanelView} from '../../models/configuration';
 import Navigation from './navigation/navigation';
+import Notes from '../notes';
 
 const getPanel = (panelView: EPanelView) => {
     switch(panelView) {
@@ -16,6 +17,8 @@ const getPanel = (panelView: EPanelView) => {
             return <Games/>;
         case EPanelView.TEXT:
             return <Text/>;
+        case EPanelView.NOTES:
+            return <Notes/>;
     }
 };
 
