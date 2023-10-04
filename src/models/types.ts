@@ -18,15 +18,18 @@ export interface SrcTranslit {
     src_translit: string;
 }
 
-export interface TranslationUnit {
+export interface BaseObject {
     id: string
+    createdAt: number
+    updatedAt: number
+}
+
+export interface TranslationUnit extends BaseObject {
     group: string
     text: string
     translation: string
     textLang: string
     transLang: string
-    createdAt: number
-    updatedAt: number
     memoryPercent: number
     totalResets: number
     currMistakes: number

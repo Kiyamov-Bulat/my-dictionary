@@ -1,17 +1,14 @@
 import {v4 as uuidv4} from 'uuid';
-import {TranslationUnit} from './types';
+import {BaseObject, TranslationUnit} from './types';
 import {sample} from 'lodash';
 import TranslationUnitModel from './translationUnit';
 
 export const MAIN_GROUP_TITLE = 'Main';
 
-export interface Group {
-    id: string
+export interface Group extends BaseObject {
     title: string
-    createAt: number
     units: TranslationUnit[]
     color: string
-    updatedAt: number
     selected: boolean
     open: boolean
 }
@@ -35,7 +32,7 @@ const GroupModel = {
         return {
             id: uuidv4(),
             title: title,
-            createAt: now,
+            createdAt: now,
             updatedAt: now,
             units: [],
             color: sample(GROUP_COLORS) as string,

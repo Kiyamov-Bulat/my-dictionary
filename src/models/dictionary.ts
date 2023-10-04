@@ -22,7 +22,9 @@ const DictionaryModel = {
 
         try {
             rawDict = await idbGet(LOCAL_STORAGE_KEY);
-        } catch (_) {/* pass */}
+        } catch (err) {
+            console.error('[Dictionary.get] indexeddb error:', err);
+        }
 
         return (rawDict && this.parse(rawDict)) || { groups: [ GroupModel.createMainGroup() ] };
     },

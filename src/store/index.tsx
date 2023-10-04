@@ -3,6 +3,7 @@ import dictionary from './slices/dictionary';
 import user from './slices/user';
 import configuration from './slices/configuration';
 import game from './slices/game';
+import note from './slices/note';
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         dictionary,
         configuration,
         game,
+        note,
     },
 });
 

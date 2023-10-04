@@ -8,9 +8,11 @@ import MainPanel from './widgets/mainPanel';
 import HotkeyManager from './components/hotkeyManger';
 import {useSelector} from 'react-redux';
 import {selectGameIsStarted} from './store/selectors/game';
+import useNoteManager from './hooks/useNoteManager';
 
 const App = () => {
     useDictionaryManager();
+    useNoteManager();
     const gameIsStarted = useSelector(selectGameIsStarted);
     const $container = useRef<HTMLDivElement | null>(null);
 
