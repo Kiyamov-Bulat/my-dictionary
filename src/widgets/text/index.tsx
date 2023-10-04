@@ -1,21 +1,21 @@
 import React, {FC, useMemo, useState} from 'react';
 import InputView from './inputView';
 import TranslateView from './translateView/translateView';
-import ConfigurationModel from '../../models/configuration';
+import NoteModel from '../../models/note';
 
 const Text: FC = () => {
-    const initialText = useMemo(() => ConfigurationModel.getCachedText(), []);
-    const [text, setText] = useState(initialText);
-    const [isInput, setIsInput] = useState(!initialText);
+    const { value: note, saved } = useMemo(() => NoteModel.getCached(), []);
+    const [text, setText] = useState(note.text);
+    const [isInput, setIsInput] = useState(!note.text);
     const toTranslateView = () => {
-        ConfigurationModel.saveText(text);
+        NoteModel.save({ ...note, text }, saved);
         setIsInput(false);
     };
     const toInputView = () => setIsInput(true);
 
     return (isInput
         ? <InputView text={text} onChange={setText} onSubmit={toTranslateView}/>
-        : <TranslateView text={text} onBack={toInputView}/>
+        : <TranslateView note={note} onBack={toInputView}/>
     );
 };
 

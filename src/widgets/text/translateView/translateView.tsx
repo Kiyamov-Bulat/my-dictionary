@@ -4,17 +4,18 @@ import styles from './styles.module.scss';
 import Switch from '../../../components/switch';
 import TranslatedText from './translatedText';
 import Word from './word';
-import {ArrowDownIcon} from '../../../icons';
+import {ArrowDownIcon, StarIcon} from '../../../icons';
 import useModalState from '../../../hooks/useModalState';
 import cx from 'classnames';
+import NoteModel, {Note} from '../../../models/note';
 
 type TranslateViewProps = {
-    text: string
+    note: Note
     onBack: () => void
 };
 
-const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
-    const words = useMemo(() => text.split(/(\s+)/), [text]);
+const TranslateView: FC<TranslateViewProps> = ({ note, onBack }) => {
+    const words = useMemo(() => note.text.split(/(\s+)/), [note.text]);
     const [reverseTranslate, setReverseTranslate] = useState(true);
     const wordsWOSpaces = words.filter((w) => !/\s+/.test(w));
     const letters = wordsWOSpaces.reduce((acc, word) => acc + word.length, 0);
@@ -34,14 +35,23 @@ const TranslateView: FC<TranslateViewProps> = ({ text, onBack }) => {
                 </div>
             </header>
             <article className={styles.wordsPanel}>
-                <Button
-                    variant={'primary'}
-                    onClick={toggle}
-                    className={cx(styles.openTranslatedTextBtn, { [styles.isOpen]: translatedTextIsOpen })}
-                >
-                    <ArrowDownIcon fill={'white'}/>
-                </Button>
-                <TranslatedText text={text} isOpen={translatedTextIsOpen}/>
+                <div className={styles.btnsPanel}>
+                    <Button
+                        variant={'primary'}
+                        onClick={toggle}
+                        className={cx(styles.openTranslatedTextBtn, { [styles.isOpen]: translatedTextIsOpen })}
+                    >
+                        <ArrowDownIcon fill={'white'}/>
+                    </Button>
+                    <Button
+                        variant={'primary'}
+                        onClick={() => NoteModel.save(note, true)}
+                        className={styles.addNoteBtn}
+                        >
+                        <StarIcon stroke={'white'}/>
+                    </Button>
+                </div>
+                <TranslatedText text={note.text} isOpen={translatedTextIsOpen}/>
                 <section className={styles.words}>
                     {words?.map((word, idx) => /\s+/.test(word)
                         ? word : <Word key={idx} value={word} reverseTranslate={reverseTranslate}/>)}

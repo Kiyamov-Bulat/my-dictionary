@@ -13,6 +13,9 @@ export const selectDictionaryValue = (state: RootState): Dictionary => selectDic
 export const selectGroups = (state: RootState): Group[] => selectDictionaryValue(state).groups;
 export const selectSelectedGroups = createSelector(selectGroups, getSelectedGroups);
 
+export const selectSelectedGroupsIds = createSelector(selectSelectedGroups,
+    (groups) => groups.map((g) => g.id));
+
 export const selectSelectedGroupsTitles =
     createSelector(selectSelectedGroups, (groups) => groups.map((g) => g.title));
 

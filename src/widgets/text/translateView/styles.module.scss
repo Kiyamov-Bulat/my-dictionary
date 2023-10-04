@@ -118,11 +118,17 @@
   float: right;
 }
 
-.openTranslatedTextBtn {
+.btnsPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   z-index: 1;
   position: sticky;
   top: 0px;
   margin-left: calc(100% - 26px);
+}
+
+.openTranslatedTextBtn, .addNoteBtn {
   padding: 9px 8px;
   border-top-left-radius: 24px;
   border-bottom-left-radius: 24px;
@@ -143,4 +149,7 @@
     transition: transform ease 0.3s;
     transform: rotate(90deg);
   }
+}
+
+.addNoteBtn {
 }

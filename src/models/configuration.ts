@@ -2,7 +2,6 @@ import text from '../widgets/text';
 
 const TEXT_LANG_LOCAL_STORAGE_KEY = 'text-lang';
 const TRANS_LANG_LOCAL_STORAGE_KEY = 'trans-lang';
-const TEXT_STORAGE_KEY = 'text';
 const MAIN_PANEL_VIEW_KEY = 'main-panel-view';
 
 export const DEFAULT_TEXT_LANG = 'auto';
@@ -40,14 +39,6 @@ const ConfigurationModel = {
             transLang: localStorage.getItem(TRANS_LANG_LOCAL_STORAGE_KEY) || DEFAULT_TRANS_LANG,
             panelView: localStorage.getItem(MAIN_PANEL_VIEW_KEY) as EPanelView || DEFAULT_PANEL_VIEW,
         };
-    },
-
-    saveText(text: string): void {
-        localStorage.setItem(TEXT_STORAGE_KEY, text);
-    },
-
-    getCachedText(): string {
-        return localStorage.getItem(TEXT_STORAGE_KEY) || '';
     },
 };
 

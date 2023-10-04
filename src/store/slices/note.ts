@@ -13,7 +13,9 @@ const noteSlice = createSlice({
             state.notes = payload;
         },
         addNote(state, { payload }: PayloadAction<Note>) {
-            state.notes.push(payload);
+            if (!state.notes.find((note) => note.id === payload.id)) {
+                state.notes.push(payload);
+            }
         },
         removeNote(state, { payload }: PayloadAction<string>) {
             state.notes = state.notes.filter((note) => note.id !== payload);
