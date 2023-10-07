@@ -1,19 +1,15 @@
 import React, {FC} from 'react';
-import Button from '../../../components/button';
-import NoteModel, {Note} from '../../../models/note';
+import Button from '../../../../components/button';
+import NoteModel, {Note} from '../../../../models/note';
+import {StarIcon} from '../../../../icons';
+import {useNoteContext} from '../../noteContext';
 import styles from './styles.module.scss';
-import {StarIcon} from '../../../icons';
-import {useNoteContext} from '../noteContext';
 
-type ControlPanelProps = {
-    note: Note
-};
-
-const ControlPanel: FC<ControlPanelProps> = () => {
-    const { note } = useNoteContext();
+const ControlPanel: FC = () => {
+    const { note, saveNote } = useNoteContext();
 
     return (
-        <div>
+        <div className={styles.controlPanelContainer}>
             <Button
                 variant={'primary'}
                 onClick={() => NoteModel.save(note, true)}
