@@ -12,12 +12,13 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: 12px 16px;
+    padding: 40px 40px 12px 16px;
     background: white;
     border-radius: 12px;
     border: 1px solid #bfc5ca;
     box-sizing: border-box;
     overflow: auto;
+    flex-grow: 1;
   }
   header {
     display: flex;
@@ -31,55 +32,6 @@
       color: #1f1f1f;
     }
   }
-}
-
-.words {
-  line-height: 32px;
-  font-size: 24px;
-  white-space: pre-wrap;
-  letter-spacing: -0.3px;
-  margin-top: -32px;
-
-  //padding: 8px 32px;
-}
-
-.word {
-  cursor: pointer;
-  display: inline-block;
-
-  &.hasWord {
-    background-color: rgba(246, 191, 7, 0.8);
-  }
-
-  &.cached {
-    border-bottom: #2196f3 solid 2px;
-    margin-bottom: -4px;
-  }
-  &:hover {
-    position: relative;
-
-    &:after {
-      content: "";
-      position: absolute;
-      left: -2px;
-      top: -2px;
-      width: calc(100% + 4px);
-      height: calc(100% + 4px);
-      box-shadow: 0px 0px 3px 1px #7f7f7f;
-      border-radius: 4px;
-    }
-  }
-}
-
-.translationPopup {
-  @include m.shadow;
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  background: white;
-  padding: 0 8px;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
 .reverseTranslateContainer {
@@ -123,9 +75,9 @@
   flex-direction: column;
   gap: 4px;
   z-index: 1;
-  position: sticky;
-  top: 0px;
-  margin-left: calc(100% - 26px);
+  position: absolute;
+  top: 6px;
+  right: 6px
 }
 
 .openTranslatedTextBtn, .addNoteBtn {

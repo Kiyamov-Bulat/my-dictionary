@@ -1,0 +1,36 @@
+
+.words {
+  line-height: 32px;
+  font-size: 24px;
+  white-space: pre-wrap;
+  letter-spacing: -0.3px;
+  //padding: 8px 32px;
+}
+
+.word {
+  cursor: pointer;
+  display: inline-block;
+
+  &.hasWord {
+    background-color: rgba(246, 191, 7, 0.8);
+  }
+
+  &.cached {
+    border-bottom: #2196f3 solid 2px;
+    margin-bottom: -4px;
+  }
+  &:hover {
+    position: relative;
+
+    &:after {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: -2px;
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+      box-shadow: 0px 0px 3px 1px #7f7f7f;
+      border-radius: 4px;
+    }
+  }
+}

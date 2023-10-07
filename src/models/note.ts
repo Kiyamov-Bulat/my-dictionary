@@ -17,7 +17,7 @@ export interface Note extends BaseObject {
 
 export interface CachedNote {
     value: Note,
-    saved: boolean
+    added: boolean
 }
 
 const NoteModel = {
@@ -66,14 +66,16 @@ const NoteModel = {
                 console.error('[Note.getCached] Failed to parse JSON', err);
             }
         }
-        return { value: this.create(), saved: false };
+        return { value: this.create(), added: false };
     },
 
     save(note: Note, add: boolean): void {
         const selectedGroups = selectSelectedGroupsIds(store.getState());
         const finalNote = { ...note, groups: selectedGroups };
 
-        this.saveInCache({ value: finalNote, saved: add });
+        this.saveInCache({ value: finalNote, added: add });
+
+        if (!add) { return; }
 
         if (this.has(finalNote)) {
             store.dispatch(updateNote(finalNote));

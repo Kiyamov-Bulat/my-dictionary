@@ -1,8 +1,8 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
-import TranslationUnitModel from '../../../models/translationUnit';
-import {TranslationUnit} from '../../../models/types';
+import TranslationUnitModel from '../../../../models/translationUnit';
+import {TranslationUnit} from '../../../../models/types';
 import {useSelector} from 'react-redux';
-import {selectTextLang, selectTransLang} from '../../../store/selectors/configuration';
+import {selectTextLang, selectTransLang} from '../../../../store/selectors/configuration';
 
 const useTranslation = (text: string, reverse = false): [TranslationUnit | null, () => void] => {
     const [unit, setUnit] = useState<TranslationUnit | null>(null);

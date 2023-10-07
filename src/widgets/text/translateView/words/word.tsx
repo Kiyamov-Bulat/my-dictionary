@@ -1,18 +1,17 @@
 import React, {FC, useMemo, useRef, useState} from 'react';
 import styles from './styles.module.scss';
-import TranslationUnitPopup from './translationUnitPopup';
+import TranslationUnitPopup from '../translationUnitPopup/translationUnitPopup';
 import cx from 'classnames';
-import {getSelectHasWord} from '../../../store/selectors/dictionary';
+import {getSelectHasWord} from '../../../../store/selectors/dictionary';
 import {useSelector} from 'react-redux';
 
 type WordProps = {
     value: string
-    reverseTranslate: boolean
 };
 
 const POPUP_MARGIN = 8;
 
-const Word: FC<WordProps> = ({ value, reverseTranslate }) => {
+const Word: FC<WordProps> = ({ value }) => {
     const [popupCoords, setPopupCoords] = useState<{ x: number, y: number } | null>(null);
     const translateIsCached = useRef(false);
     const selectHasWord = useMemo(() => getSelectHasWord(value), [value]);
@@ -37,7 +36,6 @@ const Word: FC<WordProps> = ({ value, reverseTranslate }) => {
             <TranslationUnitPopup
                 text={value}
                 coords={popupCoords}
-                reverse={reverseTranslate}
                 onClose={() => {
                     translateIsCached.current = true;
                     setPopupCoords(null);

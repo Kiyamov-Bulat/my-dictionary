@@ -1,5 +1,3 @@
-import {keys} from 'lodash';
-
 const SWAP_KEY = {
     ArrowRight: '→',
     ArrowLeft: '←',

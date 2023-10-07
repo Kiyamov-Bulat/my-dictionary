@@ -1,24 +1,26 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import TranslationUnitCard from '../../translationUnitCard';
+import TranslationUnitCard from '../../../translationUnitCard';
 import styles from './styles.module.scss';
-import useOutsideAlerter from '../../../hooks/useOutsideAlerter';
-import TranslationUnitModel from '../../../models/translationUnit';
-import {addTranslationUnit} from '../../../store/slices/dictionary';
+import useOutsideAlerter from '../../../../hooks/useOutsideAlerter';
+import TranslationUnitModel from '../../../../models/translationUnit';
+import {addTranslationUnit} from '../../../../store/slices/dictionary';
 import useTranslation from './useTranslation';
+import {useNoteContext} from '../../noteContext';
+import {useWordsContext} from '../wordsContext';
 
 type TranslationUnitPopupProps = {
     text: string
     coords: { x: number, y: number } | null
     onClose: () => void
-    reverse?: boolean
 };
 
 const INITIAL_POSITION = { x: -10000, y: -10000 };
 
-const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, coords, reverse = false }) => {
+const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, coords }) => {
     const $popup = useRef<HTMLDivElement | null>(null);
-    const [unit, translate] = useTranslation(text, reverse);
+    const { reverseTranslate } = useWordsContext();
+    const [unit, translate] = useTranslation(text, reverseTranslate);
     const [position, setPosition] = useState(INITIAL_POSITION);
     const dispatch = useDispatch();
 

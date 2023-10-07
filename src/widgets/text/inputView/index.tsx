@@ -1,17 +1,18 @@
-import React, {FC, useEffect, useRef} from 'react';
-import TextField from '../../components/textField';
-import Button from '../../components/button';
+import React, {FC, useEffect, useRef, useState} from 'react';
+import TextField from '../../../components/textField';
+import Button from '../../../components/button';
 import styles from './styles.module.scss';
+import {useNoteContext} from '../noteContext';
 
-type InputViewProps = {
-    text: string
-    onChange: (text: string) => void
-    onSubmit: () => void
-};
-
-const InputView: FC<InputViewProps> = ({ text, onChange, onSubmit }) => {
+const InputView: FC = () => {
+    const { note, saveNote, setIsEdit } = useNoteContext();
     const $textField = useRef<HTMLTextAreaElement | null>(null);
-
+    const [text, setText] = useState(note.text);
+    const onSubmit = () => {
+        saveNote({ ...note, text });
+        setIsEdit(false);
+    };
+    useEffect(() => setText(note.text), [note.text]);
     useEffect(() => $textField.current?.setSelectionRange(0, text.length), []);
     return (
         <div className={styles.container}>
@@ -23,7 +24,7 @@ const InputView: FC<InputViewProps> = ({ text, onChange, onSubmit }) => {
                 placeholder={'Что нибудь интересное...'}
                 multiline={true}
                 value={text}
-                onChange={onChange}/>
+                onChange={setText}/>
             <Button onClick={onSubmit} variant={'primary'}>
                 Подготовить
             </Button>

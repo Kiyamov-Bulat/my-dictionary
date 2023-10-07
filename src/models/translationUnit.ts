@@ -184,6 +184,10 @@ const TranslationUnitModel = {
         [res.text, res.translation, res.textLang, res.transLang] =
             [res.translation, res.text, res.transLang, res.textLang];
         return res;
+    },
+    
+    isEqual(tu1: TranslationUnit, tu2: TranslationUnit) {
+        return tu1.text === tu2.text && tu1.textLang === tu2.textLang && tu1.transLang === tu2.transLang;
     }
 };
 

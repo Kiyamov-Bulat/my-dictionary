@@ -4,6 +4,7 @@ import {selectTextLang, selectTransLang} from '../../../store/selectors/configur
 import cx from 'classnames';
 import TranslationUnitModel from '../../../models/translationUnit';
 import styles from './styles.module.scss';
+import {TranslationUnit} from '../../../models/types';
 
 type TranslatedTextProps = {
     text: string
@@ -13,19 +14,23 @@ type TranslatedTextProps = {
 const TranslatedText: FC<TranslatedTextProps> = ({ text, isOpen }) => {
     const textLang = useSelector(selectTextLang);
     const transLang = useSelector(selectTransLang);
-    const [translatedText, setTranslatedText] = useState('');
+    const [unit, setUnit] = useState({} as TranslationUnit);
 
     useEffect(() => {
+        const newUnit = TranslationUnitModel.normalize({ text, textLang, transLang });
+
+        if (!isOpen || TranslationUnitModel.isEqual(unit, newUnit)) { return; }
+
         TranslationUnitModel
             .translate(text, textLang, transLang)
-            .then((u) => setTranslatedText(u.translation))
+            .then(setUnit)
             .catch((err) => console.error('Не удалось перевести:', err));
-    }, [text, textLang, transLang]);
+    }, [text, textLang, transLang, isOpen, unit]);
 
     return (
         <div className={cx(styles.translatedTextContainer, { [styles.isOpen]: isOpen })}>
             {isOpen && <p className={styles.translatedText}>
-                {translatedText}
+                {unit.translation}
             </p>}
         </div>
     );
