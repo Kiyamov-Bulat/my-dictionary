@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
 import styles from './styles.module.scss';
 import Word from './word';
-import {useWords} from '../wordsContext';
+import {useWithSpacesWords} from '../wordsContext';
 import isSpace from '../../../../utils/isSpace';
 
 const Words: FC = () => {
-    const words = useWords();
+    const words = useWithSpacesWords();
 
     return (
         <section className={styles.words}>

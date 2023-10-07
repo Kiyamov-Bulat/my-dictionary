@@ -1,12 +1,12 @@
 import {useWordsContext} from '../wordsContext';
 
 const useWordsStatistics = () => {
-    const { words } = useWordsContext();
-    const wordsWOSpaces = words.filter((w) => !/\s+/.test(w));
-    const letters = wordsWOSpaces.reduce((acc, word) => acc + word.length, 0);
+    const { words, wordsInGroups } = useWordsContext();
+    const letters = words.reduce((acc, word) => acc + word.length, 0);
 
     return {
-        words: wordsWOSpaces.length,
+        words: words.length,
+        wordsInGroups: wordsInGroups.length,
         letters,
     };
 };

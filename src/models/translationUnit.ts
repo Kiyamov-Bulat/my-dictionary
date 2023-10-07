@@ -186,8 +186,11 @@ const TranslationUnitModel = {
         return res;
     },
     
-    isEqual(tu1: TranslationUnit, tu2: TranslationUnit) {
-        return tu1.text === tu2.text && tu1.textLang === tu2.textLang && tu1.transLang === tu2.transLang;
+    isEqual(tu1: TranslationUnit, tu2: TranslationUnit, strict = true) {
+        const res = (tu1.text === tu2.text && tu1.textLang === tu2.textLang &&
+            tu1.transLang === tu2.transLang);
+
+        return res || (!strict && tu1.text === tu2.translation && tu1.transLang === tu2.textLang && tu1.textLang === tu2.transLang);
     }
 };
 
