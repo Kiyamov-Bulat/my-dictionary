@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styles from './styles.module.scss';
-import Switch from '../../../components/switch';
-import {useWordsContext} from './wordsContext';
+import Switch from '../../../../components/switch';
+import {useWordsContext} from '../wordsContext';
 
 const Header: FC = () => {
     const { words, reverseTranslate, setReverseTranslate } = useWordsContext();

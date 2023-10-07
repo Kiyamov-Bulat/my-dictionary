@@ -1,0 +1,21 @@
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  p {
+    color: #1f1f1f;
+  }
+}
+
+.reverseTranslateContainer {
+  display: flex;
+  align-items: center;
+}
+
+.reverseTranslate {
+  transform: scale(0.6);
+}
