@@ -4,7 +4,7 @@ import NoteModel, {Note} from '../../models/note';
 const NoteContext = createContext({
     note: NoteModel.create(''),
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    saveNote: (note: Note, add?: boolean) => {},
+    saveNote: (note?: Note, add?: boolean) => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     setIsEdit: (value: boolean) => {},
     added: false,
@@ -18,10 +18,10 @@ export const useNoteText = () => useNoteContext().note.text;
 const NoteContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const [cachedNote, setCachedNote] = useState(() => NoteModel.getCached());
     const [isEdit, setIsEdit] = useState(false);
-    const saveNote = useCallback((note: Note, add = cachedNote.added) => {
+    const saveNote = useCallback((note: Note = cachedNote.value, add = cachedNote.added) => {
         NoteModel.save(note, add);
         setCachedNote(NoteModel.getCached());
-    }, [cachedNote.added]);
+    }, [cachedNote]);
     
     return (
         <NoteContext.Provider value={{ note: cachedNote.value, saveNote, added: cachedNote.added, isEdit, setIsEdit }}>

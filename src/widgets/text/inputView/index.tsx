@@ -16,7 +16,6 @@ const InputView: FC = () => {
     useEffect(() => $textField.current?.setSelectionRange(0, text.length), []);
     return (
         <div className={styles.container}>
-            <h1>Интерактивный перевод</h1>
             <TextField
                 autoFocus={true}
                 ref={$textField}

@@ -1,20 +1,84 @@
+@use "styles/constants.scss" as c;
+
 .controlPanelContainer {
   display: flex;
+  align-items: center;
   width: fit-content;
-  padding: 8px 16px;
+  padding: 8px 12px;
   background-color: rgba(33, 150, 243, 0.3);
   box-shadow: 1px 1px 0px 0px rgba(127, 127, 127, 0.2);
-  border-bottom-right-radius: 50%;
+  border-bottom-right-radius: 16px;
+  margin-bottom: 4px;
+  gap: 16px;
 }
 
-.addNoteBtn {
-  padding: 8px 7px;
-  border-radius: 12px;
+.btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  svg {
-    width: 12px;
-    height: 12px;
-    transition: transform ease 0.3s;
-    transform: rotate(90deg);
+.btn {
+  &:not(.active) button {
+    background: transparent;
+    outline: 2px solid c.$primary-color;
+
+    svg {
+      stroke: c.$primary-color;
+      fill: transparent;
+    }
+  }
+  button {
+    width: 26px;
+    height: 26px;
+    padding: 7px;
+    border-radius: 12px;
+    outline: 2px solid c.$primary-color;
+    &:hover {
+      outline: 2px solid c.$active-primary-color;
+    }
+    svg {
+      width: 12px;
+      height: 12px;
+      transition: transform ease 0.3s;
+    }
+  }
+}
+
+.leftTip {
+  > div {
+    left: -10px;
+    &:after {
+      left: 14px;
+    }
+  }
+}
+
+.textIcon {
+  button {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: 600;
+  }
+}
+
+.statistics {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(97, 110, 124, 0.5);
+  > * {
+    cursor: default;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .type {
+    color: white;
   }
 }

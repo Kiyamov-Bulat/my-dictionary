@@ -5,6 +5,7 @@ import {selectSelectedGroupsIds} from '../store/selectors/dictionary';
 import store from '../store';
 import {addNote, updateNote} from '../store/slices/note';
 import {selectNotes} from '../store/selectors/note';
+import {map} from 'lodash';
 
 const NOTES_STORAGE_KEY = 'notes';
 const CACHED_NOTE_STORAGE_KEY = 'text';
@@ -86,6 +87,12 @@ const NoteModel = {
 
     has(note: Note): boolean {
         return !!selectNotes(store.getState()).find((n) => n.id === note.id);
+    },
+    
+    clone(note: Note): Note {
+        const now = Date.now();
+        
+        return { ...note, updatedAt: now, createdAt: now, id: uuidv4() };
     }
 };
 

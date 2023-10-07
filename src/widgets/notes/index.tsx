@@ -8,7 +8,9 @@ const Notes: FC = () => {
 
     return (
         <div className={styles.notesContainer}>
-            {notes.map((n) => <p className={styles.noteContainer}>{n.text}</p>)}
+            {notes.map((n) =>
+                <p key={n.id} className={styles.noteContainer}>{n.text}</p>
+            )}
         </div>
     );
 };
