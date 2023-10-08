@@ -62,10 +62,25 @@
   gap: 4px;
   font-size: 12px;
   margin: 6px 0;
+
+  input::placeholder {
+    color: inherit;
+  }
 }
 
 .tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
   border: 1px solid;
   border-radius: 8px;
   padding: 1px 3px;
+}
+
+.removeTag {
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: -1px;
 }

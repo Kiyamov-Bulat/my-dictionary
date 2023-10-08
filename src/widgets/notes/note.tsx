@@ -24,12 +24,19 @@ const Note: FC<NoteProps> = ({ note }) => {
     };
 
     const saveTag = (tag: string) => {
+        if (!tag) {
+            return false;
+        }
         if (note.tags.includes(tag)) {
             Notice.warn('Такой тэг уже существует');
             return false;
         }
         NoteModel.save({ ...note, tags: [...note.tags, tag] }, true);
         return true;
+    };
+
+    const removeTag = (tag: string) => {
+        NoteModel.save({ ...note, tags: note.tags.filter((t) => t !== tag) }, true);
     };
 
     const goToTranslate = () => {
@@ -52,10 +59,12 @@ const Note: FC<NoteProps> = ({ note }) => {
                 />
                 <div className={styles.tagList}>
                     <EditableLabel
+                        value={''}
+                        placeholder={'Новый тэг'}
                         className={styles.tag}
-                        value={'Новый тэг'}
                         onSetInactive={saveTag}/>
-                    {tags.map((tag, idx) => <Tag name={tag} key={tag + idx}/>)}
+                    {tags.map((tag, idx) =>
+                        <Tag onRemove={removeTag} name={tag} key={tag + idx}/>)}
                 </div>
                 <div>
                     {note.text}

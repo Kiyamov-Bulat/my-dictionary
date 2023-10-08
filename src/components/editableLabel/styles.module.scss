@@ -1,5 +1,6 @@
 .editableLabelWrapper {
   position: relative;
+  cursor: pointer;
 }
 
 .editableLabelContainer {
@@ -11,6 +12,11 @@
     font-size: inherit !important;
     font-weight: inherit !important;
     line-height: inherit !important;
+    &::placeholder {
+      font-size: inherit !important;
+      font-weight: inherit !important;
+      line-height: inherit !important;
+    }
   }
   border: 1px solid #ffffffff;
 

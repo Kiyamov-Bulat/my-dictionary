@@ -8,15 +8,25 @@ import {ETooltipPosition} from '../../../../components/tooltip/TooltipWrapper';
 import ButtonWithTooltip from '../../../../components/button/ButtonWithTooltip';
 import Statistics from './statistics';
 import NoteModel from '../../../../models/note';
-import TranslatedText from '../translatedText';
+import GroupModel from '../../../../models/group';
+import {useDispatch} from 'react-redux';
+import {addGroup} from '../../../../store/slices/dictionary';
 
 const ControlPanel: FC = () => {
+    const dispatch = useDispatch();
     const { note, saveNote, added, setIsEdit } = useNoteContext();
     const { reverseTranslate, setReverseTranslate } = useWordsContext();
     const newNote = () => {
         saveNote(NoteModel.clone(note), false);
         setIsEdit(true);
     };
+    const addNoteGroup = () => {
+        const group = GroupModel.create(note.title);
+        
+        dispatch(addGroup(group));
+        saveNote({...note, groups: [...note.groups, group.id]});
+    };
+    
     return (
         <div className={styles.controlPanelContainer}>
             <div className={styles.btns}>
@@ -39,13 +49,24 @@ const ControlPanel: FC = () => {
                     tipContent={reverseTranslate ? 'Выключить обратный перевод' : 'Включить обратный перевод'}
                     className={cx(styles.btn, { [styles.active]: reverseTranslate })}
                     action={() => setReverseTranslate((prevState) => !prevState)}/>
-                {added && <ButtonWithTooltip
-                    Icon={PenIcon}
-                    position={ETooltipPosition.S}
-                    tipContent={'Редактировать'}
-                    className={cx(styles.btn, styles.active)}
-                    action={() => setIsEdit(true)}
-                />}
+                {added &&
+                    <>
+                        <ButtonWithTooltip
+                            position={ETooltipPosition.S}
+                            action={addNoteGroup}
+                            tipContent={'Добавить группу'}
+                            className={cx(styles.btn, styles.textIcon, styles.active)}
+                        >
+                            +G
+                        </ButtonWithTooltip>
+                        <ButtonWithTooltip
+                            Icon={PenIcon}
+                            position={ETooltipPosition.S}
+                            tipContent={'Редактировать'}
+                            className={cx(styles.btn, styles.active)}
+                            action={() => setIsEdit(true)}
+                        />
+                    </>}
             </div>
             <Statistics/>
         </div>
