@@ -3,7 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 import {get as idbGet, set as idbSet} from 'idb-keyval';
 import {selectSelectedGroupsIds} from '../store/selectors/dictionary';
 import store from '../store';
-import {addNote, updateNote} from '../store/slices/note';
+import {addNote, removeNote, updateNote} from '../store/slices/note';
 import {selectNotes} from '../store/selectors/note';
 import {map} from 'lodash';
 import normalizeObject from '../utils/normalize';
@@ -28,6 +28,7 @@ const isCachedNote = (note: any): note is CachedNote => {
 };
 
 const NoteModel = {
+    DEFAULT_TITLE: 'Заметка без названия',
     create(text = ''): Note {
         const now = Date.now();
         
@@ -37,7 +38,7 @@ const NoteModel = {
             updatedAt: now,
             groups: [],
             tags: [],
-            title: '',
+            title: this.DEFAULT_TITLE,
             text,
         };
     },
@@ -131,6 +132,17 @@ const NoteModel = {
         } catch (e) {/* pass */}
 
         return null;
+    },
+
+    remove(note: Note) {
+        const cachedNote = this.getCached();
+
+        if (cachedNote.value.id === note.id) {
+            cachedNote.added = false;
+            // обнуляем флаг, если заметка в кеше, но не удаляем заметку.
+            this.saveInCache(cachedNote);
+        }
+        store.dispatch(removeNote(note.id));
     }
 };
 

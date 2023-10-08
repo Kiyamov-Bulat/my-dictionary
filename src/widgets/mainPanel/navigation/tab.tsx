@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import cx from 'classnames';
 import styles from './styles.module.scss';
-import {EPanelView} from '../../../models/configuration';
+import ConfigurationModel, {EPanelView} from '../../../models/configuration';
 import {useDispatch} from 'react-redux';
 import {setPanelView} from '../../../store/slices/configuration';
 import Button from '../../../components/button';
@@ -14,7 +14,10 @@ type TabProps = {
 
 const Tab: FC<TabProps> = ({ isSelected, children, panelView }) => {
     const dispatch = useDispatch();
-    const openPanel = () => dispatch(setPanelView(panelView));
+    const openPanel = () => {
+        dispatch(setPanelView(panelView));
+        ConfigurationModel.saveMainPanelView(panelView);
+    };
     return (
         <Button
             variant={'primary'}

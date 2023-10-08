@@ -1,3 +1,5 @@
+@use "styles/mixins.scss" as m;
+
 .notesContainer {
   display: flex;
   flex-direction: column;
@@ -8,4 +10,62 @@
   background-color: white;
   border-radius: 8px;
   padding: 16px;
+  font-size: 14px;
+}
+
+.contentContainer {
+  > div:first-of-type {
+    z-index: 1;
+  }
+}
+
+.title {
+  @include m.smallTitle;
+  margin-bottom: 2px;
+  input {
+    font-weight: 600;
+    padding: 0;
+  }
+}
+
+.btns {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  gap: 8px;
+  float: left;
+  margin-right: 8px;
+  z-index: 2;
+
+  > * {
+    position: relative;
+    opacity: 1;
+  }
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    width: fit-content;
+    height: fit-content;
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.tagList {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  font-size: 12px;
+  margin: 6px 0;
+}
+
+.tag {
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 1px 3px;
 }

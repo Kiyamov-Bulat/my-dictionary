@@ -1,4 +1,5 @@
 import text from '../widgets/text';
+import store from '../store';
 
 const TEXT_LANG_LOCAL_STORAGE_KEY = 'text-lang';
 const TRANS_LANG_LOCAL_STORAGE_KEY = 'trans-lang';
