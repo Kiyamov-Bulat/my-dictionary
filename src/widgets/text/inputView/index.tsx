@@ -23,6 +23,7 @@ const InputView: FC = () => {
                 placeholder={'Что нибудь интересное...'}
                 multiline={true}
                 value={text}
+                maxLength={1000} //@TODO max
                 onChange={setText}/>
             <Button onClick={onSubmit} variant={'primary'}>
                 Подготовить

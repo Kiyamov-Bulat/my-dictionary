@@ -95,7 +95,7 @@ const GameModel = {
     },
 
     provideEmptyAnswer(): void {
-        this.provideAnswer(TranslationUnitModel.empty());
+        this.provideAnswer(TranslationUnitModel.create());
     },
 
     playAnswerSound(answer: TranslationUnit): void {

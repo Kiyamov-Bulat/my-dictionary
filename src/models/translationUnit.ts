@@ -8,6 +8,7 @@ import preloadImages from '../utils/preloadImages';
 import getRemoteImage from '../utils/getRemoteImage';
 import store from '../store';
 import {selectTextLang, selectTransLang} from '../store/selectors/configuration';
+import normalizeObject from '../utils/normalize';
 
 const LINES_SEPARATOR = /\n+/;
 
@@ -33,7 +34,7 @@ const responseToTranslationUnit = (
     const translations = response.sentences.filter((s): s is Sentence => 'trans' in s);
 
     return TranslationUnitModel.updateImageSrc({
-        ...TranslationUnitModel.empty(),
+        ...TranslationUnitModel.create(),
         textLang: response.src || sourceLang,
         transLang: targetLang,
         text: translations.map(s => s.orig).join(''),
@@ -42,7 +43,7 @@ const responseToTranslationUnit = (
 };
 
 const TranslationUnitModel = {
-    empty(): TranslationUnit {
+    create(): TranslationUnit {
         const now = Date.now();
 
         return {
@@ -61,19 +62,9 @@ const TranslationUnitModel = {
             imageSrc: '',
         };
     },
-    
+
     normalize(tu: Partial<TranslationUnit>): TranslationUnit {
-        const empty = this.empty();
-        
-        Object.keys(empty).forEach((key) => {
-            if (key in tu) {
-                // @TODO check types
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                empty[key] = tu[key];
-            }
-        });
-        return empty;
+        return normalizeObject(this, tu);
     },
 
     async translate(

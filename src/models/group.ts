@@ -2,6 +2,7 @@ import {v4 as uuidv4} from 'uuid';
 import {BaseObject, TranslationUnit} from './types';
 import {sample} from 'lodash';
 import TranslationUnitModel from './translationUnit';
+import normalizeObject from '../utils/normalize';
 
 export const MAIN_GROUP_TITLE = 'Main';
 
@@ -27,7 +28,7 @@ const GROUP_COLORS = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
 
 
 const GroupModel = {
-    create(title: string): Group {
+    create(title = ''): Group {
         const now = Date.now();
         return {
             id: uuidv4(),
@@ -57,15 +58,13 @@ const GroupModel = {
     normalize(group: Partial<Group>): Group {
         const empty = this.create(`group_${uuidv4()}`);
         
-        Object.keys(empty).forEach((key) => {
-            if (key in group) {
-                // @TODO check types
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                empty[key] = group[key];
-                if (key === 'units') {
-                    empty.units = empty.units.map((u) => TranslationUnitModel.normalize(u));
-                }
+        normalizeObject(empty, group, (key) => {
+            // @TODO
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            empty[key] = group[key];
+            if (key === 'units') {
+                empty.units = empty.units.map((u) => TranslationUnitModel.normalize(u));
             }
         });
         return empty;
