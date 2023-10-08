@@ -9,7 +9,7 @@ const TranslateView: FC = () => {
     return (
         <WordsContextProvider>
             <div className={styles.container}>
-                <article className={styles.wordsPanel}>
+                <article>
                     <ControlPanel/>
                     <TranslatedText/>
                     <Words/>

@@ -8,6 +8,7 @@ import {ETooltipPosition} from '../../../../components/tooltip/TooltipWrapper';
 import ButtonWithTooltip from '../../../../components/button/ButtonWithTooltip';
 import Statistics from './statistics';
 import NoteModel from '../../../../models/note';
+import TranslatedText from '../translatedText';
 
 const ControlPanel: FC = () => {
     const { note, saveNote, added, setIsEdit } = useNoteContext();

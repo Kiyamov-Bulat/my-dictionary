@@ -5,11 +5,13 @@
   align-items: center;
   width: fit-content;
   padding: 8px 12px;
-  background-color: rgba(33, 150, 243, 0.3);
+  background-color: rgba(33, 150, 243, 0.7);
   box-shadow: 1px 1px 0px 0px rgba(127, 127, 127, 0.2);
   border-bottom-right-radius: 16px;
   margin-bottom: 4px;
   gap: 16px;
+  position: sticky;
+  top: 0;
 }
 
 .btns {
