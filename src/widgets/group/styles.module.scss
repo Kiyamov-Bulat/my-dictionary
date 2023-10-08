@@ -34,6 +34,10 @@
   min-height: unset;
   padding: 0 12px 12px;
 
+  ul {
+    overflow: initial;
+  }
+
   li {
     padding: 8px 12px 8px 8px !important;
   }
@@ -57,6 +61,7 @@
   align-items: center;
   gap: 6px;
   font-weight: 600;
+  max-width: calc(100% - 70px);
 }
 
 
