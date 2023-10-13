@@ -136,7 +136,7 @@ const TranslationUnitModel = {
         }
     },
 
-    vocalize(unit: TranslationUnit): void {
+    vocalize(unit: TranslationUnit): () => void {
         const msg = new SpeechSynthesisUtterance();
         // const voices = window.speechSynthesis.getVoices();
 
@@ -147,6 +147,7 @@ const TranslationUnitModel = {
         msg.text = unit.translation;
         msg.lang = unit.transLang;
         window.speechSynthesis.speak(msg);
+        return () => window.speechSynthesis.cancel();
     },
 
     async listFromRawString(rawUnits: string): Promise<TranslationUnit[]> {

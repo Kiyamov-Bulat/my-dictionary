@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, {memo, useCallback, useEffect, useRef} from 'react';
+import React, {memo, useCallback, useRef} from 'react';
 import DropdownList, {DropdownOption} from './dropdownList';
 import styles from './styles.module.scss';
 import {ArrowDownIcon} from '../../icons';
@@ -30,6 +30,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     children
 }) => {
     const $dropdownList = useRef<HTMLUListElement | null>(null);
+    const $overflowTimeoutId = useRef<number | null>(null);
     const handleSelect = useCallback(
         (option: DropdownOption, selectedName?: string) => {
             onSelect?.(option, selectedName);

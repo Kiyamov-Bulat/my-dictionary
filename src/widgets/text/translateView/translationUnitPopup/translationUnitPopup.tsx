@@ -6,7 +6,6 @@ import useOutsideAlerter from '../../../../hooks/useOutsideAlerter';
 import TranslationUnitModel from '../../../../models/translationUnit';
 import {addTranslationUnit} from '../../../../store/slices/dictionary';
 import useTranslation from './useTranslation';
-import {useNoteContext} from '../../noteContext';
 import {useWordsContext} from '../wordsContext';
 
 type TranslationUnitPopupProps = {
@@ -31,7 +30,7 @@ const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, co
             return;
         }
 
-        TranslationUnitModel.vocalize(unit);
+        return TranslationUnitModel.vocalize(unit);
     }, [unit, coords, translate]);
 
     useOutsideAlerter(() => {
