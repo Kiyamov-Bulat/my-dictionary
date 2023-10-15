@@ -1,9 +1,11 @@
 import {useEffect, useRef} from 'react';
+import word from './word';
 
 const isCorrectSelection = (element: HTMLElement | null) => {
     const selection = window.getSelection();
     const parent = element?.parentElement;
 
+    console.log(selection, parent, element);
     return (
         element && selection && parent &&
         parent.contains(selection.anchorNode) &&
@@ -13,21 +15,21 @@ const isCorrectSelection = (element: HTMLElement | null) => {
 };
 
 const useWordSelection = (wordElement: HTMLElement | null) => {
-    const $selection = useRef('');
+    const $selection = useRef(wordElement?.textContent || '');
+
+    const clearSelection = () => { $selection.current = wordElement?.textContent || ''; };
 
     const saveSelection = () => {
         if (isCorrectSelection(wordElement)) {
             $selection.current = window.getSelection()?.toString() || '';
+        } else {
+            clearSelection();
         }
     };
 
-    const clearSelection = () => $selection.current = '';
+    useEffect(clearSelection, [wordElement?.textContent]);
 
-    useEffect(() => {
-        $selection.current = '';
-    }, [wordElement, wordElement?.textContent]);
-
-    return { selection: $selection.current || wordElement?.textContent || '', saveSelection, clearSelection };
+    return { $selection, saveSelection, clearSelection };
 };
 
 export default useWordSelection;
