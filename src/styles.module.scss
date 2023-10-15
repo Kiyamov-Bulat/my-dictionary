@@ -24,7 +24,7 @@
   box-sizing: border-box;
 
   > * {
-    height: 100%;
+    height: max(100%, fit-content);
   }
 
   > *:first-child {
