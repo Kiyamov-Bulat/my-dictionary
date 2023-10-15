@@ -9,6 +9,7 @@ import getRemoteImage from '../utils/getRemoteImage';
 import store from '../store';
 import {selectTextLang, selectTransLang} from '../store/selectors/configuration';
 import normalizeObject from '../utils/normalize';
+import noImageSrc from '../assets/noImage.svg';
 
 const LINES_SEPARATOR = /\n+/;
 
@@ -119,7 +120,7 @@ const TranslationUnitModel = {
 
         try {
             if (unit.text.length < 100) {
-                u.imageSrc = await getRemoteImage(unit.text);
+                u.imageSrc = await getRemoteImage(unit.text) || noImageSrc;
             }
         } catch (err) {
             console.error('updateImage error');

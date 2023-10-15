@@ -54,9 +54,7 @@ const getPopupInitialCoords = (
     return (
         <section className={styles.words} ref={$wordsContainer}>
             {words.map((word, idx) =>
-                isSpace(word)
-                    ? word
-                    : <Word key={idx} value={word} isCached={false} onClick={openPopup}/>)
+                isSpace(word) ? word : <Word key={idx} value={word} onClick={openPopup}/>)
             }
             <TranslationUnitPopup
                 isOpen={!!popupInfo}
