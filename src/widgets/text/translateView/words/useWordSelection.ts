@@ -5,7 +5,6 @@ const isCorrectSelection = (element: HTMLElement | null) => {
     const selection = window.getSelection();
     const parent = element?.parentElement;
 
-    console.log(selection, parent, element);
     return (
         element && selection && parent &&
         parent.contains(selection.anchorNode) &&

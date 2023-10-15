@@ -6,15 +6,22 @@ import cx from 'classnames';
 type TranslationUnitCardProps = {
     className?: string
     unit: TranslationUnit
+    showImage?: boolean
 }
 
-const TranslationUnitCard: FC<TranslationUnitCardProps> = ({ className, unit }) => {
+const TranslationUnitCard: FC<TranslationUnitCardProps> = (
+    {
+        className,
+        unit,
+        showImage = true
+    }
+) => {
 
     return (
         <div className={cx(styles.translationUnitCardContainer, className)}>
-            <div className={styles.imgWrapper}>
+            {showImage && <div className={styles.imgWrapper}>
                 <img src={unit.imageSrc}/>
-            </div>
+            </div>}
             <p className={styles.text}>
                 <span>{unit.text}</span>
                 <span className={styles.lang}>({unit.textLang})</span>

@@ -24,10 +24,7 @@ const useDictionaryManager = (): void => {
 
     useEffect(() => {
         DictionaryModel.get()
-            .then((dict) => {
-                console.log(dict)
-                dispatch(setDictionary(dict))
-            })
+            .then((dict) => dispatch(setDictionary(dict)))
             .catch((err) => console.error('Failed to get dictionary', err));
     }, []);
 };

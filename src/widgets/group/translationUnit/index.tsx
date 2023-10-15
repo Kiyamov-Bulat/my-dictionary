@@ -8,23 +8,18 @@ import {useDispatch} from 'react-redux';
 import {ETooltipPosition} from '../../../components/tooltip/TooltipWrapper';
 import ButtonWithTooltip from '../../../components/button/ButtonWithTooltip';
 import {RestIcon, SwapIcon} from '../../../icons';
+import TranslationUnitCard from '../../translationUnitCard';
 
 const TranslationUnit: FC<ITranslationUnit> = (translationUnit) => {
-    const { text, translation, textLang, transLang, memoryPercent } = translationUnit;
     const dispatch = useDispatch();
     const swapTextAndTransl = () => dispatch(swapTextAndTranslation(translationUnit));
     const rmTransitionUnit = () => dispatch(removeTranslationUnit(translationUnit));
     const resetTransitionUnit = () => dispatch(resetTranslationUnit(translationUnit));
 
     return (
-        <span className={styles.translationUnit}>
-            <span className={styles.text}>
-                {text}
-                <span className={styles.lang}>({textLang})</span>
-                - {translation}
-                <span className={styles.lang}>({transLang})</span>
-            </span>
-            <span className={styles.controls}>
+        <div className={styles.translationUnit}>
+            <TranslationUnitCard unit={translationUnit} showImage={false} className={styles.text}/>
+            <div className={styles.controls}>
                 <ButtonWithTooltip
                     className={styles.swapBtn}
                     action={swapTextAndTransl}
@@ -38,12 +33,12 @@ const TranslationUnit: FC<ITranslationUnit> = (translationUnit) => {
                     position={ETooltipPosition.N}/>
                 <RemoveBtn className={styles.rmBtn} onClick={rmTransitionUnit}/>
                 <MemoryChart
-                    current={memoryPercent}
+                    current={translationUnit.memoryPercent}
                     total={100} size={14} lineWidth={3}
                     position={ETooltipPosition.NE}
                 />
-            </span>
-        </span>
+            </div>
+        </div>
     );
 };
 

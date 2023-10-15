@@ -7,8 +7,6 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  font-size: 14px;
-  line-height: 18px;
   gap: 2px;
 
   span {
@@ -16,17 +14,12 @@
   }
 }
 
-.text {
-  @include m.textEllipsis;
-}
-
-.lang {
-  display: flex;
-  flex-grow: 1;
-  font-size: 10px;
-  line-height: 12px;
-  color: c.$pale-color;
-  padding: 0 2px;
+.text  {
+  width: calc(100% - 76px);
+  & > p {
+    font-size: 14px !important;
+    line-height: 18px !important;
+  }
 }
 
 .controls {
