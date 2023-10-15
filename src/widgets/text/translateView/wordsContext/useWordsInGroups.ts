@@ -27,15 +27,15 @@ const useWordsInGroups = (words: string[]) => {
         return res;
     }, [selectedGroupsUnits, textLang, transLang, words]);
 
-    const hasWord = useCallback((word: string) => {
+    const getWord = useCallback((word: string) => {
         const wordUnit = TranslationUnitModel.normalize(
             { text: word, textLang, transLang }
         );
 
-        return wordsInGroups.some((u) => TranslationUnitModel.isEqual(wordUnit, u, false));
+        return wordsInGroups.find((u) => TranslationUnitModel.isEqual(wordUnit, u, false)) || null;
     }, [wordsInGroups, textLang, transLang]);
 
-    return [wordsInGroups, hasWord] as [TranslationUnit[], (word: string) => boolean];
+    return [wordsInGroups, getWord] as [TranslationUnit[], (word: string) => TranslationUnit | null];
 };
 
 export default useWordsInGroups;

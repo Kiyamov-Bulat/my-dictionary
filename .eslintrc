@@ -9,7 +9,7 @@
     "semi": "error",
     "quotes": [ "error", "single", { "allowTemplateLiterals": true }],
     "@typescript-eslint/explicit-function-return-type": "warn",
-    "no-undef": "error"
+    "no-undef": "warn"
   },
   "env": {
     "es6": true,

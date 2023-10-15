@@ -3,6 +3,6 @@
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
-    "strict": true
-  }
+    "strict": true,
+  },
 }

@@ -10,13 +10,14 @@ import {useWordsContext} from '../wordsContext';
 
 type TranslationUnitPopupProps = {
     text: string
-    coords: { x: number, y: number } | null
+    getInitialPosition: (instance: HTMLElement) => Point
     onClose: () => void
+    isOpen: boolean
 };
 
 const INITIAL_POSITION = { x: -10000, y: -10000 };
 
-const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, coords }) => {
+const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ isOpen, text, onClose, getInitialPosition }) => {
     const $popup = useRef<HTMLDivElement | null>(null);
     const { reverseTranslate } = useWordsContext();
     const [unit, translate] = useTranslation(text, reverseTranslate);
@@ -24,14 +25,14 @@ const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, co
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!coords) { return; }
+        if (!isOpen) { return; }
         if (!unit) {
             translate();
             return;
         }
 
         return TranslationUnitModel.vocalize(unit);
-    }, [unit, coords, translate]);
+    }, [unit, isOpen, translate]);
 
     useOutsideAlerter(() => {
         setPosition(INITIAL_POSITION);
@@ -39,16 +40,13 @@ const TranslationUnitPopup: FC<TranslationUnitPopupProps> = ({ text, onClose, co
     }, $popup);
     
     // @TODO loader and error manager
-    if (!unit || !coords) { return null; }
+    if (!unit || !isOpen) { return null; }
     
     const initPosition = (instance: HTMLDivElement | null) => {
         $popup.current = instance;
 
-        if (instance && position.x === -10000) {
-            const x = Math.min(Math.max(coords.x - instance.offsetWidth / 2, 0), window.innerWidth);
-            const y = Math.max(coords.y, 0);
-
-            setPosition({ x, y });
+        if (instance && position.x === INITIAL_POSITION.x) {
+            setPosition(getInitialPosition(instance));
         }
     };
     

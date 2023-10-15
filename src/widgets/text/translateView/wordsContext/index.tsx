@@ -8,7 +8,7 @@ const WordsContext = createContext({
     words: [] as string[],
     wordsWithSpaces: [] as string[],
     wordsInGroups: [] as TranslationUnit[],
-    hasWordInGroups: (word: string) => false as boolean,
+    getWordFromGroups: (word: string) => null as TranslationUnit | null,
     reverseTranslate: true,
     setReverseTranslate: (value: boolean | ((value: boolean) => boolean)) => { value; }
 });
@@ -24,12 +24,12 @@ const WordsContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
         return [withSpaces, withSpaces.filter((w) => !isSpace(w))];
     }, [text]);
-    const [wordsInGroups, hasWordInGroups] = useWordsInGroups(words);
+    const [wordsInGroups, getWordFromGroups] = useWordsInGroups(words);
 
     const value = useMemo(
         () => ({
             words, wordsWithSpaces, wordsInGroups,
-            hasWordInGroups, reverseTranslate, setReverseTranslate
+            getWordFromGroups, reverseTranslate, setReverseTranslate
         })
     , [text, reverseTranslate, wordsInGroups]);
 
