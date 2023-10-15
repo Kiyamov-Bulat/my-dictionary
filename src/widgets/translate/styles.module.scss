@@ -60,3 +60,15 @@
     padding: 8px 10px;
   }
 }
+
+.swap {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  padding: 2px;
+  border-radius: 8px;
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}

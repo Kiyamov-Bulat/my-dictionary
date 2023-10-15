@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setTextLang, setTransLang} from '../../store/slices/configuration';
 import {selectTextLang, selectTransLang} from '../../store/selectors/configuration';
 import cx from 'classnames';
+import {SwapIcon} from '../../icons';
 
 type HeaderProps = {
     className?: string
@@ -28,6 +29,11 @@ const Languages: FC<HeaderProps> = ({ className }) => {
         ConfigurationModel.saveTransLang(lang);
         return false;
     };
+    
+    const onSwapLangs = (): void => {
+        onTransLangChange(textLang);
+        onTextLangChange(transLang);
+    };
     return (
         <div className={cx(styles.transLangContainer, className)}>
             Перевод (
@@ -36,7 +42,7 @@ const Languages: FC<HeaderProps> = ({ className }) => {
                 className={styles.transLang}
                 value={textLang}
                 onSetInactive={onTextLangChange}/>
-            { '=>' }
+            <SwapIcon className={styles.swap} onClick={onSwapLangs}/>
             <EditableLabel
                 maxLength={3}
                 className={styles.transLang}
