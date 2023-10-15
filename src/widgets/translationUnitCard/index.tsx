@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {TranslationUnit} from '../../models/types';
 import styles from './styles.module.scss';
+import cx from 'classnames';
 
 type TranslationUnitCardProps = {
     className?: string
@@ -10,7 +11,7 @@ type TranslationUnitCardProps = {
 const TranslationUnitCard: FC<TranslationUnitCardProps> = ({ className, unit }) => {
 
     return (
-        <div className={styles.translationUnitCardContainer}>
+        <div className={cx(styles.translationUnitCardContainer, className)}>
             <div className={styles.imgWrapper}>
                 <img src={unit.imageSrc}/>
             </div>
@@ -18,8 +19,9 @@ const TranslationUnitCard: FC<TranslationUnitCardProps> = ({ className, unit }) 
                 <span>{unit.text}</span>
                 <span className={styles.lang}>({unit.textLang})</span>
                 &nbsp;-&nbsp;
-                <span>{unit.translation}</span></p>
+                <span>{unit.translation}</span>
                 <span className={styles.lang}>({unit.transLang})</span>
+            </p>
         </div>
     );
 };

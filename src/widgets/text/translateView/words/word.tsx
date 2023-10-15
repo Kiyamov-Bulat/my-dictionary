@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import TranslationUnitPopup from '../translationUnitPopup/translationUnitPopup';
 import cx from 'classnames';
 import {useWordsContext} from '../wordsContext';
+import useWordSelection from './useWordSelection';
 
 type WordProps = {
     value: string
@@ -10,30 +11,12 @@ type WordProps = {
 
 const POPUP_MARGIN = 8;
 
-const isCorrectSelection = (element: HTMLElement | null) => {
-    const selection = window.getSelection();
-    const parent = element?.parentElement;
-
-    return (
-        element && selection && parent &&
-        parent.contains(selection.anchorNode) &&
-        parent.contains(selection.focusNode) &&
-        selection.containsNode(element, true)
-    );
-};
-
 const Word: FC<WordProps> = ({ value }) => {
     const $element = useRef(null);
     const { hasWordInGroups } = useWordsContext();
     const [popupCoords, setPopupCoords] = useState<{ x: number, y: number } | null>(null);
     const translateIsCached = useRef(false);
-    const $selection = useRef('');
-
-    const saveSelection = () => {
-        if (isCorrectSelection($element.current)) {
-            $selection.current = window.getSelection()?.toString() || '';
-        }
-    };
+    const { selection, saveSelection, clearSelection } = useWordSelection($element.current);
 
     const openPopup = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         const target = e.target as HTMLElement;
@@ -43,10 +26,6 @@ const Word: FC<WordProps> = ({ value }) => {
             y: target.offsetTop + target.offsetHeight + POPUP_MARGIN
         });
     };
-
-    useEffect(() => {
-        $selection.current = '';
-    }, [value]);
 
     return (
         <>
@@ -58,12 +37,12 @@ const Word: FC<WordProps> = ({ value }) => {
                 {value}
             </span>
             <TranslationUnitPopup
-                text={$selection.current || value}
+                text={selection}
                 coords={popupCoords}
                 onClose={() => {
-                    translateIsCached.current = !$selection.current;
+                    translateIsCached.current = selection === value;
                     setPopupCoords(null);
-                    $selection.current = '';
+                    clearSelection();
                 }}
             />
         </>
