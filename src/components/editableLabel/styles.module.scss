@@ -2,7 +2,7 @@
   position: relative;
 
   &.editable .editableLabelContainer {
-    border: 1px solid #006fff;
+    outline: 1px solid #006fff;
   }
 
   &:not(&.editable) {

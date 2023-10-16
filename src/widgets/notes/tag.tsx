@@ -12,7 +12,7 @@ const Tag: FC<TagProps> = ({ name, onRemove }) => {
 
     return (
         <div className={styles.tag} style={{ borderColor: color }}>
-            <div>{name}</div>
+            <p>{name}</p>
             <div className={styles.removeTag} onClick={() => onRemove(name)}>x</div>
         </div>
     );

@@ -6,11 +6,9 @@ import {setPanelView} from '../../store/slices/configuration';
 import {EPanelView} from '../../models/configuration';
 import {useDispatch} from 'react-redux';
 import {PenIcon} from '../../icons';
-import EditableLabel from '../../components/editableLabel';
 import RemoveBtn from '../../components/removeBtn';
 import {ETooltipPosition} from '../../components/tooltip/TooltipWrapper';
-import Tag from './tag';
-import Notice from '../../components/notice';
+import NoteHeader from './noteHeader';
 
 type NoteProps = {
     note: NoteType
@@ -18,32 +16,11 @@ type NoteProps = {
 
 const Note: FC<NoteProps> = ({ note }) => {
     const dispatch = useDispatch();
-    const saveTitle = (title: string) => {
-        NoteModel.save({ ...note, title }, true);
-        return true;
-    };
-
-    const saveTag = (tag: string) => {
-        if (!tag) {
-            return false;
-        }
-        if (note.tags.includes(tag)) {
-            Notice.warn('Такой тэг уже существует');
-            return false;
-        }
-        NoteModel.save({ ...note, tags: [...note.tags, tag] }, true);
-        return true;
-    };
-
-    const removeTag = (tag: string) => {
-        NoteModel.save({ ...note, tags: note.tags.filter((t) => t !== tag) }, true);
-    };
 
     const goToTranslate = () => {
         NoteModel.saveInCache({ value: note, added: true });
         dispatch(setPanelView(EPanelView.TEXT, ));
     };
-    const tags = note.title !== NoteModel.DEFAULT_TITLE ? [note.title, ...note.tags] : note.tags;
 
     return (
         <div className={styles.noteContainer}>
@@ -52,20 +29,7 @@ const Note: FC<NoteProps> = ({ note }) => {
                 <RemoveBtn onClick={() => NoteModel.remove(note)}/>
             </div>
             <div className={styles.contentContainer}>
-                <EditableLabel
-                    className={styles.title}
-                    value={note.title || NoteModel.DEFAULT_TITLE}
-                    onSetInactive={saveTitle}
-                />
-                <div className={styles.tagList}>
-                    <EditableLabel
-                        value={''}
-                        placeholder={'Новый тэг'}
-                        className={styles.tag}
-                        onSetInactive={saveTag}/>
-                    {tags.map((tag, idx) =>
-                        <Tag onRemove={removeTag} name={tag} key={tag + idx}/>)}
-                </div>
+                <NoteHeader note={note}/>
                 <div>
                     {note.text}
                 </div>

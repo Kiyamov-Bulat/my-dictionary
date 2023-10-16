@@ -11,6 +11,7 @@ import NoteModel from '../../../../models/note';
 import GroupModel from '../../../../models/group';
 import {useDispatch} from 'react-redux';
 import {addGroup} from '../../../../store/slices/dictionary';
+import NoteHeader from '../../../notes/noteHeader';
 
 const ControlPanel: FC = () => {
     const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const ControlPanel: FC = () => {
     
     return (
         <div className={styles.controlPanelContainer}>
+            <NoteHeader note={note} className={styles.header} onUpdateNote={(note) => saveNote(note, added)}/>
             <div className={styles.btns}>
                 <ButtonWithTooltip
                     position={ETooltipPosition.SW}
