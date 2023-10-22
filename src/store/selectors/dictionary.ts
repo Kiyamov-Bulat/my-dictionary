@@ -39,3 +39,6 @@ export const getSelectHasWord = (word: string) =>
                 (u.textLang === transLang && u.transLang === textLang && u.translation === word)
             ));
         });
+
+export const selectOpenedUnit = (state: RootState): TranslationUnit | null =>
+    selectDictionary(state).openedUnit;

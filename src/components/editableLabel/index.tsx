@@ -25,6 +25,8 @@ const EditableLabel: FC<EditableLabelProps> = (
     const [text, setText] = useState(value);
     const [editable, setEditable] = useState(false);
     const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
+    const $labelWidth = useRef(0);
+
     const handleChange = (txt: string) => {
         setText(txt);
         onChange?.(txt);
@@ -54,6 +56,19 @@ const EditableLabel: FC<EditableLabelProps> = (
             makeInactive();
         }
     };
+    const initRef = (element: HTMLInputElement | HTMLTextAreaElement) => {
+        inputRef.current = element;
+        
+        if (element?.parentElement) {
+            element.parentElement.style.setProperty('width', `${$labelWidth.current}px`);
+        }
+    };
+    
+    const initWidth = (element: HTMLParagraphElement) => {
+        if (element) {
+            $labelWidth.current = element.offsetWidth;
+        }
+    };
 
     useEffect(() => {
         setText(value);
@@ -63,17 +78,18 @@ const EditableLabel: FC<EditableLabelProps> = (
     useHotkey(HOTKEYS.FOCUS_LANG.key, makeActive, { block: editable });
 
     return (
-        <div className={cx(styles.editableLabelWrapper, { [styles.editable]: editable })}>
-            <TextField
-                onKeyDown={handleKeyDown}
-                className={cx(styles.editableLabelContainer, className)}
-                ref={inputRef}
-                value={text}
-                onChange={handleChange}
-                disabled={!editable}
-                {...rest}
-            />
-            <div className={styles.bg} onClick={makeActive}/>
+        <div className={cx(styles.editableLabelWrapper, className, { [styles.editable]: editable })}>
+            {editable
+                ? <TextField
+                    onKeyDown={handleKeyDown}
+                    className={styles.editableLabelContainer}
+                    ref={initRef}
+                    value={text}
+                    onChange={handleChange}
+                    {...rest}
+                />
+                : <p onClick={makeActive} ref={initWidth}>{text}</p>
+            }
         </div>
     );
 };

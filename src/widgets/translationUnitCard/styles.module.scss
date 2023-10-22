@@ -1,24 +1,24 @@
-@use "styles/constants.scss" as c;
 @use "styles/mixins.scss" as m;
 
 .translationUnitCardContainer {
+  @include m.commonText;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
 }
 
 .text {
-  @include m.commonText;
   display: inline-flex;
   word-break: break-all;
+  font-size: 1em;
+  line-height: 1.25em;
+  letter-spacing: -0.3px;
 }
 
 .lang {
+  @include m.subAsideText;
   display: flex;
   flex-grow: 1;
-  font-size: 10px;
-  line-height: 12px;
-  color: c.$pale-color;
   padding: 0 2px;
   flex-shrink: 0;
 }
@@ -33,6 +33,6 @@
     border-radius: 8px;
     width: 80px;
     height: 80px;
-    object-fit: contain;
+    object-fit: cover;
   }
 }

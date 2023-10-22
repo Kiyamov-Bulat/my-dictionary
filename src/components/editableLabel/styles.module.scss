@@ -12,7 +12,7 @@
 
 .editableLabelContainer {
   input, textarea {
-    padding: 0 4px;
+    padding: 0px;
     background: none !important;
     border: none !important;
     color: inherit !important;
@@ -25,13 +25,4 @@
       line-height: inherit !important;
     }
   }
-  border: 1px solid #ffffffff;
-}
-
-.bg {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
 }

@@ -1,7 +1,8 @@
-import React, {FC} from 'react';
+import React, {FC, PropsWithChildren} from 'react';
 import {TranslationUnit} from '../../models/types';
 import styles from './styles.module.scss';
 import cx from 'classnames';
+import EditableLabel from '../../components/editableLabel';
 
 type TranslationUnitCardProps = {
     className?: string
@@ -9,27 +10,31 @@ type TranslationUnitCardProps = {
     showImage?: boolean
 }
 
-const TranslationUnitCard: FC<TranslationUnitCardProps> = (
+const TranslationUnitCard: FC<PropsWithChildren<TranslationUnitCardProps>> = (
     {
         className,
         unit,
-        showImage = true
+        showImage = true,
+        children,
     }
 ) => {
 
     return (
-        <div className={cx(styles.translationUnitCardContainer, className)}>
-            {showImage && <div className={styles.imgWrapper}>
+        <section className={cx(styles.translationUnitCardContainer, className)}>
+            {showImage && <aside className={styles.imgWrapper}>
                 <img src={unit.imageSrc}/>
-            </div>}
-            <p className={styles.text}>
-                <span>{unit.text}</span>
-                <span className={styles.lang}>({unit.textLang})</span>
-                &nbsp;-&nbsp;
-                <span>{unit.translation}</span>
-                <span className={styles.lang}>({unit.transLang})</span>
-            </p>
-        </div>
+            </aside>}
+            <article className={styles.unitDataContainer}>
+                <div className={styles.text}>
+                    <EditableLabel value={unit.text}/>
+                    <div className={styles.lang}>({unit.textLang})</div>
+                    &nbsp;-&nbsp;
+                    <EditableLabel value={unit.translation}/>
+                    <div className={styles.lang}>({unit.transLang})</div>
+                </div>
+                {children}
+            </article>
+        </section>
     );
 };
 

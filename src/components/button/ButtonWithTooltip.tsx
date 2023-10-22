@@ -5,7 +5,7 @@ import {IconProps} from '../../icons';
 import {useDispatch} from 'react-redux';
 
 interface ButtonWithTooltipProps extends Omit<TooltipWrapperProps, 'action'> {
-    action: () => any
+    action: (e?: React.MouseEvent) => any
     Icon?: FC<IconProps>
     disp?: boolean
     children?: React.ReactNode

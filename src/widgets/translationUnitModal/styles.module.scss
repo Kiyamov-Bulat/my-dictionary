@@ -1,0 +1,52 @@
+@use "styles/mixins.scss" as m;
+
+.modalWrapper {
+  section {
+    height: fit-content;
+  }
+  article {
+    display: flex;
+    //align-items: flex-start;
+    padding: 16px;
+  }
+}
+
+.unitCard {
+  justify-content: space-between;
+  font-size: 24px;
+
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+  }
+
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    & > div:first-of-type {
+      padding-bottom: 4px;
+      border-bottom: 1px solid #2196f3;
+    }
+  }
+}
+
+.unitDataContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dates {
+  @include m.subAsideText;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .dateLabel {
+    display: inline-block;
+    width: 60px;
+  }
+}

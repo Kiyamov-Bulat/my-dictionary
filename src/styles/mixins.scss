@@ -1,3 +1,5 @@
+@use "constants" as c;
+
 @mixin textEllipsis {
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -39,4 +41,10 @@
 @mixin smallText {
   font-size: 12px;
   line-height: 14px;
+}
+
+@mixin subAsideText {
+  font-size: 10px;
+  line-height: 12px;
+  color: c.$pale-color;
 }

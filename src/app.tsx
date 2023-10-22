@@ -9,6 +9,7 @@ import HotkeyManager from './components/hotkeyManger';
 import {useSelector} from 'react-redux';
 import {selectGameIsStarted} from './store/selectors/game';
 import useNoteManager from './hooks/useNoteManager';
+import TranslationUnitModal from './widgets/translationUnitModal';
 
 const App = () => {
     useDictionaryManager();
@@ -31,6 +32,7 @@ const App = () => {
                 </div>
                 <Settings/>
                 {/*<Help/>*/}
+                <TranslationUnitModal/>
             </div>
         </HotkeyManager>
     );

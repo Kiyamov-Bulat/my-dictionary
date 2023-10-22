@@ -1,12 +1,12 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import DictionaryModel, {Dictionary} from '../../models/dictionary';
+import {Dictionary} from '../../models/dictionary';
 import GroupModel, {Group} from '../../models/group';
 import {TranslationUnit} from '../../models/types';
-import {selectSelectedGroups} from '../selectors/dictionary';
 import TranslationUnitModel from '../../models/translationUnit';
 
 const dictionaryState = {
     value: { groups: [GroupModel.getMainGroup([])] },
+    openedUnit: null as TranslationUnit | null,
 };
 
 export const getSelectedGroups = (groups: Group[]): Group[] => groups.filter((g) => g.selected);
@@ -100,14 +100,19 @@ const dictionary = createSlice({
                 return;
             }
             g.units[index] = TranslationUnitModel.swapTextAndTranslation(g.units[index]);
-            return;
         },
         swapSelectedGroupsTextAndTranslation(state) {
             updateSelectedGroups(state, (group) => group.units = group.units.map(TranslationUnitModel.swapTextAndTranslation));
         },
         addUnits(state, { payload }: PayloadAction<TranslationUnit[]>) {
             updateSelectedGroups(state, group => group.units = [...group.units, ...payload ]);
-        }
+        },
+        openTranslationUnit(state, { payload }: PayloadAction<TranslationUnit>) {
+            state.openedUnit = payload;
+        },
+        closeUnit(state) {
+            state.openedUnit = null;
+        },
     },
 });
 
@@ -124,5 +129,7 @@ export const {
     swapTextAndTranslation,
     swapSelectedGroupsTextAndTranslation,
     addUnits,
+    openTranslationUnit,
+    closeUnit
 } = dictionary.actions;
 export default dictionary.reducer;
