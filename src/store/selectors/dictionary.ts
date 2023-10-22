@@ -40,5 +40,18 @@ export const getSelectHasWord = (word: string) =>
             ));
         });
 
-export const selectOpenedUnit = (state: RootState): TranslationUnit | null =>
-    selectDictionary(state).openedUnit;
+export const selectOpenedUnitId = (state: RootState): string => selectDictionary(state).openedUnitId;
+export const selectUnitIsOpen = (state: RootState): boolean => !!selectOpenedUnitId(state);
+
+export const selectOpenedUnit = createSelector(selectGroups, selectOpenedUnitId,
+    (groups, id): TranslationUnit => {
+        for (const group of groups) {
+            for (const unit of group.units) {
+                if (unit.id === id) {
+                    return unit;
+                }
+            }
+        }
+        return TranslationUnitModel.create();
+    }
+);

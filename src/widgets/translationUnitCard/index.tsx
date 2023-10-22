@@ -8,6 +8,7 @@ type TranslationUnitCardProps = {
     className?: string
     unit: TranslationUnit
     showImage?: boolean
+    editable?: boolean
 }
 
 const TranslationUnitCard: FC<PropsWithChildren<TranslationUnitCardProps>> = (
@@ -16,6 +17,7 @@ const TranslationUnitCard: FC<PropsWithChildren<TranslationUnitCardProps>> = (
         unit,
         showImage = true,
         children,
+        editable = false,
     }
 ) => {
 
@@ -26,10 +28,10 @@ const TranslationUnitCard: FC<PropsWithChildren<TranslationUnitCardProps>> = (
             </aside>}
             <article className={styles.unitDataContainer}>
                 <div className={styles.text}>
-                    <EditableLabel value={unit.text}/>
+                    <EditableLabel value={unit.text} disabled={!editable}/>
                     <div className={styles.lang}>({unit.textLang})</div>
                     &nbsp;-&nbsp;
-                    <EditableLabel value={unit.translation}/>
+                    <EditableLabel value={unit.translation} disabled={!editable}/>
                     <div className={styles.lang}>({unit.transLang})</div>
                 </div>
                 {children}

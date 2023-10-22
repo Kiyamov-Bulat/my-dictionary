@@ -8,9 +8,9 @@ import HOTKEYS from '../../utils/hotkeys';
 
 export type EditableLabelProps = {
     value: string
-    onSetActive?: () => void
+    onSetActive?: (inputRef: HTMLElement | null) => void
     onSetInactive?: (text: string) => boolean
-} & Omit<ITextField, 'value' | 'disabled' | 'label' | 'onClick' | 'ref'>
+} & Omit<ITextField, 'value' | 'label' | 'onClick' | 'ref'>
 
 const EditableLabel: FC<EditableLabelProps> = (
     {
@@ -19,6 +19,7 @@ const EditableLabel: FC<EditableLabelProps> = (
         onSetActive,
         onSetInactive,
         className,
+        disabled,
         ...rest
     }
 ) => {
@@ -33,12 +34,14 @@ const EditableLabel: FC<EditableLabelProps> = (
     };
 
     const makeActive = () => {
-        if (editable) {
+        if (editable || disabled) {
             return;
         }
         setEditable(true);
-        onSetActive?.();
-        setTimeout(() => inputRef.current?.focus());
+        setTimeout(() => {
+            onSetActive?.(inputRef.current);
+            inputRef.current?.focus();
+        });
     };
     const makeInactive = () => {
         if (!editable) {

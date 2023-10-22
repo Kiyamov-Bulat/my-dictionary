@@ -28,7 +28,6 @@ const TranslationUnit: FC<ITranslationUnit> = (translationUnit) => {
             dispatch(act(translationUnit));
         });
 
-    useEffect(() => open(), []);
     return (
         <div className={styles.translationUnit} onClick={open}>
             <TranslationUnitCard unit={translationUnit} showImage={false} className={styles.text}/>

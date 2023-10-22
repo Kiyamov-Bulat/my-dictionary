@@ -12,6 +12,7 @@
 }
 
 .unitCard {
+  position: relative;
   justify-content: space-between;
   font-size: 24px;
 
@@ -49,4 +50,12 @@
     display: inline-block;
     width: 60px;
   }
+}
+
+.changeImageInput {
+  position: absolute;
+  top: 156px;
+  left: 0;
+  font-size: 14px;
+  line-height: 18px;
 }
