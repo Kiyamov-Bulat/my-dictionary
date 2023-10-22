@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import NoteModel, {Note} from '../../models/note';
 import Tag from './tag';
 import Notice from '../../components/notice';
+import cx from 'classnames';
 
 type NoteHeaderProps = {
     note: Note
@@ -49,7 +50,7 @@ const NoteHeader: FC<NoteHeaderProps> = (
                 <EditableLabel
                     value={''}
                     placeholder={'Новый тэг'}
-                    className={styles.tag}
+                    className={cx(styles.tag, styles.createTag)}
                     onSetInactive={saveTag}/>
                 {note.tags.map((tag, idx) =>
                     <Tag onRemove={removeTag} name={tag} key={tag + idx}/>)}

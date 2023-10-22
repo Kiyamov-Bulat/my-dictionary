@@ -26,7 +26,7 @@ const EditableLabel: FC<EditableLabelProps> = (
     const [text, setText] = useState(value);
     const [editable, setEditable] = useState(false);
     const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
-    const $labelWidth = useRef(0);
+    const $labelBounds = useRef<DOMRect | null>(null);
 
     const handleChange = (txt: string) => {
         setText(txt);
@@ -62,14 +62,15 @@ const EditableLabel: FC<EditableLabelProps> = (
     const initRef = (element: HTMLInputElement | HTMLTextAreaElement) => {
         inputRef.current = element;
         
-        if (element?.parentElement) {
-            element.parentElement.style.setProperty('width', `${$labelWidth.current}px`);
+        if (element?.parentElement && $labelBounds.current) {
+            element.parentElement.style.setProperty('width', `${$labelBounds.current.width}px`);
+            element.parentElement.style.setProperty('height', `${$labelBounds.current?.height}px`);
         }
     };
     
     const initWidth = (element: HTMLParagraphElement) => {
         if (element) {
-            $labelWidth.current = element.offsetWidth;
+            $labelBounds.current = element.getBoundingClientRect();
         }
     };
 
@@ -91,7 +92,7 @@ const EditableLabel: FC<EditableLabelProps> = (
                     onChange={handleChange}
                     {...rest}
                 />
-                : <p onClick={makeActive} ref={initWidth}>{text}</p>
+                : <p onClick={makeActive} ref={initWidth}>{text || rest.placeholder || ''}</p>
             }
         </div>
     );

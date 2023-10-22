@@ -23,6 +23,9 @@
   @include m.smallTitle;
   margin-bottom: 2px;
   border: unset;
+  p {
+    @include m.textEllipsis;
+  }
   input {
     font-weight: 600;
     padding: 0;
