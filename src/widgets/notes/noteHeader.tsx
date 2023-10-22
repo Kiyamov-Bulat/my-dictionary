@@ -16,7 +16,7 @@ const NoteHeader: FC<NoteHeaderProps> = (
     {
         note,
         className,
-        onUpdateNote = NoteModel.save
+        onUpdateNote = NoteModel.save.bind(NoteModel)
     }) => {
     const saveTitle = (title: string) => {
         onUpdateNote({ ...note, title }, true);
