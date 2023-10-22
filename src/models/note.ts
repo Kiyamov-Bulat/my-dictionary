@@ -5,7 +5,6 @@ import {selectSelectedGroupsIds} from '../store/selectors/dictionary';
 import store from '../store';
 import {addNote, removeNote, updateNote} from '../store/slices/note';
 import {selectNotes} from '../store/selectors/note';
-import {map} from 'lodash';
 import normalizeObject from '../utils/normalize';
 
 const NOTES_STORAGE_KEY = 'notes';
