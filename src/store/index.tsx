@@ -5,7 +5,7 @@ import configuration from './slices/configuration';
 import game from './slices/game';
 import note from './slices/note';
 
-export const store = configureStore({
+const store = configureStore({
     reducer: {
         user,
         dictionary,

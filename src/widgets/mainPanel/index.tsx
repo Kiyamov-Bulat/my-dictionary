@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import Games from '../game';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {selectPanelView} from '../../store/selectors/configuration';
 import Text from '../text';
 import styles from './styles.module.scss';

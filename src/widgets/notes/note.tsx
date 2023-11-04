@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import NoteModel, {Note as NoteType} from '../../models/note';
 import ButtonWithTooltip from '../../components/button/ButtonWithTooltip';
 import {setPanelView} from '../../store/slices/configuration';
-import {EPanelView} from '../../models/configuration';
+import ConfigurationModel, {EPanelView} from '../../models/configuration';
 import {useDispatch} from 'react-redux';
 import {PenIcon} from '../../icons';
 import RemoveBtn from '../../components/removeBtn';
@@ -18,8 +18,11 @@ const Note: FC<NoteProps> = ({ note }) => {
     const dispatch = useDispatch();
 
     const goToTranslate = () => {
+        const panel = EPanelView.TEXT;
+
         NoteModel.saveInCache({ value: note, added: true });
-        dispatch(setPanelView(EPanelView.TEXT, ));
+        dispatch(setPanelView(panel));
+        ConfigurationModel.saveMainPanelView(panel);
     };
 
     return (

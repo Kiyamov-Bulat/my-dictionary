@@ -5,6 +5,7 @@
     "jsx": "react",
     "strict": true,
     "target": "ESNext",
+    "module": "esnext",
     "moduleResolution": "NodeNext"
   }
 }

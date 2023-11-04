@@ -1,4 +1,4 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC} from 'react';
 import EditableLabel from '../../components/editableLabel';
 import styles from './styles.module.scss';
 import NoteModel, {Note} from '../../models/note';

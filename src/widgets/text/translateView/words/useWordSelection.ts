@@ -1,5 +1,4 @@
 import {useEffect, useRef} from 'react';
-import word from './word';
 
 const isCorrectSelection = (element: HTMLElement | null) => {
     const selection = window.getSelection();

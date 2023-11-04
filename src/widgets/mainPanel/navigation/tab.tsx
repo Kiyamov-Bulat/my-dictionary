@@ -2,9 +2,9 @@ import React, {FC} from 'react';
 import cx from 'classnames';
 import styles from './styles.module.scss';
 import ConfigurationModel, {EPanelView} from '../../../models/configuration';
-import {useDispatch} from 'react-redux';
-import {setPanelView} from '../../../store/slices/configuration';
 import Button from '../../../components/button';
+import {setPanelView} from '../../../store/slices/configuration';
+import {useDispatch} from 'react-redux';
 
 type TabProps = {
     isSelected: boolean
