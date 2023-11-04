@@ -96,7 +96,9 @@ const NoteModel = {
         const selectedGroups = selectSelectedGroupsIds(store.getState());
         const finalNote = { ...note, groups: selectedGroups };
 
-        this.saveInCache({ value: finalNote, added: add });
+        if (this.getCached().value.id === finalNote.id) {
+            this.saveInCache({value: finalNote, added: add});
+        }
 
         if (!add) { return; }
 
