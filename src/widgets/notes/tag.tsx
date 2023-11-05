@@ -11,7 +11,7 @@ const Tag: FC<TagProps> = ({ name, onRemove }) => {
     const color = useMemo(() => getRandomColor(), []);
 
     return (
-        <div className={styles.tag} style={{ borderColor: color }}>
+        <div className={styles.tag} style={{ background: color }}>
             <p>{name}</p>
             <div className={styles.removeTag} onClick={() => onRemove(name)}>x</div>
         </div>
