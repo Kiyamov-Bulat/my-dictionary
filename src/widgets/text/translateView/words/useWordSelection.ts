@@ -1,4 +1,5 @@
 import {useEffect, useRef} from 'react';
+import {cloneDeep} from 'lodash';
 
 const isCorrectSelection = (element: HTMLElement | null) => {
     const selection = window.getSelection();
@@ -8,7 +9,8 @@ const isCorrectSelection = (element: HTMLElement | null) => {
         element && selection && parent &&
         parent.contains(selection.anchorNode) &&
         parent.contains(selection.focusNode) &&
-        selection.containsNode(element, true)
+        selection.containsNode(element, true) &&
+        !!selection.toString()
     );
 };
 

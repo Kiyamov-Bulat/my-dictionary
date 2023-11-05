@@ -11,8 +11,6 @@ const WordsContext = createContext({
     getWordFromGroups: (word: string) => null as TranslationUnit | null,
     reverseTranslate: true,
     setReverseTranslate: (value: boolean | ((value: boolean) => boolean)) => { value; },
-    cachedUnits: [] as TranslationUnit[],
-    saveCachedUnit: (unit: TranslationUnit): void => undefined,
 });
 
 export const useWordsContext = () => useContext(WordsContext);
@@ -26,7 +24,6 @@ const WordsContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
         return [withSpaces, withSpaces.filter((w) => !isSpace(w))];
     }, [text]);
-    const [cachedUnits, setCachedUnits] = useState<TranslationUnit[]>([]);
     const [wordsInGroups, getWordFromGroups] = useWordsInGroups(words);
 
     const value = useMemo(
@@ -34,10 +31,8 @@ const WordsContextProvider: FC<PropsWithChildren> = ({ children }) => {
             words, wordsWithSpaces,
             wordsInGroups, getWordFromGroups,
             reverseTranslate, setReverseTranslate,
-            cachedUnits, saveCachedUnit: (u: TranslationUnit) =>
-                setCachedUnits((state) => [...state, u])
         })
-    , [text, reverseTranslate, wordsInGroups, cachedUnits]);
+    , [text, reverseTranslate, wordsInGroups]);
 
     return (
         <WordsContext.Provider value={value}>

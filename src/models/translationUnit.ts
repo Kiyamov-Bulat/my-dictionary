@@ -12,6 +12,7 @@ import normalizeObject from '../utils/normalize';
 import noImageSrc from '../assets/noImage.svg';
 
 const LINES_SEPARATOR = /\n+/;
+const SESSION_CACHE_KEY = 'units';
 
 export const DEFAULT_GAME_STUDY_PERCENT = 25;
 
@@ -183,7 +184,29 @@ const TranslationUnitModel = {
         const res = (tu1.text === tu2.text && tu1.textLang === tu2.textLang &&
             tu1.transLang === tu2.transLang);
 
-        return res || (!strict && tu1.text === tu2.translation && tu1.transLang === tu2.textLang && tu1.textLang === tu2.transLang);
+        return res || (!strict && (
+                (
+                    tu1.transLang === tu2.textLang &&
+                    tu1.textLang === tu2.transLang
+                ) && (
+                    tu1.text === tu2.translation ||
+                    tu1.translation === tu2.text
+                )
+            )
+        );
+    },
+
+    getSessionCache(): TranslationUnit[] {
+        try{
+            return JSON.parse(sessionStorage.getItem(SESSION_CACHE_KEY) || '');
+        } catch (e) {
+            console.error('[TranslationUnit.getSessionCache] Failed to parse json', e);
+            return [];
+        }
+    },
+
+    saveAsSessionCache(tu: TranslationUnit[]) {
+        sessionStorage.setItem(SESSION_CACHE_KEY, JSON.stringify(tu));
     }
 };
 

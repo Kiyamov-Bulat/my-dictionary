@@ -5,13 +5,27 @@ import {useSelector} from 'react-redux';
 import {selectTextLang, selectTransLang} from '../../../../store/selectors/configuration';
 import {useWordsContext} from '../wordsContext';
 
+const CACHED_UNITS = {} as Record<string, TranslationUnit>;
+
 const useTranslation = (text: string, reverse = false): [TranslationUnit | null, () => void] => {
     const [unit, setUnit] = useState<TranslationUnit | null>(null);
     const $reversed = useRef(false);
-    const { cachedUnits, wordsInGroups, saveCachedUnit } = useWordsContext();
+    const { wordsInGroups } = useWordsContext();
     const textLang = useSelector(selectTextLang);
     const transLang = useSelector(selectTransLang);
     const translate = useCallback(() => {
+        const toFind = TranslationUnitModel.normalize({ text, textLang, transLang });
+
+        if (unit && TranslationUnitModel.isEqual(toFind, unit, false)) { return; }
+
+        const cachedUnit = [...Object.values(CACHED_UNITS), ...wordsInGroups].find((u) =>
+            TranslationUnitModel.isEqual(toFind, u, false)) || null;
+
+        if (cachedUnit) {
+            setUnit(cachedUnit);
+            return;
+        }
+
         TranslationUnitModel
             .translate(text, textLang, transLang)
             .then((unit) => {
@@ -27,23 +41,11 @@ const useTranslation = (text: string, reverse = false): [TranslationUnit | null,
             .then((unit) => $reversed.current ? TranslationUnitModel.swapTextAndTranslation(unit) : unit)
             .then((unit) => {
                 setUnit(unit);
-                saveCachedUnit(unit);
+                CACHED_UNITS[unit.id] = unit;
             });
-    }, [text, textLang, transLang]);
+    }, [text, textLang, transLang, wordsInGroups, unit]);
 
-    useEffect(() => {
-        if (unit) { return; }
-        
-        const toFind = TranslationUnitModel.normalize({ text, textLang, transLang });
-        const savedUnits = [...cachedUnits, ...wordsInGroups];
-        let cachedUnit = savedUnits.find((u) => TranslationUnitModel.isEqual(u, toFind, false)) || null;
-
-        if (cachedUnit && cachedUnit.textLang !== textLang) {
-            cachedUnit = TranslationUnitModel.swapTextAndTranslation(cachedUnit);
-        }
-
-        setUnit(cachedUnit);
-    }, [text, textLang, transLang, cachedUnits, wordsInGroups]);
+    useEffect(() => setUnit(null), [text, textLang, transLang]);
 
     useEffect(() => {
         if (unit && reverse !== $reversed.current) {
