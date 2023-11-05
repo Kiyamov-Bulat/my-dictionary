@@ -12,7 +12,7 @@ type WordProps = {
 const Word: FC<WordProps> = ({ value, onClick }) => {
     const $element = useRef(null);
     const { getWordFromGroups } = useWordsContext();
-    const { $selection, saveSelection, clearSelection } = useWordSelection($element.current);
+    const { $selection, saveSelection, clearSelection } = useWordSelection($element);
     const $isCached = useRef(false);
     const handleClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         onClick(e, $selection.current);
