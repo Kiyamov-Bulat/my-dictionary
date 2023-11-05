@@ -9,7 +9,6 @@ const CACHED_UNITS = {} as Record<string, TranslationUnit>;
 
 const useTranslation = (text: string, reverse = false): [TranslationUnit | null, () => void] => {
     const [unit, setUnit] = useState<TranslationUnit | null>(null);
-    const $reversed = useRef(false);
     const { wordsInGroups } = useWordsContext();
     const textLang = useSelector(selectTextLang);
     const transLang = useSelector(selectTransLang);
@@ -22,7 +21,7 @@ const useTranslation = (text: string, reverse = false): [TranslationUnit | null,
             TranslationUnitModel.isEqual(toFind, u, false)) || null;
 
         if (cachedUnit) {
-            setUnit(cachedUnit);
+            setUnit(reverse ? TranslationUnitModel.swapTextAndTranslation(cachedUnit) : cachedUnit);
             return;
         }
 
@@ -38,21 +37,12 @@ const useTranslation = (text: string, reverse = false): [TranslationUnit | null,
                 }
                 return unit;
             })
-            .then((unit) => $reversed.current ? TranslationUnitModel.swapTextAndTranslation(unit) : unit)
-            .then((unit) => {
-                setUnit(unit);
-                CACHED_UNITS[unit.id] = unit;
-            });
-    }, [text, textLang, transLang, wordsInGroups, unit]);
+            .then((unit) => CACHED_UNITS[unit.id] = unit)
+            .then((unit) => reverse ? TranslationUnitModel.swapTextAndTranslation(unit) : unit)
+            .then(setUnit);
+    }, [text, textLang, transLang, wordsInGroups, unit, reverse]);
 
     useEffect(() => setUnit(null), [text, textLang, transLang]);
-
-    useEffect(() => {
-        if (unit && reverse !== $reversed.current) {
-            setUnit(TranslationUnitModel.swapTextAndTranslation(unit));
-        }
-        $reversed.current = reverse;
-    }, [reverse]);
 
     return [unit, translate];
 };
