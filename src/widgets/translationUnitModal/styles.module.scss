@@ -1,4 +1,4 @@
-@use "styles/mixins.scss" as m;
+@use "src/styles/mixins.scss" as m;
 
 .modalWrapper {
   section {
@@ -14,7 +14,7 @@
 .unitCard {
   position: relative;
   justify-content: space-between;
-  font-size: 24px;
+  font-size: 18px;
 
   img {
     width: 150px;
@@ -54,8 +54,9 @@
 
 .changeImageInput {
   position: absolute;
-  top: 156px;
-  left: 0;
-  font-size: 14px;
-  line-height: 18px;
+  top: 150px;
+  left: 7.5px;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.3px;
 }

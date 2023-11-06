@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 export type ModalProps = {
     isOpen: boolean
-    title: string
+    title?: string
     onClose: () => void
     text?: string
     className?: string
@@ -20,7 +20,7 @@ const Modal: FC<ModalProps> = ({ isOpen, title, text, className, onClose, childr
     return (
         <div className={cx(styles.modalWrapper, className)} onClick={onClose}>
             <section className={styles.modal} onClick={e => e.stopPropagation()}>
-                <h1>{title}</h1>
+                {title && <h1>{title}</h1>}
                 <article className={styles.content}>{text || children}</article>
             </section>
         </div>

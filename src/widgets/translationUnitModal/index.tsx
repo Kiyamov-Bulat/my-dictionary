@@ -18,7 +18,7 @@ const TranslationUnitModal: FC = () => {
         dispatch(updateTranslationUnit({ ...openedUnit, ...updateUnit }));
 
     return (
-        <Modal isOpen={isOpen} title={'Карточка'} onClose={close} className={styles.modalWrapper}>
+        <Modal isOpen={isOpen} onClose={close} className={styles.modalWrapper}>
             <TranslationUnitCard className={styles.unitCard} unit={openedUnit}>
                 <p className={styles.dates}>
                     <span>
