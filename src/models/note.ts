@@ -92,21 +92,22 @@ const NoteModel = {
         return { value: this.create(), added: false };
     },
 
+    addOrUpdate(note: Note): void {
+        if (this.has(note)) {
+            store.dispatch(updateNote(note));
+        } else {
+            store.dispatch(addNote(note));
+        }
+    },
+
     save(note: Note, add: boolean): void {
         const selectedGroups = selectSelectedGroupsIds(store.getState());
         const finalNote = { ...note, groups: selectedGroups };
 
-        if (this.getCached().value.id === finalNote.id) {
-            this.saveInCache({value: finalNote, added: add});
-        }
+        this.saveInCache({value: finalNote, added: add});
 
         if (!add) { return; }
-
-        if (this.has(finalNote)) {
-            store.dispatch(updateNote(finalNote));
-        } else {
-            store.dispatch(addNote(finalNote));
-        }
+        this.addOrUpdate(finalNote);
     },
 
     has(note: Note): boolean {
