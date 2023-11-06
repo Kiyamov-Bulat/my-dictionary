@@ -12,6 +12,6 @@ export const COLOR_LIST = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6'
     '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'
 ];
 
-const getRandomColor = () => sample(COLOR_LIST);
+const getRandomColor = (): string => sample(COLOR_LIST) as string;
 
 export default getRandomColor;

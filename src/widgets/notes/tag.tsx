@@ -1,19 +1,16 @@
-import React, {FC, useMemo} from 'react';
-import getRandomColor from '../../utils/getRandomColor';
+import React, {FC} from 'react';
 import styles from './styles.module.scss';
+import { Tag as ITag } from '../../models/tag';
 
 type TagProps = {
-    name: string
-    onRemove: (tag: string) => void
-};
+    onRemove: (tag: ITag) => void
+} & ITag;
 
-const Tag: FC<TagProps> = ({ name, onRemove }) => {
-    const color = useMemo(() => getRandomColor(), []);
-
+const Tag: FC<TagProps> = ({ onRemove, ...tag }) => {
     return (
-        <div className={styles.tag} style={{ background: color }}>
-            <p>{name}</p>
-            <div className={styles.removeTag} onClick={() => onRemove(name)}>x</div>
+        <div className={styles.tag} style={{ background: tag.color }}>
+            <p>{tag.title}</p>
+            <div className={styles.removeTag} onClick={() => onRemove(tag)}>x</div>
         </div>
     );
 };

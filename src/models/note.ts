@@ -6,6 +6,7 @@ import store from '../store';
 import {addNote, removeNote, updateNote} from '../store/slices/note';
 import {selectNotes} from '../store/selectors/note';
 import normalizeObject from '../utils/normalize';
+import TagModel, {Tag} from './tag';
 
 const NOTES_STORAGE_KEY = 'notes';
 const CACHED_NOTE_STORAGE_KEY = 'text';
@@ -14,7 +15,7 @@ export interface Note extends BaseObject {
     groups: string[]
     text: string
     title: string
-    tags: string[]
+    tags: Tag[]
 }
 
 export interface CachedNote {
@@ -145,6 +146,17 @@ const NoteModel = {
             this.saveInCache(cachedNote);
         }
         store.dispatch(removeNote(note.id));
+    },
+
+    hasTag(note: Note, tag: Tag): boolean {
+        return !!note.tags.find((next) => TagModel.isEqual(next, tag));
+    },
+
+    addTag(note: Note, tag: Tag): Note {
+        return { ...note, tags: [...note.tags, tag] };
+    },
+    removeTag(note: Note, tag: Tag): Note {
+        return { ...note, tags: note.tags.filter((t) => !TagModel.isEqual(t, tag)) };
     }
 };
 

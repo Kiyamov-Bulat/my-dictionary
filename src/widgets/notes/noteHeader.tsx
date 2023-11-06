@@ -5,6 +5,7 @@ import NoteModel, {Note} from '../../models/note';
 import Tag from './tag';
 import Notice from '../../components/notice';
 import cx from 'classnames';
+import TagModel, { Tag as ITag } from '../../models/tag';
 
 type NoteHeaderProps = {
     note: Note
@@ -23,20 +24,22 @@ const NoteHeader: FC<NoteHeaderProps> = (
         return true;
     };
 
-    const saveTag = (tag: string) => {
-        if (!tag) {
+    const saveTag = (strTag: string) => {
+        if (!strTag) {
             return false;
         }
-        if (note.tags.includes(tag)) {
+        const tag = TagModel.create(strTag);
+
+        if (NoteModel.hasTag(note, tag)) {
             Notice.warn('Такой тэг уже существует');
             return false;
         }
-        onUpdateNote({ ...note, tags: [...note.tags, tag] }, true);
+        onUpdateNote(NoteModel.addTag(note, tag), true);
         return true;
     };
 
-    const removeTag = (tag: string) => {
-        onUpdateNote({ ...note, tags: note.tags.filter((t) => t !== tag) }, true);
+    const removeTag = (tag: ITag) => {
+        onUpdateNote(NoteModel.removeTag(note, tag), true);
     };
 
     return (
@@ -52,8 +55,8 @@ const NoteHeader: FC<NoteHeaderProps> = (
                     placeholder={'Новый тэг'}
                     className={cx(styles.tag, styles.createTag)}
                     onSetInactive={saveTag}/>
-                {note.tags.map((tag, idx) =>
-                    <Tag onRemove={removeTag} name={tag} key={tag + idx}/>)}
+                {note.tags.map((tag) =>
+                    <Tag onRemove={removeTag} {...tag} key={tag.id}/>)}
             </div>
         </div>
     );
