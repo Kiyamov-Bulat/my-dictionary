@@ -1,4 +1,4 @@
-@use "styles/constants.scss" as c;
+@use "src/styles/constants" as c;
 
 .controlPanelContainer {
   display: flex;
@@ -21,7 +21,6 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
-  border-right: 1px solid #7f7f7f;
   max-width: 250px;
   > *:last-child > * {
     background: rgba(255, 255, 255, 0.8);
