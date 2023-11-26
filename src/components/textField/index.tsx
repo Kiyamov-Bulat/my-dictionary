@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ComponentProps, HTMLProps} from 'react';
 import cx from 'classnames';
 import styles from './styles.modules.scss';
 
@@ -15,6 +15,7 @@ export interface ITextField {
     maxLength?: number;
     invalid?: boolean;
     error?: string;
+    type?: HTMLProps<HTMLInputElement>['type']
     onClick?: React.MouseEventHandler<HTMLElement>;
     onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
     onKeyUp?: React.KeyboardEventHandler<HTMLElement>;
