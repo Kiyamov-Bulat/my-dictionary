@@ -122,9 +122,15 @@ const TranslationUnitModel = {
         try {
             if (unit.text.length < 100) {
                 u.imageSrc = await getRemoteImage(unit.text) || noImageSrc;
+            } else {
+                u.imageSrc = noImageSrc;
             }
         } catch (err) {
-            console.error('updateImage error');
+            console.error('[TranslationUnitModel.updateImageSrc] failed to update imageSrc', err);
+
+            if (!u.imageSrc) {
+                u.imageSrc = noImageSrc;
+            }
         }
 
         return u;
