@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import TooltipWrapper, {ETooltipPosition, TooltipWrapperProps} from '../tooltip/TooltipWrapper';
-import Button from './index';
+import Button, {IButtonProps} from './index';
 import {IconProps} from '../../icons';
 import {useDispatch} from 'react-redux';
 
@@ -8,6 +8,7 @@ interface ButtonWithTooltipProps extends Omit<TooltipWrapperProps, 'action'> {
     action: (e?: React.MouseEvent) => any
     Icon?: FC<IconProps>
     disp?: boolean
+    variant?: IButtonProps['variant'],
     children?: React.ReactNode
 }
 
@@ -17,6 +18,7 @@ const ButtonWithTooltip: FC<ButtonWithTooltipProps> = (
         action,
         Icon,
         disp = false,
+        variant,
         children,
         ...props
     }) => {
@@ -25,7 +27,7 @@ const ButtonWithTooltip: FC<ButtonWithTooltipProps> = (
 
     return (
         <TooltipWrapper tipContent={tipContent} position={ETooltipPosition.NE} delay={500} {...props}>
-            <Button onClick={onClick} variant={'primary'}>
+            <Button onClick={onClick} variant={variant}>
                 {Icon && <Icon width={20} height={20} stroke={'white'} fill={'white'}/>}
                 {children}
             </Button>

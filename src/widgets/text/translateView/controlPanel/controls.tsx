@@ -9,17 +9,13 @@ import {useWordsContext} from '../wordsContext';
 import NoteModel from '../../../../models/note';
 import GroupModel from '../../../../models/group';
 import {addGroup} from '../../../../store/slices/dictionary';
-import {useDispatch, useSelector} from 'react-redux';
-import EditableLabel from '../../../../components/editableLabel';
-import {selectInteractiveTextFontSize} from '../../../../store/selectors/configuration';
-import {setInteractiveTextFontSize} from '../../../../store/slices/configuration';
-import ConfigurationModel from '../../../../models/configuration';
+import {useDispatch} from 'react-redux';
+import FontSize from './fontSize';
 
 const Controls: FC = () => {
     const dispatch = useDispatch();
     const { note, saveNote, added, setIsEdit } = useNoteContext();
     const { reverseTranslate, setReverseTranslate } = useWordsContext();
-    const textFontSize = useSelector(selectInteractiveTextFontSize);
 
     const newNote = () => {
         saveNote(NoteModel.clone(note), false);
@@ -70,10 +66,7 @@ const Controls: FC = () => {
                         action={() => setIsEdit(true)}
                     />
                 </>}
-            <EditableLabel value={String(textFontSize)} onSetInactive={(text) => {
-                ConfigurationModel.saveInteractiveTextFontSize(text);
-                return true;
-            }}/>
+            <FontSize/>
         </div>
     );
 };

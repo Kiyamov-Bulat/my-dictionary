@@ -5,6 +5,8 @@ import {useWithSpacesWords} from '../wordsContext';
 import isSpace from '../../../../utils/isSpace';
 import TranslationUnitPopup from '../translationUnitPopup/translationUnitPopup';
 import minmax from '../../../../utils/minmax';
+import {useSelector} from 'react-redux';
+import {selectInteractiveTextFontSize} from '../../../../store/selectors/configuration';
 
 const POPUP_MARGIN = 8;
 
@@ -46,13 +48,14 @@ const getPopupInitialCoords = (
     const $wordsContainer = useRef<HTMLElement | null>(null);
     const words = useWithSpacesWords();
     const [popupInfo, setPopupInfo] = useState<PopupInfo | null>(null);
+    const fontSize = useSelector(selectInteractiveTextFontSize);
 
     const openPopup = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>, selection: string) => {
         setPopupInfo({ selection, wordElement: e.target as HTMLElement });
     };
 
     return (
-        <section className={styles.words} ref={$wordsContainer}>
+        <section className={styles.words} ref={$wordsContainer} style={{ fontSize: `${fontSize}px`}}>
             {words.map((word, idx) =>
                 isSpace(word) ? word : <Word key={idx} value={word} onClick={openPopup}/>)
             }
