@@ -7,9 +7,9 @@ import styles from './styles.module.scss';
 import Help from '../help';
 import {selectGameState} from '../../store/selectors/game';
 import {EGameState} from '../../models/game';
-import {EPanelView} from '../../models/configuration';
 import Navigation from './navigation/navigation';
 import Notes from '../notes';
+import {EPanelView} from '../../models/types';
 
 const getPanel = (panelView: EPanelView) => {
     switch(panelView) {

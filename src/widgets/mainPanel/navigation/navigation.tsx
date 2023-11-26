@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
 import {useSelector} from 'react-redux';
 import {selectPanelView} from '../../../store/selectors/configuration';
-import {EPanelView} from '../../../models/configuration';
 import Tab from './tab';
 import styles from './styles.module.scss';
+import {EPanelView} from '../../../models/types';
 
 const TABS = {
     [EPanelView.TEXT]: {

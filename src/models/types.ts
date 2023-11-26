@@ -36,3 +36,16 @@ export interface TranslationUnit extends BaseObject {
     totalMistakes: number
     imageSrc: string
 }
+
+export enum EPanelView {
+    GAMES_LIST = '@panel-view/games-list',
+    TEXT = '@panel-view/text',
+    NOTES = '@panel-view/notes'
+}
+
+export interface Configuration {
+    textLang: string;
+    transLang: string;
+    panelView: EPanelView;
+    interactiveTextFontSize: number;
+}

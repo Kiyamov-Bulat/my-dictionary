@@ -3,13 +3,13 @@ import {RawResponse, Sentence, TranslationUnit} from './types';
 import {MAIN_GROUP_TITLE} from './group';
 import {DropdownOption} from '../components/dropdown/dropdownList';
 import {ReactNode} from 'react';
-import {DEFAULT_TEXT_LANG, DEFAULT_TRANS_LANG} from './configuration';
 import preloadImages from '../utils/preloadImages';
 import getRemoteImage from '../utils/getRemoteImage';
 import store from '../store';
 import {selectTextLang, selectTransLang} from '../store/selectors/configuration';
 import normalizeObject from '../utils/normalize';
 import noImageSrc from '../assets/noImage.svg';
+import {DEFAULT_TEXT_LANG, DEFAULT_TRANS_LANG} from './constants';
 
 const LINES_SEPARATOR = /\n+/;
 const SESSION_CACHE_KEY = 'units';

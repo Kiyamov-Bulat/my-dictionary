@@ -1,8 +1,9 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import ConfigurationModel, {EPanelView} from '../../models/configuration';
+import {INITIAL_CONFIGURATION} from '../../models/constants';
+import {EPanelView} from '../../models/types';
 
 const configurationState = {
-    ...ConfigurationModel.get(),
+    ...INITIAL_CONFIGURATION,
     isOpen: false,
 };
 
@@ -15,6 +16,9 @@ const configuration = createSlice({
         },
         setTransLang(state, { payload }: PayloadAction<string>) {
             state.transLang = payload;
+        },
+        setInteractiveTextFontSize(state, { payload }: PayloadAction<number>) {
+            state.interactiveTextFontSize = payload;
         },
         openSettings(state) {
             state.isOpen = true;
@@ -38,6 +42,7 @@ export const {
     closeSetting,
     setPanelView,
     togglePanelView,
+    setInteractiveTextFontSize,
 } = configuration.actions;
 
 export default configuration.reducer;

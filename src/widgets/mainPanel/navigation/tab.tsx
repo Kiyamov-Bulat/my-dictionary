@@ -1,10 +1,9 @@
 import React, {FC} from 'react';
 import cx from 'classnames';
 import styles from './styles.module.scss';
-import ConfigurationModel, {EPanelView} from '../../../models/configuration';
 import Button from '../../../components/button';
-import {setPanelView} from '../../../store/slices/configuration';
-import {useDispatch} from 'react-redux';
+import ConfigurationModel from '../../../models/configuration';
+import {EPanelView} from '../../../models/types';
 
 type TabProps = {
     isSelected: boolean
@@ -13,9 +12,7 @@ type TabProps = {
 };
 
 const Tab: FC<TabProps> = ({ isSelected, children, panelView }) => {
-    const dispatch = useDispatch();
     const openPanel = () => {
-        dispatch(setPanelView(panelView));
         ConfigurationModel.saveMainPanelView(panelView);
     };
     return (

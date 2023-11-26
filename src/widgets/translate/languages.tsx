@@ -13,19 +13,16 @@ type HeaderProps = {
 };
 
 const Languages: FC<HeaderProps> = ({ className }) => {
-   const dispatch = useDispatch();
     const textLang = useSelector(selectTextLang);
     const transLang = useSelector(selectTransLang);
 
     const onTextLangChange = (lang: string): boolean => {
         if (!lang) { return true; }
-        dispatch(setTextLang(lang));
         ConfigurationModel.saveTextLang(lang);
         return false;
     };
     const onTransLangChange = (lang: string): boolean => {
         if (!lang) { return true; }
-        dispatch(setTransLang(lang));
         ConfigurationModel.saveTransLang(lang);
         return false;
     };

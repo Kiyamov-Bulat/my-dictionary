@@ -12,3 +12,5 @@ export const selectSettingsIsOpen = (state: RootState): boolean => selectConfigu
 export const selectPanelView = (state: RootState): EPanelView => selectConfiguration(state).panelView;
 
 export const selectPanelViewIsGamesList = (state: RootState): boolean => selectPanelView(state) === EPanelView.GAMES_LIST;
+
+export const selectInteractiveTextFontSize = (state: RootState): number => selectConfiguration(state).interactiveTextFontSize;

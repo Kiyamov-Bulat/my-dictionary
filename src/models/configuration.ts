@@ -1,43 +1,35 @@
-const TEXT_LANG_LOCAL_STORAGE_KEY = 'text-lang';
-const TRANS_LANG_LOCAL_STORAGE_KEY = 'trans-lang';
-const MAIN_PANEL_VIEW_KEY = 'main-panel-view';
-
-export const DEFAULT_TEXT_LANG = 'auto';
-export const DEFAULT_TRANS_LANG = 'ru';
-
-export enum EPanelView {
-    GAMES_LIST = '@panel-view/games-list',
-    TEXT = '@panel-view/text',
-    NOTES = '@panel-view/notes'
-}
-
-export const DEFAULT_PANEL_VIEW = EPanelView.GAMES_LIST;
-
-export interface Configuration {
-    textLang: string
-    transLang: string
-    panelView: EPanelView
-}
+import store from '../store';
+import {setInteractiveTextFontSize, setPanelView, setTextLang, setTransLang} from '../store/slices/configuration';
+import {
+    INTERACTIVE_TEXT_FONT_SIZE,
+    INTERACTIVE_TEXT_FONT_SIZE_KEY,
+    MAIN_PANEL_VIEW_KEY,
+    TEXT_LANG_LOCAL_STORAGE_KEY,
+    TRANS_LANG_LOCAL_STORAGE_KEY
+} from './constants';
+import {EPanelView} from './types';
 
 const ConfigurationModel = {
     saveTextLang(lang: string) {
+        store.dispatch(setTextLang(lang));
         localStorage.setItem(TEXT_LANG_LOCAL_STORAGE_KEY, lang);
     },
     saveTransLang(lang: string) {
+        store.dispatch(setTransLang(lang));
         localStorage.setItem(TRANS_LANG_LOCAL_STORAGE_KEY, lang);
     },
-
     saveMainPanelView(panelView: EPanelView): void {
+        store.dispatch(setPanelView(panelView));
         localStorage.setItem(MAIN_PANEL_VIEW_KEY, panelView);
     },
+    saveInteractiveTextFontSize(fontSize: number | string): void {
+        let fs = Number(fontSize);
 
-    get(): Configuration {
-        return {
-            textLang: localStorage.getItem(TEXT_LANG_LOCAL_STORAGE_KEY) || DEFAULT_TEXT_LANG,
-            transLang: localStorage.getItem(TRANS_LANG_LOCAL_STORAGE_KEY) || DEFAULT_TRANS_LANG,
-            panelView: localStorage.getItem(MAIN_PANEL_VIEW_KEY) as EPanelView || DEFAULT_PANEL_VIEW,
-        };
-    },
+        if (Number.isNaN(fs) || fs > INTERACTIVE_TEXT_FONT_SIZE.MAX || fs < INTERACTIVE_TEXT_FONT_SIZE.MIN) {
+            fs = INTERACTIVE_TEXT_FONT_SIZE.DEFAULT;
+        }
+        store.dispatch(setInteractiveTextFontSize(fs));
+        localStorage.setItem(INTERACTIVE_TEXT_FONT_SIZE_KEY, fs.toString());
+    }
 };
-
 export default ConfigurationModel;

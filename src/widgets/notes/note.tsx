@@ -15,13 +15,10 @@ type NoteProps = {
 };
 
 const Note: FC<NoteProps> = ({ note }) => {
-    const dispatch = useDispatch();
-
     const goToTranslate = () => {
         const panel = EPanelView.TEXT;
 
         NoteModel.saveInCache({ value: note, added: true });
-        dispatch(setPanelView(panel));
         ConfigurationModel.saveMainPanelView(panel);
     };
 
