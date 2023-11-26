@@ -2,13 +2,12 @@ import React, {FC} from 'react';
 import styles from './styles.module.scss';
 import NoteModel, {Note as NoteType} from '../../models/note';
 import ButtonWithTooltip from '../../components/button/ButtonWithTooltip';
-import {setPanelView} from '../../store/slices/configuration';
-import ConfigurationModel, {EPanelView} from '../../models/configuration';
-import {useDispatch} from 'react-redux';
+import ConfigurationModel from '../../models/configuration';
 import {PenIcon} from '../../icons';
 import RemoveBtn from '../../components/removeBtn';
 import {ETooltipPosition} from '../../components/tooltip/TooltipWrapper';
 import NoteHeader from './noteHeader';
+import {EPanelView} from '../../models/types';
 
 type NoteProps = {
     note: NoteType
@@ -16,10 +15,8 @@ type NoteProps = {
 
 const Note: FC<NoteProps> = ({ note }) => {
     const goToTranslate = () => {
-        const panel = EPanelView.TEXT;
-
         NoteModel.saveInCache({ value: note, added: true });
-        ConfigurationModel.saveMainPanelView(panel);
+        ConfigurationModel.saveMainPanelView(EPanelView.TEXT);
     };
 
     return (
